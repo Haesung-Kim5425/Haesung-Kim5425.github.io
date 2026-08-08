@@ -321,6 +321,34 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
         exit 3
     }
 
+    # Cross-check site_url against _config.yml's `url`.
+    #
+    # A GitHub user site is served at <account>.github.io, so the site address and the
+    # GitHub handle are the same fact written twice. They were wrong together once
+    # already: the handle was inferred from the Purdue username, and the site URL was
+    # derived from the wrong handle. _config.yml cannot read a data file, so this value
+    # has to be duplicated -- compare it rather than hope.
+    $siteUrlMatch = [regex]::Match($profileText, '(?m)^\s*site_url\s*:\s*"([^"]+)"')
+    if ($siteUrlMatch.Success) {
+        $wantUrl = $siteUrlMatch.Groups[1].Value.TrimEnd('/')
+        $configPathForUrl = Join-Path $here '..\_config.yml'
+        if (Test-Path -LiteralPath $configPathForUrl) {
+            $cfg = Get-Content -LiteralPath $configPathForUrl -Raw -Encoding UTF8
+            $haveUrl = ([regex]::Match($cfg, '(?m)^url:\s*(\S+)')).Groups[1].Value.TrimEnd('/')
+            if ($haveUrl -and $haveUrl -ne $wantUrl) {
+                Write-Host ""
+                Write-Host "SYNC REFUSED - site URL disagrees with the profile." -ForegroundColor Red
+                Write-Host "    profile.yml site_url : $wantUrl"
+                Write-Host "    _config.yml url      : $haveUrl"
+                Write-Host ""
+                Write-Host "  These are the same fact in two places. Publishing with them out of step"
+                Write-Host "  puts the wrong address in the sitemap, canonical links and social previews."
+                Write-Host ""
+                exit 3
+            }
+        }
+    }
+
     # Cross-check the author-name variants against _config.yml. jekyll-scholar reads its
     # name list from _config.yml, which cannot read a data file, so that one value has to
     # be duplicated -- and a mismatch fails silently, printing the owner's own name
