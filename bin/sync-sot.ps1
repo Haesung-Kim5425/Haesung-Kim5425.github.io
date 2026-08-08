@@ -178,8 +178,17 @@ if ($Check) {
     exit 0
 }
 
+if (-not $changed -and (Test-Path -LiteralPath $DestPath)) {
+    # Nothing to do. Deliberately do NOT rewrite the file just to refresh the header
+    # timestamp: that leaves a one-line diff after every sync, so the file shows as
+    # modified when nothing about the publications has changed. Meaningless diffs on
+    # this file are worse than useless -- they train whoever reviews them to skip it,
+    # which is exactly the file where a real change must never be skipped.
+    Write-Host "Already current; nothing written." -ForegroundColor Green
+    exit 0
+}
+
 # Write without a BOM: bibtex-ruby chokes on a leading U+FEFF.
 [System.IO.File]::WriteAllText($DestPath, $newText, (New-Object System.Text.UTF8Encoding($false)))
 
-if ($changed) { Write-Host "Synced (content changed)." -ForegroundColor Green }
-else          { Write-Host "Synced (content identical; header timestamp refreshed)." -ForegroundColor Green }
+Write-Host "Synced (content changed)." -ForegroundColor Green
