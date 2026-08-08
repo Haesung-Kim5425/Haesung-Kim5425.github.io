@@ -32,6 +32,11 @@ NOTES.md
 # Throwaway production build made by bin/check-public.ps1 for its pre-deploy scan.
 _site_check
 
+# Full-resolution originals kept for re-processing. Not published: the camera files carry
+# EXIF (timestamps, camera body serial number) and are far larger than any page needs.
+# What ships is the stripped, resized copy beside them.
+assets/img/_source/
+
 # Note on generated files that ARE committed: _bibliography/papers.bib, _data/profile.yml,
 # _data/socials.yml and assets/pdf/Haesung_Kim_CV.pdf are all produced by
 # bin/sync-sot.ps1 from sources outside this repo. The GitHub Actions build only checks

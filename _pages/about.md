@@ -6,7 +6,7 @@ subtitle: Opto-electronic characterization and physics-based modeling of semicon
 
 profile:
   align: right
-  image: # add prof_pic.jpg to assets/img/ and put the filename here
+  image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>Birck Nanotechnology Center</p>
