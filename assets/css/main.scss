@@ -88,39 +88,30 @@
   }
 }
 
-// --- Publication figures ---------------------------------------------------
-// Rendered inside the entry by _includes/hook/bib.liquid, not in the theme's
-// thumbnail column — see the note there. The container needs flow-root so the
-// float is contained: without it a tall figure escapes its entry and lands on
-// top of the next paper in the list.
-.publications .row > [class*="col-sm-"] {
-  display: flow-root;
-}
-
-.pub-figure {
-  float: right;
-  max-width: 210px;
-  max-height: 160px;
-  width: auto;
+// --- Selected-work figure panel --------------------------------------------
+// One composed image rather than a figure per publication entry: five pictures
+// spread down a twenty-five item list interrupted it without ever showing the
+// work as a whole. Built by bin/make-figure-panel.py from the same figures the
+// bibliography references.
+//
+// The panel is line art on white, so it keeps its own white background in dark
+// mode — inverting or tinting it would wreck the figures' own colour coding.
+.figure-panel {
+  display: block;
+  width: 100%;
   height: auto;
-  margin: 0.1rem 0 0.6rem 1.1rem;
+  margin: 0.5rem 0 0.4rem;
+  background: #fff;
   border: 1px solid var(--global-divider-color);
-  border-radius: 4px;
-  background: #fff; // figures are line art on white; keeps them legible in dark mode
-  padding: 3px;
-  object-fit: contain;
+  border-radius: 5px;
+  padding: 6px;
 }
 
-// Below the text on narrow screens: at phone width a floated 210px figure leaves
-// the title wrapping in a column too narrow to read.
-@media (max-width: 575px) {
-  .pub-figure {
-    float: none;
-    display: block;
-    max-width: 100%;
-    max-height: none;
-    margin: 0.5rem 0 0.75rem;
-  }
+.figure-panel-caption {
+  font-size: 0.85em;
+  color: var(--global-text-color-light);
+  text-align: left;
+  margin-bottom: 1.2rem;
 }
 
 // --- Sentence case on the theme's own headings -----------------------------

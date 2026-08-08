@@ -40,26 +40,18 @@
 {%- assign roles = entry.authorship | replace: " ", "" | split: "," -%}
 
 {%- comment -%}
-  Figure, for the entries that have one (`preview` in the bibliography).
+  No per-entry figure here, deliberately.
 
-  Rendered here rather than through the theme's own thumbnail column. That column is
-  reserved for every entry as soon as thumbnails are enabled, so with five figures among
-  twenty-five papers the other twenty would carry an empty gutter — which reads as an
-  image that failed to load. Putting the figure inside the entry instead keeps all
-  twenty-five titles on the same left margin and shows a figure only where one exists.
+  Figures were rendered inside each entry for a while. Five pictures scattered down a
+  twenty-five item list broke the list's rhythm without ever showing the work as a whole
+  — the reader met them one at a time, out of context. They are now composed into a
+  single panel on the front page (assets/img/selected_work.png, built by
+  bin/make-figure-panel.py), which is where a visitor actually looks for a sense of the
+  research.
 
-  Floated right so the text still fills the line; the float is contained by a
-  `display: flow-root` rule in assets/css/main.scss, and drops below the text on narrow
-  screens where there is no room beside it.
+  `preview` fields stay in the bibliography: they are what the panel builder reads to
+  know which figure belongs to which paper, and what its caption should say.
 {%- endcomment -%}
-{%- if entry.preview -%}
-  <img
-    class="pub-figure"
-    src="{{ '/assets/img/publication_preview/' | append: entry.preview | relative_url }}"
-    alt="Figure from: {{ entry.title | strip_html | escape }}"
-    loading="lazy"
-  />
-{%- endif -%}
 
 {%- if entry.keywords contains "preprint" -%}
   <span

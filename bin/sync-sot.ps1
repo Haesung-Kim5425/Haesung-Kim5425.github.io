@@ -225,7 +225,13 @@ foreach ($m in $statEntries) {
     $isPrimary = if ($hasRole) { $primaryByField -or $primaryByPosition } else { $primaryByPosition }
     if ($isPrimary) { $stat.primary++ } else { $stat.co_author++ }
 
-    if ($hasRole -and ($primaryByField -ne $primaryByPosition) -and -not ($roleField -match 'co-first' -and $pos -ne 1)) {
+    # Only flag a disagreement that would actually mean an error. Shared first authorship
+    # and corresponding authorship are both routinely held by someone who is not listed
+    # first -- that is the normal case, not a contradiction, so neither is reported.
+    # Flagging them made the check fire on a correct record, which is how a check earns
+    # being ignored.
+    $legitimatelyNotFirst = ($roleField -match 'co-first' -or $roleField -match 'corresponding') -and ($pos -ne 1)
+    if ($hasRole -and ($primaryByField -ne $primaryByPosition) -and -not $legitimatelyNotFirst) {
         $key = ([regex]::Match($body, '^([^,]*),')).Groups[1].Value.Trim()
         $roleMismatch += "$key : authorship='$roleField' but author position is $pos"
     }
@@ -601,9 +607,9 @@ if ($stat.role_unrecorded -gt 0) { Write-Host "  ($($stat.role_unrecorded) with 
 # does not reference and `preview` values with no file behind them — a mismatch either way
 # is a fault worth seeing, not something to discover in a browser.
 # --------------------------------------------------------------------------------------
-$figChanged = @()
 $figOrphan  = @()
 $figMissing = @()
+$figStamp   = ''
 
 # Skip '%' comment lines. The bibliography header documents the convention with a sample
 # line (preview = {filename.png}), and counting that as a reference made the check report
@@ -618,21 +624,22 @@ foreach ($line in ($sotText -split "`n")) {
 }
 
 if (Test-Path -LiteralPath $FigSourceDir) {
-    $srcFigs = Get-ChildItem -LiteralPath $FigSourceDir -File
+    $srcFigs = Get-ChildItem -LiteralPath $FigSourceDir -File | Sort-Object Name
+    # One fingerprint over all the source figures. There is nothing in the site to compare
+    # each figure against any more -- only the composed panel is published -- so staleness
+    # is tracked against a stamp instead. Without it every sync would rebuild the panel,
+    # and a rebuild on every run is the kind of pointless work that trains people to
+    # ignore the output.
+    $figStamp = (($srcFigs | ForEach-Object { "$($_.Name):$((Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash)" }) -join "`n")
     foreach ($f in $srcFigs) {
-        $dst = Join-Path $FigDestDir $f.Name
-        $srcH = (Get-FileHash -LiteralPath $f.FullName -Algorithm SHA256).Hash
-        $dstH = if (Test-Path -LiteralPath $dst) { (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash } else { $null }
-        if ($srcH -ne $dstH) { $figChanged += $f }
         if ($previewNames -notcontains $f.Name) { $figOrphan += $f.Name }
     }
     foreach ($n in $previewNames) {
         if (-not (Test-Path -LiteralPath (Join-Path $FigSourceDir $n))) { $figMissing += $n }
     }
-    Write-Host "Figures: $($srcFigs.Count) in source, $($previewNames.Count) referenced by the bibliography" -NoNewline
-    if ($figChanged.Count -gt 0) { Write-Host "  [$($figChanged.Count) differ]" -ForegroundColor Yellow } else { Write-Host "  [current]" }
+    Write-Host "Figures: $($srcFigs.Count) in source, $($previewNames.Count) referenced by the bibliography"
     if ($figOrphan.Count -gt 0)  { Write-Warning "Figure file(s) no entry references: $($figOrphan -join ', ')" }
-    if ($figMissing.Count -gt 0) { Write-Warning "preview field(s) with no figure file: $($figMissing -join ', '). These render as broken images." }
+    if ($figMissing.Count -gt 0) { Write-Warning "preview field(s) with no figure file: $($figMissing -join ', '). The panel will be missing a panel." }
 }
 elseif ($previewNames.Count -gt 0) {
     Write-Warning "The bibliography references $($previewNames.Count) preview image(s) but $FigSourceDir does not exist."
@@ -688,11 +695,35 @@ if ($statsChanged) {
     $wroteSomething = $true
 }
 
-if ($figChanged.Count -gt 0) {
-    if (-not (Test-Path -LiteralPath $FigDestDir)) { New-Item -ItemType Directory -Path $FigDestDir | Out-Null }
-    foreach ($f in $figChanged) { Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $FigDestDir $f.Name) -Force }
-    Write-Host "$($figChanged.Count) publication figure(s) synced." -ForegroundColor Green
-    $wroteSomething = $true
+# Rebuild the composed panel whenever a source figure moved, or when it is missing
+# entirely. The front page shows the panel, not the individual figures, so a figure that
+# changed without the panel being rebuilt would be a change nobody sees -- the worst kind,
+# because the site looks fine and is simply out of date.
+#
+# The individual figures are NOT copied into the site. Only the panel is published; the
+# builder reads the originals straight from the record. Copying them in left five
+# publisher figures served at guessable URLs with no copyright notice attached, and
+# referenced by nothing.
+$panelPath  = Join-Path $here '..\assets\img\selected_work.png'
+$stampPath  = Join-Path $here '..\assets\img\selected_work.stamp'
+$stampOld   = if (Test-Path -LiteralPath $stampPath) { (Get-Content -LiteralPath $stampPath -Raw -Encoding UTF8) -replace "`r`n", "`n" } else { '' }
+$panelStale = ($figStamp -ne '') -and (($stampOld.Trim() -ne $figStamp.Trim()) -or (-not (Test-Path -LiteralPath $panelPath)))
+if ($panelStale -and (Test-Path -LiteralPath $FigSourceDir)) {
+    $py = (Get-Command python -ErrorAction SilentlyContinue)
+    if ($py) {
+        & $py.Source (Join-Path $here 'make-figure-panel.py') | ForEach-Object { Write-Host "  $_" }
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "make-figure-panel.py failed (exit $LASTEXITCODE). The panel on the front page is now out of date."
+        }
+        else {
+            [System.IO.File]::WriteAllText($stampPath, $figStamp, (New-Object System.Text.UTF8Encoding($false)))
+            Write-Host "Selected-work panel rebuilt." -ForegroundColor Green
+        }
+        $wroteSomething = $true
+    }
+    else {
+        Write-Warning "python not found, so the selected-work panel was not rebuilt. Run: python bin/make-figure-panel.py"
+    }
 }
 
 if (-not $wroteSomething) {

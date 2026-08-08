@@ -41,3 +41,8 @@ assets/img/_source/
 # _data/socials.yml and assets/pdf/Haesung_Kim_CV.pdf are all produced by
 # bin/sync-sot.ps1 from sources outside this repo. The GitHub Actions build only checks
 # out this repository, so they have to be present here. Never hand-edit them.
+
+# Publication figures live in the academic record, not here. Only the composed panel
+# (assets/img/selected_work.png) is published; bin/make-figure-panel.py reads the
+# originals from ../achievements/figures/.
+assets/img/publication_preview/
