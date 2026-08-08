@@ -17,6 +17,12 @@
 .NOTES
     Direction is one-way by design. Edits made directly to _bibliography/papers.bib are
     destroyed the next time this runs. Fix the SoT instead.
+
+    Exit codes:
+      0  synced, or (-Check) the copy is current
+      1  the source could not be found
+      2  (-Check only) the copy is stale and needs a sync
+      3  the source is not valid BibTeX and was refused; -Repair overrides
 #>
 
 [CmdletBinding()]
@@ -28,7 +34,11 @@ param(
     [string]$DestPath,
 
     # Report what would change without writing anything.
-    [switch]$Check
+    [switch]$Check,
+
+    # Sync anyway when the source contains '@' inside a '%' comment line, rewriting those
+    # '@' to '[at]' in the copy only. Off by default on purpose -- see the check below.
+    [switch]$Repair
 )
 
 $ErrorActionPreference = 'Stop'
@@ -57,29 +67,56 @@ if ($null -eq $sotText) { $sotText = '' }
 #  Windows PowerShell 5.1 reads a BOM-less .ps1 as ANSI and would corrupt a literal.)
 $sotText = $sotText.TrimStart([char]0xFEFF)
 
-# Neutralise '@' inside comment lines.
+# Refuse to sync a source that is not valid BibTeX. Fail loudly; do not paper over it.
 #
 # BibTeX has no line-comment syntax: '%' lines are simply text outside any entry, and
 # bibtex-ruby skips them by scanning forward to the next '@'. So an '@' that appears
 # inside a '%' note -- e.g. a tally line reading "total 24 = @article 21 + ..." -- makes
 # the parser open an entry mid-comment and the whole file fails with
 #   Failed to parse BibTeX on value "21" (NUMBER) ["@", "article"]
-# taking the publications page down with it.
+# taking the publications page down with it. This happened for real on 2026-08-07.
 #
-# Only lines whose first non-whitespace character is '%' are touched, so no entry field,
-# author, title or DOI can be altered by this. The SoT itself is left alone -- the fix
-# belongs there, and the warning below says so.
+# An earlier version of this script silently rewrote those '@' and carried on. That was
+# the wrong call: the same file is also read by the CV and biosketch renderers, which
+# have no such workaround, so a quiet fix here would have let a broken source sit
+# unnoticed until it broke somewhere with no guard rail. The source is the thing to fix.
+#
+# -Repair applies the old rewrite as a deliberate, one-off escape hatch. Only comment
+# lines are touched either way, so no entry field, author, title or DOI can be altered.
 $commentAtPattern = '(?m)^([ \t]*%.*)$'
-$sanitised = [regex]::Replace($sotText, $commentAtPattern, {
-    param($m)
-    $line = $m.Groups[1].Value
-    if ($line.Contains('@')) { $line.Replace('@', '[at]') } else { $line }
-})
-$commentAtCount = ([regex]::Matches($sotText, $commentAtPattern) | Where-Object { $_.Groups[1].Value.Contains('@') }).Count
-if ($commentAtCount -gt 0) {
-    Write-Warning "$commentAtCount comment line(s) in the SoT contain '@'. Rewritten to '[at]' in the copy so bibtex-ruby can parse the file."
-    Write-Warning "Ask the hub session to remove '@' from '%' comment lines in achievements/publications.bib -- as written, that file is not valid BibTeX."
-    $sotText = $sanitised
+$offending = [regex]::Matches($sotText, $commentAtPattern) | Where-Object { $_.Groups[1].Value.Contains('@') }
+
+if ($offending.Count -gt 0) {
+    if (-not $Repair) {
+        Write-Host ""
+        Write-Host "SYNC REFUSED - the publication source of truth is not valid BibTeX." -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  $($offending.Count) comment line(s) contain '@'. BibTeX has no line-comment syntax, so a"
+        Write-Host "  parser treats '%' text as 'skip to the next @' and opens an entry mid-comment."
+        Write-Host "  The whole file then fails to parse - not just here, but in every renderer that"
+        Write-Host "  reads it (CV, biosketch)."
+        Write-Host ""
+        Write-Host "  Offending line(s) in $SotPath :" -ForegroundColor Yellow
+        foreach ($m in $offending) {
+            $lineNo = ($sotText.Substring(0, $m.Index) -split "`n").Count
+            $text   = $m.Groups[1].Value.Trim()
+            if ($text.Length -gt 100) { $text = $text.Substring(0, 100) + '...' }
+            Write-Host "    line $lineNo : $text"
+        }
+        Write-Host ""
+        Write-Host "  Fix the source: write 'journal article' instead of '@article' in comments."
+        Write-Host "  To sync anyway with '@' rewritten to '[at]' in the copy only:  -Repair"
+        Write-Host ""
+        exit 3
+    }
+
+    Write-Warning "$($offending.Count) comment line(s) in the SoT contain '@'. -Repair given: rewriting them to '[at]' in the copy."
+    Write-Warning "This does not fix the source. Other renderers of the same file will still fail on it."
+    $sotText = [regex]::Replace($sotText, $commentAtPattern, {
+        param($m)
+        $line = $m.Groups[1].Value
+        if ($line.Contains('@')) { $line.Replace('@', '[at]') } else { $line }
+    })
 }
 
 # Count real BibTeX entries so the operator sees whether the site will actually have

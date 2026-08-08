@@ -46,6 +46,12 @@ if [ "$status" -eq 2 ]; then
     echo "" >&2
     exit 1
 fi
+if [ "$status" -eq 3 ]; then
+    echo "" >&2
+    echo "pre-commit: BLOCKED - the publication source of truth is not valid BibTeX." >&2
+    echo "$check_output" >&2
+    exit 1
+fi
 if [ "$status" -ne 0 ]; then
     echo "pre-commit: freshness check could not run (exit $status); allowing commit." >&2
     echo "$check_output" >&2
