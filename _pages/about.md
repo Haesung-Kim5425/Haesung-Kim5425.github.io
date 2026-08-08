@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Post-doctoral Researcher, <a href="https://www.purdue.edu/discoverypark/birck/">Birck Nanotechnology Center</a>, Purdue University
+subtitle: Opto-electronic characterization and physics-based modeling of semiconductor devices · <a href="https://www.purdue.edu/discoverypark/birck/">Birck Nanotechnology Center</a>, Purdue University
 
 profile:
   align: right
@@ -30,37 +30,34 @@ latest_posts:
 ---
 
 {% comment %}
-  ★ SOURCING RULE FOR THIS PAGE
+  ★ THE PARAGRAPH BELOW IS APPROVED TEXT. DO NOT REWORD IT.
 
-  Position, advisor, education and research areas below come from the academic record
-  maintained by the hub session (achievements/record.md), which was compiled from the
-  owner's CV. The description of the work is derived from the verified bibliography.
+  It is the biography from the academic record the hub session maintains
+  (achievements/record.md), built only from facts stated in the owner's CV and signed off
+  by the owner on 2026-08-08. Copy-edits, tightening and paraphrase are all off limits:
+  the wording is what was approved, not a draft to improve. Changes go through the hub.
 
-  A personal biography does not exist in any source document yet. The hub session is
-  drafting one for the owner's approval. Until it arrives, DO NOT write one here — an
-  invented bio on a public academic page is exactly the failure this whole setup is
-  built to prevent. Leave the facts to speak.
+  Two house rules apply to this page and to every other rendering of it — page
+  descriptions, og:description, image alt text:
+
+    1. NO PRONOUNS. The owner chose to be referred to by name or with subjectless
+       constructions. Do not introduce he/she/they anywhere.
+    2. NO PUBLICATION COUNT in prose. A number written into a sentence goes stale the
+       next time something is published. The publications page is the count.
 
   (Liquid comment, not an HTML one: Jekyll strips this at build time. An HTML comment
   would be served to every visitor who opens the page source.)
 {% endcomment %}
 
-I am a post-doctoral researcher at the **Birck Nanotechnology Center, Purdue University**,
-working with Prof. Thomas Beechem. I completed my Ph.D., M.S. and B.S. in Electrical
-Engineering at **Kookmin University**.
-
-My work is in **semiconductor device characterization** — opto-electronic measurement
-techniques, physics-based modelling, and the development of analysis methods for
-extracting device parameters that conventional measurements cannot separate.
-
-Four device families run through the publication record: **silicon MOSFETs**
-(parasitic-resistance and trap extraction), **amorphous oxide semiconductor TFTs**
-(subgap density of states, conduction-band-minimum energy, intrinsic mobility),
-**ferroelectric FETs** (charge trapping at the HfZrO<sub>2</sub>/SiO<sub>2</sub>
-interface, read-after-write latency, endurance), and **ferroelectric TFTs** (switching
-characteristics and speed limits). What connects them is the same problem: an ordinary
-I–V or C–V sweep reports one lumped number where several mechanisms overlap, and the
-technique has to separate them before any of it means anything.
+Haesung Kim is a postdoctoral researcher at the Birck Nanotechnology Center, Purdue
+University, advised by Prof. Thomas Beechem. The work centers on developing
+characterization techniques and physics-based models that extract device parameters which
+are otherwise difficult to separate — parasitic resistances, interface and subgap trap
+distributions, and the conduction band minimum — using opto-electronic and transient
+measurements. This methodology has been applied across four device families: silicon
+MOSFETs including gate-all-around and NAND flash structures, amorphous IGZO thin-film
+transistors, ferroelectric FETs, and ferroelectric TFTs. Haesung received the Ph.D., M.S.,
+and B.S. degrees in Electrical Engineering from Kookmin University, Seoul, Korea.
 
 The full list of papers is on the [publications](/publications/) page; the research
 themes are described in more detail under [research](/research/).

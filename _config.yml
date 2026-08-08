@@ -6,11 +6,14 @@ title: blank # the website title (if blank, full name will be used instead)
 first_name: Haesung
 middle_name:
 last_name: Kim
+# ★ No pronouns here either — this renders under the profile on the front page.
 contact_note: >
-  Email is the best way to reach me.
+  Email is the best way to get in touch.
+# ★ No pronouns and no publication count in this text — it becomes the meta description
+#   and og:description. Owner's house rules, confirmed 2026-08-08.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Academic homepage of Haesung Kim — semiconductor device physics, characterization and reliability
-  of ferroelectric (HfZrO<sub>2</sub>) and amorphous-oxide-semiconductor devices.
+  Academic homepage of Haesung Kim — opto-electronic characterization and physics-based
+  modeling of semiconductor devices at the Birck Nanotechnology Center, Purdue University.
 footer_text: >
   Built with <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and the
   <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme. Hosted on

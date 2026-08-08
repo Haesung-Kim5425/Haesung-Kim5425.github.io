@@ -10,6 +10,10 @@ nav_order: 2
 {% comment %}
   ★ SOURCING RULE FOR THIS PAGE
 
+  NO PRONOUNS anywhere on this site — the owner chose to be referred to by name or with
+  subjectless constructions (confirmed 2026-08-08). Write "the work", not "my work" or
+  "their work". NO publication count in prose either; it goes stale on the next paper.
+
   The four tracks below are the four research tracks recorded in the academic record the
   hub session maintains (achievements/record.md), taken from the owner's CV. The
   supporting detail in each is drawn from the verified bibliography — every technique
@@ -20,14 +24,14 @@ nav_order: 2
   paper in the bibliography, it does not belong on this page.
 {% endcomment %}
 
-My work is in **opto-electronic characterization of semiconductor devices**,
+The work is in **opto-electronic characterization of semiconductor devices**,
 physics-based modelling, and the development of analysis methods. The recurring problem
 across all of it: an ordinary I–V or C–V sweep returns a single lumped number where
 several physical mechanisms overlap. Until those mechanisms can be separated, a device's
 behaviour gets attributed to a fitting parameter rather than to a trap population, a
 resistance, or an interface.
 
-Four device families run through the work.
+Four device families run through it.
 
 ## Ferroelectric FETs
 

@@ -7,7 +7,7 @@ nav: true
 nav_order: 4
 ---
 
-The best way to reach me is by email.
+Email is the best way to get in touch.
 
 **Email** — {% al_email_protect_link site.data.socials.email %}
 
@@ -21,16 +21,19 @@ The best way to reach me is by email.
   site, so there is exactly one line to change when the address changes.
 {% endcomment %}
 
-**Affiliation** — Purdue University, West Lafayette, IN, USA
+**Affiliation** — Birck Nanotechnology Center, Purdue University, West Lafayette, IN, USA
 
 **ORCID** — [0000-0002-3392-9444](https://orcid.org/0000-0002-3392-9444)
 
-I am happy to hear from colleagues about collaborations, from students with questions
-about the measurement techniques in my papers, and from anyone who wants a copy of a
-paper they cannot access.
+Enquiries are welcome — from colleagues about collaborations, from students with
+questions about the measurement techniques in these papers, and from anyone who cannot
+get access to a paper and would like a copy.
 
 {% comment %}
   ★ PUBLIC PAGE — work contact only. Never add: home address, personal mobile number,
   office phone, or a street address. The owner settled the scope on 2026-08-08: work
   email, institution and city, and nothing beyond that.
+
+  NO PRONOUNS, here as everywhere else on the site (owner's choice, 2026-08-08). That is
+  why this page says "Enquiries are welcome" rather than "I am happy to hear from...".
 {% endcomment %}

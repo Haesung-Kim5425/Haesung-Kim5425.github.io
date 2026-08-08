@@ -52,7 +52,7 @@ nav_order: 1
   Every entry in this list has been checked against its DOI: the title claimed here was
   compared with the title registered for that DOI, and none is a preprint or a retracted
   paper presented as a journal article. Shared first authorship is marked
-  <em>Co-first author</em>; the one preprint is marked as such and is not a peer-reviewed
-  publication. The authoritative record is
+  <em>Co-first author</em>; preprints are marked as such and are not peer-reviewed
+  publications. The authoritative record is
   <a href="https://orcid.org/0000-0002-3392-9444">ORCID 0000-0002-3392-9444</a>.
 </p>
