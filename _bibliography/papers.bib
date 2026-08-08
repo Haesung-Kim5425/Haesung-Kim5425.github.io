@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 11:58:14   |   entries: 25
+% Synced: 2026-08-08 12:05:49   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -79,9 +79,11 @@
 %          (2026-08-08 Nature Communications 논문(17인 중 10번째)을 이 규칙으로 제외했다)
 %       → selected 를 붙이기 전에 저자 위치를 반드시 확인할 것.
 %   authorship = {corresponding} 또는 {co-first,corresponding}
-%       -> 교신저자. **현재 SoT에 이 값이 붙은 엔트리는 없다** — 정보가 없어서지 없어서가 아니다.
-%          교신저자 논문이 있으면 오너 확인 후 추가할 것. 안 적으면 위 선정 규칙의
-%          "교신저자" 갈래를 적용할 수 없고, 오너가 실적을 손해 본다(공동 제1저자 때와 같은 논리).
+%       -> 교신저자. **현재 0건이며, 이는 "확인 결과 없음"이다** (정보 부재가 아니다).
+%          2026-08-08 제1저자 논문 7건의 원문 PDF 1쪽을 직접 읽어 확인했다. 교신저자는
+%          전부 지도교수급(D. M. Kim / J.-H. Bae / D. Kwon / Y. J. Yoon / S. Y. Woo)이었다.
+%          미확인 1건: 10.1109/TED.2026.3691120 (Zotero에 PDF 없음). 상세는 candidates.md E-1절.
+%       ★ 렌더는 값을 contains 로 매칭할 것 — {co-first,corresponding} 처럼 결합될 수 있다.
 
 @article{kim2020alternating,
   title        = {Alternating Current-Based Technique for Separate Extraction of Parasitic Resistances in MISFETs With or Without the Body Contact},
