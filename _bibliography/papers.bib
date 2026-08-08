@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 00:43:28   |   entries: 25
+% Synced: 2026-08-08 00:54:31   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -32,6 +32,16 @@
 %   10.1166/jnn.2021.19391 는 published record 상 저자명이 "Hae Sung Kim"(띄어쓰기)이라
 %   ORCID·Zotero 어느 쪽의 "Haesung Kim" 검색에서도 안 잡혔다. CV 대조로만 발견.
 %   → 향후 동기화 때 "Hae Sung" / "Haesung" 양쪽으로 검색할 것.
+%
+% 수기 교정 이력 (Crossref 레코드 오류 수정 — 이 파일에서 수기로 고친 유일한 항목)
+%   2026-08-08  kim2025photonic (10.1109/TED.2025.3547707) 의 author 필드
+%     Crossref 등록 레코드가 성/이름 경계를 잘못 나눠 놓았다:
+%       "Hyeop Han, Seung" / "Hwan Kim, Dae" / "Myong Kim, Dong"
+%     -> "Han, Seung Hyeop" / "Kim, Dae Hwan" / "Kim, Dong Myong" 로 교정.
+%     근거: 동일 인물이 이 파일의 다른 엔트리 다수에 올바른 형태로 등록돼 있고,
+%           오너 CV(2025-11-10판) 표기와도 일치한다. 제목·DOI·서지는 손대지 않았다.
+%     증상: 교정 전 CV 렌더가 "S. Hyeop Han", "D. Hwan Kim" 으로 출력했다.
+%   ※ 이 외의 모든 서지 필드는 Crossref 원본 그대로다. 교정 시 반드시 여기에 기록할 것.
 %
 % 미포함(공개 노출 금지) → candidates.md 참조
 %   - 10.1038/s41586-025-09793-3 (Nature, 2025) "Haesung Kim" 동명이인 의심(삼성 소속 저자군)
@@ -236,7 +246,7 @@
 
 @article{kim2025photonic,
   title        = {Photonic I–V Technique With Photogating Effect for Extended Extraction of Subgap Density of States in Amorphous Oxide Semiconductor TFTs},
-  author       = {Kim, Haesung and Hyeop Han, Seung and Jeong, Hyunwook and Yang, Hyojin and Choi, Sung-Jin and Hwan Kim, Dae and Bae, Jong-Ho and Myong Kim, Dong},
+  author       = {Kim, Haesung and Han, Seung Hyeop and Jeong, Hyunwook and Yang, Hyojin and Choi, Sung-Jin and Kim, Dae Hwan and Bae, Jong-Ho and Kim, Dong Myong},
   journal      = {IEEE Transactions on Electron Devices},
   year         = {2025},
   volume       = {72},

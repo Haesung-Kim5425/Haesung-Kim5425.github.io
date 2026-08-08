@@ -12,3 +12,7 @@
 # Same reasoning for the sync scripts themselves: sync-sot.ps1 must stay pure ASCII with
 # stable line endings, because Windows PowerShell 5.1 reads a BOM-less .ps1 as ANSI.
 bin/*.ps1 text eol=lf
+
+# The CV is a generated PDF copied in by the same script. Mark it binary explicitly so no
+# line-ending or diff heuristic can ever touch it.
+*.pdf binary

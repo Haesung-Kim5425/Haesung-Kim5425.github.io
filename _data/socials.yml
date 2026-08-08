@@ -24,7 +24,10 @@ scholar_userid: 976BWb4AAAAJ
 
 rss_icon: false # no blog on this site, so no feed to advertise
 
+# Download button under the profile photo. The file is copied in from the academic record
+# by bin/sync-sot.ps1 — it is a build artefact, not something to edit or replace by hand.
+cv_pdf: /assets/pdf/Haesung_Kim_CV.pdf
+
 # --- Pending owner confirmation --------------------------------------------
 # linkedin_username:
 # research_gate_profile:
-# cv_pdf: /assets/pdf/cv.pdf # enable after the hub session renders the CV PDF into assets/pdf/
