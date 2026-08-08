@@ -12,13 +12,17 @@ Email is the best way to get in touch.
 **Email** — {% al_email_protect_link site.data.profile.contact.email %}
 
 {% comment %}
-  The tag above comes from the al_email_protect plugin (protect_email: true in
-  _config.yml). It emits no user@host string and no mailto: target into the HTML — the
-  halves are rejoined by the browser on click. Do not replace it with a plain
-  <a href="mailto:..."> link; that hands the address straight to harvesters.
+  The tag above is from the al_email_protect plugin. It is safe to call whether or not
+  protection is enabled: with `protect_email: false` (the current setting) it renders an
+  ordinary mailto: link, and with it on it renders a click-to-copy element instead.
 
-  It also reads the address from _data/socials.yml, which is the only copy of it in the
-  site, so there is exactly one line to change when the address changes.
+  Protection is off deliberately — see the note at `protect_email` in _config.yml. The
+  short version: it displayed the address as "kim5425 [at] purdue [dot] edu" while the
+  same address still went out in plain text via the footer mail icon and inside the CV
+  PDF, so it cost the reader something and protected nothing.
+
+  Keep using the tag rather than hand-writing the address: it reads from the profile, so
+  there is exactly one place to change when the address changes.
 {% endcomment %}
 
 **Affiliation** — {{ site.data.profile.position.display }}

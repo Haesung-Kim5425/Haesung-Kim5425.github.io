@@ -43,7 +43,18 @@ repo_theme_dark: dark # https://github.com/stats-organization/github-stats-exten
 # `user@host` and no `mailto:` for harvesters to scrape, and clicking one copies
 # it to the clipboard instead of opening a mail client.
 # See "Protecting email addresses from scrapers" in docs/CUSTOMIZE.md.
-protect_email: true
+# ★ Off on purpose.
+#
+# When on, the contact page rendered the address as "kim5425 [at] purdue [dot] edu" —
+# awkward to read, impossible to copy in one action, and protecting nothing, because the
+# same address already leaves this site in plain text twice over: the footer mail icon
+# emits a raw mailto: (jekyll-socials does not route through the protection plugin), and
+# the CV PDF served from /assets/pdf/ contains it as extractable text.
+#
+# Obfuscation that leaks in two other places is not a defence, it is just friction for
+# the reader. The owner approved publishing the work address on 2026-08-08, and it is
+# already printed on every paper. Show it plainly.
+protect_email: false
 
 # Off by default: the free public github-profile-trophy instance is disabled
 # (its Vercel deployment answers HTTP 402 / DEPLOYMENT_DISABLED), so every trophy
