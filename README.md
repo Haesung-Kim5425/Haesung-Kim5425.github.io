@@ -1,4 +1,4 @@
-# kim5425.github.io
+# haesung-kim5425.github.io
 
 Academic homepage of Haesung Kim, built with [Jekyll](https://jekyllrb.com/) and the
 [al-folio](https://github.com/alshedivat/al-folio) theme, served by GitHub Pages.
@@ -14,7 +14,7 @@ pwsh -File bin/sync-sot.ps1
 ```
 
 That script writes `_bibliography/papers.bib`, which jekyll-scholar renders on the
-[publications](https://kim5425.github.io/publications/) page. `_bibliography/papers.bib`
+[publications](https://haesung-kim5425.github.io/publications/) page. `_bibliography/papers.bib`
 carries a "GENERATED FILE" header: any edit made to it directly is destroyed on the next
 sync. To change what the site shows, change the source and re-run the script.
 

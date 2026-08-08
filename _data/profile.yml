@@ -12,7 +12,7 @@
 #       렌더(홈페이지·CV·biosketch)는 이 파일을 읽어 배선한다. 값을 복사해 두지 않는다.
 #       이직·소속변경 시 여기 한 줄만 고치면 모든 렌더가 따라온다.
 #
-# ★★★ 이 파일은 공개 저장소(kim5425.github.io)로 복사된다.
+# ★★★ 이 파일은 공개 저장소(haesung-kim5425.github.io)로 복사된다.
 #     ⇒ **공개 안전한 값만 담는다. 비공개 항목을 절대 넣지 말 것.**
 #     전화번호·오피스 상세주소·GPA·생년월일·성별·국적은 여기 없다(있어서도 안 된다).
 #     그 값들과 공개/비공개 정책은 `record.md`에만 있고, record.md는 공개 복사 대상이 아니다.
@@ -58,15 +58,37 @@ contact:
   email: "kim5425@purdue.edu"
   email_note: "Purdue 재직 기반 주소. 이직 시 갱신 필요."
 
+# ── 외부 식별자 ──────────────────────────────────────────────────────────────
+# ★★★ 규칙: **귀속 근거(verified_by)와 확인일(verified_on) 없이 ID를 넣지 말 것.**
+#   잘못된 ID는 방문자를 **남의 프로필/레코드로 보낸다.** 공개물이라 그 자체가 사고다.
+#   2026-08-08 실제로 그런 일이 있었다 — `github: kim5425` 가 검증 없이 들어가 있었고,
+#   `github.com/kim5425` 는 **실존하지만 오너 계정이 아니었다.** 배포 직전 오너 확인으로 잡혔다.
+#   유래: 이 저장소 초기 PROFILE.md에 적혀 있던 값을 그대로 옮긴 것. 이메일 로컬파트나
+#   퍼듀 사내 GitHub 아이디에서 유추된 값으로 보인다. **ORCID·Scholar는 근거를 확인했는데
+#   GitHub만 안 했다** — 식별자는 전부 같은 기준으로 검증한다.
 ids:
   orcid: "0000-0002-3392-9444"
   orcid_url: "https://orcid.org/0000-0002-3392-9444"
+  orcid_verified_by: "ORCID 공개 API works 목록이 오너 논문과 일치 (pub.orcid.org)"
+  orcid_verified_on: "2026-08-07"
+
   google_scholar: "976BWb4AAAAJ"
   google_scholar_url: "https://scholar.google.com/citations?user=976BWb4AAAAJ"
-  # 공개 식별자다. 사이트가 어디에 호스팅되는지(kim5425.github.io)와는 별개로,
-  # 프로필 링크·소셜 아이콘에 쓰이므로 여기가 원본이다.
-  github: "kim5425"
-  github_url: "https://github.com/kim5425"
+  google_scholar_verified_by: "프로필 표기 소속 'Post-doctoral Researcher, Purdue University' + verified email 도메인 purdue.edu 일치"
+  google_scholar_verified_on: "2026-08-07"
+
+  # ★ 계정이 두 개다. 헷갈리지 말 것 (오너 직접 확인 2026-08-08)
+  #   Haesung-Kim5425  (2025-09-15 생성) ← ★ 오너 계정. 이것만 쓴다.
+  #   kim5425          (2020-07-31 생성) ← ✗ **오너 계정 아님.** 실존하는 남의 계정이다. 절대 링크하지 말 것.
+  #   ⚠ 퍼듀 사내 GitHub(github.itap.purdue.edu)의 아이디와 공개 github.com 계정명은 다르다.
+  #     이메일 로컬파트(kim5425@purdue.edu)에서 계정명을 유추하지 말 것 — 이번 사고의 원인이다.
+  github: "Haesung-Kim5425"
+  github_url: "https://github.com/Haesung-Kim5425"
+  github_verified_by: "오너 직접 확인 + 이 PC의 Windows 자격증명이 api.github.com/Haesung-Kim5425 로 저장돼 있음"
+  github_verified_on: "2026-08-08"
+
+# 공개 사이트 주소 — GitHub user site는 **계정명에서 나온다**. 위 github 값과 반드시 일치해야 한다.
+site_url: "https://haesung-kim5425.github.io"
 
 # ── 표기 규약 (오너 확정 2026-08-08) — 모든 렌더가 지킬 것 ────────────────────
 style:
