@@ -29,16 +29,21 @@ latest_posts:
   limit: 3
 ---
 
-<!-- ★ SOURCING RULE FOR THIS PAGE
-     Position, advisor, education and research areas below come from the academic
-     record maintained by the hub session (achievements/record.md), which was compiled
-     from the owner's CV. The description of the work is derived from the verified
-     bibliography.
+{% comment %}
+  ★ SOURCING RULE FOR THIS PAGE
 
-     A personal biography does not exist in any source document yet. The hub session is
-     drafting one for the owner's approval. Until it arrives, DO NOT write one here —
-     an invented bio on a public academic page is exactly the failure this whole setup
-     is built to prevent. Leave the facts to speak. -->
+  Position, advisor, education and research areas below come from the academic record
+  maintained by the hub session (achievements/record.md), which was compiled from the
+  owner's CV. The description of the work is derived from the verified bibliography.
+
+  A personal biography does not exist in any source document yet. The hub session is
+  drafting one for the owner's approval. Until it arrives, DO NOT write one here — an
+  invented bio on a public academic page is exactly the failure this whole setup is
+  built to prevent. Leave the facts to speak.
+
+  (Liquid comment, not an HTML one: Jekyll strips this at build time. An HTML comment
+  would be served to every visitor who opens the page source.)
+{% endcomment %}
 
 I am a post-doctoral researcher at the **Birck Nanotechnology Center, Purdue University**,
 working with Prof. Thomas Beechem. I completed my Ph.D., M.S. and B.S. in Electrical

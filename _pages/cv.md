@@ -12,16 +12,18 @@ toc:
   sidebar: left
 ---
 
-<!-- Hidden from the navigation on purpose.
+{% comment %}
+  Hidden from the navigation on purpose.
 
-     This page renders from _data/cv.yml. The al-folio demo data (Albert Einstein) has
-     been removed so that nothing fabricated can ever reach the public site. Publishing
-     an incomplete or invented CV on a public academic page is a reputational risk, so
-     the page stays unlinked until real data arrives.
+  This page renders from _data/cv.yml. The al-folio demo data (Albert Einstein) has been
+  removed so that nothing fabricated can ever reach the public site. Publishing an
+  incomplete or invented CV on a public academic page is a reputational risk, so the page
+  stays unlinked until real data arrives.
 
-     To turn it on:
-       1. Hub session (cwd D:\Claude\academic-profile) renders the CV from achievements/
-          into website/assets/pdf/cv.pdf.
-       2. Fill _data/cv.yml from achievements/record.md (same SoT, no retyping).
-       3. Set cv_pdf: /assets/pdf/cv.pdf and nav: true above, and uncomment cv_pdf in
-          _data/socials.yml so the download button appears under the profile photo. -->
+  To turn it on:
+    1. The hub session renders the CV from the academic record into assets/pdf/cv.pdf.
+    2. Fill _data/cv.yml from achievements/record.md (same source, no retyping). Leave
+       the email out — _data/socials.yml holds the only copy; render it from there.
+    3. Set cv_pdf: /assets/pdf/cv.pdf, nav: true, drop sitemap: false above, and
+       uncomment cv_pdf in _data/socials.yml for the download button.
+{% endcomment %}

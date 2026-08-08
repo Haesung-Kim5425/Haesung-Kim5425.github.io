@@ -7,15 +7,18 @@ nav: true
 nav_order: 2
 ---
 
-<!-- ★ SOURCING RULE FOR THIS PAGE
-     The four tracks below are the four research tracks recorded in the academic record
-     the hub session maintains (achievements/record.md), taken from the owner's CV. The
-     supporting detail in each is drawn from the verified bibliography — every technique
-     named here corresponds to a published, DOI-checked paper on the publications page.
+{% comment %}
+  ★ SOURCING RULE FOR THIS PAGE
 
-     Nothing unpublished, in preparation, or under review appears here, and no funded
-     project is described as an outcome. If a claim cannot be traced to the record or to
-     a paper in the bibliography, it does not belong on this page. -->
+  The four tracks below are the four research tracks recorded in the academic record the
+  hub session maintains (achievements/record.md), taken from the owner's CV. The
+  supporting detail in each is drawn from the verified bibliography — every technique
+  named here corresponds to a published, DOI-checked paper on the publications page.
+
+  Nothing unpublished, in preparation, or under review appears here, and no funded
+  project is described as an outcome. If a claim cannot be traced to the record or to a
+  paper in the bibliography, it does not belong on this page.
+{% endcomment %}
 
 My work is in **opto-electronic characterization of semiconductor devices**,
 physics-based modelling, and the development of analysis methods. The recurring problem
