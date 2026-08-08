@@ -237,6 +237,39 @@ foreach ($m in $statEntries) {
     }
 }
 
+# Selected papers must be first-authored. The owner's rule, narrowed twice: first from
+# "any primary author" after a seventeen-author paper was featured for the journal's sake,
+# then to first-author-only, which excludes corresponding authorship and shared first
+# authorship where the owner is not listed first.
+#
+# Enforced rather than trusted, because the failure mode is a person deciding a paper is
+# too prestigious to leave out -- which is exactly how the first violation happened. The
+# CV generator refuses to build on the same condition; if only one of the two refused, the
+# public site would be the one that published the violation.
+$selectedViolations = @()
+foreach ($m in $statEntries) {
+    $body = $m.Groups[2].Value
+    if ($body -notmatch '(?ms)selected\s*=\s*\{true\}') { continue }
+    $r = ([regex]::Match($body, '(?ms)authorship\s*=\s*\{([^}]*)\}')).Groups[1].Value
+    $tokens = ($r -replace '\s', '') -split ','
+    if ($tokens -notcontains 'first') {
+        $k = ([regex]::Match($body, '^([^,]*),')).Groups[1].Value.Trim()
+        $selectedViolations += "$k : selected={true} but authorship='$r' (not first-authored)"
+    }
+}
+if ($selectedViolations.Count -gt 0) {
+    Write-Host ""
+    Write-Host "SYNC REFUSED - a selected paper is not first-authored." -ForegroundColor Red
+    Write-Host ""
+    foreach ($v in $selectedViolations) { Write-Host "    $v" -ForegroundColor Yellow }
+    Write-Host ""
+    Write-Host "  Selected papers are first-author-only (owner's rule, 2026-08-08). Corresponding"
+    Write-Host "  authorship and shared first authorship where the owner is not listed first do not"
+    Write-Host "  qualify, and journal prestige is not a reason. Fix the source, not this check."
+    Write-Host ""
+    exit 3
+}
+
 if ($roleMismatch.Count -gt 0) {
     Write-Warning "authorship field disagrees with author position in $($roleMismatch.Count) entry(ies):"
     foreach ($r in $roleMismatch) { Write-Warning "    $r" }

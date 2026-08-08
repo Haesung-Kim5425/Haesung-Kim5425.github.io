@@ -111,10 +111,10 @@ style:
   person: "third"                     # 3인칭 서술
   pronouns: "none"                    # ★ 대명사를 쓰지 않는다. he/she/they 임의 삽입 금지.
   publication_counts_in_prose: false  # ★ 산문에 논문 수를 적지 않는다. 목록 자체가 개수다.
-  # ★ 대표논문(publications.bib 의 selected={true}) 선정 규칙 — 오너 확정 2026-08-08
-  #   주저자 논문만: 제1저자 · 공동 제1저자 · 교신저자. 공저 참여만 한 논문은 제외한다.
-  #   저널 가시성은 선정 근거가 아니다.
-  selected_publications_rule: "primary-author-only (first, co-first, or corresponding)"
+  # ★ 대표논문(publications.bib 의 selected={true}) 선정 규칙 — 오너 최종 확정 2026-08-08
+  #   **제1저자 논문만.** authorship 에 `first` 가 있는 것만.
+  #   교신저자 논문도 제외 · 본인이 1번째가 아닌 공동제1저자도 제외 · 저널 가시성은 근거 아님.
+  selected_publications_rule: "first-author-only (authorship must contain `first`)"
   notes: >-
     한 사이트/문서 안에서 인칭이 섞이면 저자가 둘인 것처럼 읽힌다.
     bio 밖(Research·Contact 문안, config의 설명문·contact_note, og:description,
