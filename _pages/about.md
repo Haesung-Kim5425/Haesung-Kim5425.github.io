@@ -2,6 +2,9 @@
 layout: about
 title: about
 permalink: /
+# Front matter cannot read data files, so the lab name and URL are repeated here from
+# profile.yml (position.lab / position.lab_url). If either changes there, change it here
+# too — this is the one place on the page that cannot follow automatically.
 subtitle: Opto-electronic characterization and physics-based modeling of semiconductor devices · <a href="https://specere.org">Specere Lab</a>, Purdue University
 
 profile:
@@ -12,6 +15,8 @@ profile:
     <p><a href="https://specere.org">Specere Lab</a></p>
     <p>Purdue University</p>
     <p>West Lafayette, IN, USA</p>
+  # Same caveat as the subtitle above: front matter is static, so these repeat
+  # position.lab / position.lab_url / position.city from profile.yml by hand.
 
 selected_papers: true # the five papers flagged selected={true} in the bibliography source
 # of truth. Which papers appear is decided there, not here — this page must never carry

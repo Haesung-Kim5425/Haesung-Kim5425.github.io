@@ -349,6 +349,31 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
         }
     }
 
+    # Cross-check the lab name and URL against _pages/about.md.
+    #
+    # The About page's subtitle and profile block live in YAML front matter, which Jekyll
+    # does not run Liquid over -- so those two cannot read the profile the way the page
+    # body does, and the lab name and link have to be repeated by hand. The affiliation
+    # was wrong on this site once already (Birck Nanotechnology Center, where the lab is
+    # based, rather than the lab the owner actually joined), and it was visible on the
+    # page for a while precisely because one half updated and the other did not.
+    $labMatch    = [regex]::Match($profileText, '(?m)^\s*lab\s*:\s*"([^"]+)"')
+    $labUrlMatch = [regex]::Match($profileText, '(?m)^\s*lab_url\s*:\s*"([^"]+)"')
+    $aboutPath   = Join-Path $here '..\_pages\about.md'
+    if ($labMatch.Success -and (Test-Path -LiteralPath $aboutPath)) {
+        $aboutText = Get-Content -LiteralPath $aboutPath -Raw -Encoding UTF8
+        # Only the front matter: the body renders from the profile and needs no check.
+        $fm = [regex]::Match($aboutText, '(?s)^---(.*?)^---', 'Multiline')
+        $fmText = if ($fm.Success) { $fm.Groups[1].Value } else { '' }
+        $missing = @()
+        if ($fmText -notmatch [regex]::Escape($labMatch.Groups[1].Value)) { $missing += "lab name '$($labMatch.Groups[1].Value)'" }
+        if ($labUrlMatch.Success -and $fmText -notmatch [regex]::Escape($labUrlMatch.Groups[1].Value)) { $missing += "lab_url '$($labUrlMatch.Groups[1].Value)'" }
+        if ($missing.Count -gt 0) {
+            Write-Warning "_pages/about.md front matter does not mention: $($missing -join '; ')."
+            Write-Warning "Front matter cannot read profile.yml, so the About subtitle and profile block must be updated by hand or the page will show two different affiliations."
+        }
+    }
+
     # Cross-check the author-name variants against _config.yml. jekyll-scholar reads its
     # name list from _config.yml, which cannot read a data file, so that one value has to
     # be duplicated -- and a mismatch fails silently, printing the owner's own name
