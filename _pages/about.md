@@ -13,14 +13,13 @@ profile:
     <p>Purdue University</p>
     <p>West Lafayette, IN, USA</p>
 
-selected_papers: false # ★ no entry in the SoT carries selected={true} yet, so this section
-# would render empty. Ask the hub session to mark 4-5 highlight papers with
-# selected={true} in achievements/publications.bib, re-run bin/sync-sot.ps1, then flip
-# this to true. Do not curate a separate list here — the SoT stays the only list.
+selected_papers: true # the five papers flagged selected={true} in the bibliography source
+# of truth. Which papers appear is decided there, not here — this page must never carry
+# a hand-curated list of its own, or the two will drift apart.
 social: true # includes social icons at the bottom of the page
 
 announcements:
-  enabled: false # no verified news items yet — re-enable once _news/ has real entries
+  enabled: true # items come from _news/
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
   limit: 5 # leave blank to include all the news in the `_news` folder
 

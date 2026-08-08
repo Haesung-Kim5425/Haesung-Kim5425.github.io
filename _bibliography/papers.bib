@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 00:24:03   |   entries: 25
+% Synced: 2026-08-08 00:28:34   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -45,7 +45,11 @@
 %    엔트리 타입을 주석에 쓸 때는 '＠article' 대신 'journal article' 처럼 풀어 쓴다.)
 %
 % note 필드 규약 (렌더가 읽어야 함)
-%   note = {Co-first author}  -> 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
+%   authorship = {co-first}   -> 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
+%       ★ 표시 문구가 아니라 의미값이다. 렌더가 표현을 정한다(웹=배지, CV=단검표 등).
+%       note 에 넣지 않는 이유: note 는 자유서술 필드라 CV·biosketch·홈페이지가 각자
+%       문자열 매칭을 해야 하고, 문구가 바뀌면 조용히 깨진다. 의미값은 전용 필드로 둔다.
+%   note = {...}                -> 자유서술 전용(프리프린트 설명·이름 표기 변형 등). 매칭 대상 아님.
 %   keywords = {preprint}     -> 프리프린트. verified 논문과 섞어 표시하지 말 것. 1건.
 %   selected = {true}         -> 홈페이지 About 상단 대표논문. 5건. 오너가 조정 가능.
 
@@ -122,7 +126,7 @@
   publisher    = {IEEE},
   doi          = {10.1109/NANO54668.2022.9928778},
   url          = {https://doi.org/10.1109/NANO54668.2022.9928778},
-  note         = {Co-first author}
+  authorship         = {co-first}
 }
 
 @misc{kim2023capacitancebased,
@@ -162,7 +166,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2023.3253468},
   url          = {https://doi.org/10.1109/TED.2023.3253468},
-  note         = {Co-first author}
+  authorship         = {co-first}
 }
 
 @article{han2024photovoltaic,
@@ -176,7 +180,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2024.3469161},
   url          = {https://doi.org/10.1109/TED.2024.3469161},
-  note         = {Co-first author}
+  authorship         = {co-first}
 }
 
 @article{kim2024comprehensive,
@@ -203,7 +207,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/LED.2024.3360419},
   url          = {https://doi.org/10.1109/LED.2024.3360419},
-  note         = {Co-first author}
+  authorship         = {co-first}
 }
 
 @article{yang2024exploration,
@@ -353,7 +357,7 @@
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2025.109271},
   url          = {https://doi.org/10.1016/j.sse.2025.109271},
-  note         = {Co-first author}
+  authorship         = {co-first}
 }
 
 @article{yang2026defectmediated,
@@ -367,6 +371,7 @@
   doi          = {10.1016/j.mssp.2025.110268},
   url          = {https://doi.org/10.1016/j.mssp.2025.110268}
 }
+
 
 
 

@@ -2,19 +2,21 @@
 layout: page
 title: news
 permalink: /news/
-nav: false # ★ hidden until _news/ contains at least one real, verified item
+nav: true
 nav_order: 5
-sitemap: false # keep the empty placeholder out of search engines; remove when the page goes live
 ---
 
 {% include news.liquid %}
 
-<!-- Hidden from the navigation because _news/ is currently empty (the three al-folio
-     demo announcements were deleted). An empty News page reads as a broken site.
+<!-- Items live in _news/ (front matter: layout: post, date, inline: true for a one-liner).
+     Every one of them is sourced from the academic record the hub session maintains.
 
-     To turn it on: add a file to _news/ (front matter: layout: post, date, inline: true
-     for a one-liner), then set nav: true above and flip `announcements.enabled` to true
-     in _pages/about.md so the items also show on the front page.
+     Two rules:
 
-     Only post things that have actually happened — an accepted paper, a talk given, an
-     award received. No "submitted" or "under review" items on a public page. -->
+     1. Only things that have actually happened — a paper published, a talk given, an
+        award received, a position started. Never "submitted", "under review" or
+        "accepted pending revision" on a public page.
+
+     2. Do not invent date precision. Most of these are recorded to a month or an
+        academic term, so `date:` is a sort key and _includes/news.liquid prints the
+        year alone. If an item needs a real day, put it in the item's own text. -->

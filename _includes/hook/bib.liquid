@@ -11,20 +11,19 @@
   Why this exists: two facts in the bibliography carry real academic weight and were
   rendering as ordinary grey text, indistinguishable from a journal name —
 
-    * co-first authorship (`note = {Co-first author}`, 5 entries) — this feeds directly
+    * co-first authorship (`authorship = {co-first}`, 5 entries) — this feeds directly
       into how a publication record is assessed; burying it costs the author.
     * preprint status (`keywords = {preprint}`, 1 entry) — the opposite problem: a
       non-peer-reviewed item must never read as a journal publication on a public page.
 
-  Both fields are set in the bibliography source of truth, not here. This file only
-  decides how they look. Colours come from al-folio's theme custom properties, so the
-  badges follow light/dark mode without any extra stylesheet.
+  Both are semantic values set in the bibliography source of truth, deliberately kept out
+  of the free-text `note` field so that no renderer has to string-match prose that might
+  later be reworded. This file only decides how they look; the source decides what is
+  true. Colours come from al-folio's theme custom properties, so the badges follow
+  light/dark mode without any extra stylesheet.
 
-  Note: the theme also prints `entry.note` verbatim on the line below. For the preprint
-  that is useful (the note spells out what "preprint" means); for the five co-first
-  entries it now repeats this badge. The fix belongs in the source of truth — the hub
-  session has been asked to drop `note = {Co-first author}` now that the flag is
-  rendered from it. Until then the duplication is cosmetic, not wrong.
+  `authorship` is listed in `filtered_bibtex_keywords` in _config.yml, which stops the
+  theme from also dumping it as a raw field on the page.
 {%- endcomment -%}
 
 {%- assign flag_style = "display:inline-block;margin:0 0 0.25rem 0;padding:0.1rem 0.5rem;border-radius:0.2rem;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;line-height:1.5;" -%}
@@ -37,7 +36,7 @@
   >
 {%- endif -%}
 
-{%- if entry.note contains "Co-first author" -%}
+{%- if entry.authorship contains "co-first" -%}
   <span
     style="{{ flag_style }}color:var(--global-theme-color);border:1px solid var(--global-theme-color);background:transparent;"
     title="Shared first authorship on this paper."

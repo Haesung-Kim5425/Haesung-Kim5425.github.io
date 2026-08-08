@@ -295,6 +295,14 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  # Every news item also gets a standalone page. For `inline: true` items — which is all
+  # of them — that page holds a single sentence already shown in full on /news/ and on the
+  # front page. Indexing five one-line pages adds nothing and dilutes the real ones.
+  - scope:
+      path: ""
+      type: news
+    values:
+      sitemap: false
 
 sass:
   style: compressed
@@ -374,6 +382,12 @@ scholar:
   query: "@*"
   group_by: year
   group_order: descending
+  # Sort entries themselves, not just the year groups. Without this, any listing that
+  # does not group by year — the "selected publications" block on the front page uses
+  # `--group_by none` — falls back to the order entries happen to appear in the .bib,
+  # which is oldest first. A front page should open with the most recent work.
+  sort_by: year
+  order: descending
 
 # Display different badges withs stats for your publications
 # Customize badge behavior in _layouts/bib.liquid
@@ -392,6 +406,7 @@ filtered_bibtex_keywords:
     altmetric,
     annotation,
     arxiv,
+    authorship, # semantic flag from the bibliography source; rendered as a badge by _includes/hook/bib.liquid
     award,
     award_name,
     bibtex_show,

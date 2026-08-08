@@ -2,64 +2,81 @@
 layout: page
 permalink: /research/
 title: research
-description: Research themes, with the published work behind each one.
+description: Four device families, one recurring problem — telling overlapping mechanisms apart.
 nav: true
 nav_order: 2
 ---
 
-<!-- DRAFT — every theme below is grounded in the publication record on
-     ORCID 0000-0002-3392-9444 (retrieved 2026-08-07). No unpublished, in-preparation,
-     or funded-project claims appear here. Replace with the owner's own research
-     statement when the hub session supplies it. -->
+<!-- ★ SOURCING RULE FOR THIS PAGE
+     The four tracks below are the four research tracks recorded in the academic record
+     the hub session maintains (achievements/record.md), taken from the owner's CV. The
+     supporting detail in each is drawn from the verified bibliography — every technique
+     named here corresponds to a published, DOI-checked paper on the publications page.
 
-## Ferroelectric HfZrO<sub>2</sub> devices for memory
+     Nothing unpublished, in preparation, or under review appears here, and no funded
+     project is described as an outcome. If a claim cannot be traced to the record or to
+     a paper in the bibliography, it does not belong on this page. -->
 
-Ferroelectric field-effect transistors are attractive as non-volatile memory, but their
-behaviour as a *memory cell* is governed less by the ferroelectric itself than by what
-happens at the interfacial layer between it and the channel. My work quantifies those
-mechanisms: the interaction between channel carriers and remote traps across the
-HfZrO<sub>2</sub>/SiO<sub>2</sub> interface, the role the interfacial layer plays in
-memory-cell failure, read-after-write latency, and how charge-trapping dynamics evolve
-with endurance cycling and temperature.
+My work is in **opto-electronic characterization of semiconductor devices**,
+physics-based modelling, and the development of analysis methods. The recurring problem
+across all of it: an ordinary I–V or C–V sweep returns a single lumped number where
+several physical mechanisms overlap. Until those mechanisms can be separated, a device's
+behaviour gets attributed to a fitting parameter rather than to a trap population, a
+resistance, or an interface.
 
-Related work extends this to ferroelectric **thin-film** transistors — how device
-structure shapes switching characteristics, and how source/drain resistance together
-with subgap density of states sets the switching-speed limit in IGZO/HfZrO<sub>x</sub>
-ferroelectric TFTs.
+Four device families run through the work.
 
-## Amorphous oxide semiconductor TFTs
+## Ferroelectric FETs
 
-In a-IGZO thin-film transistors, the quantities that matter most are the hardest to
-measure directly. I develop characterization techniques that reach them: photonic I–V
-and photonic C–V methods for extracting subgap density of states, extraction of the
-conduction-band-minimum energy, simultaneous extraction of mobility enhancement factor
-and threshold voltage in the presence of parasitic resistance, low-temperature intrinsic
-field-effect mobility separated from contact resistance, low-frequency noise as a probe
-of contact-metal effects, and trap dynamics from transient response.
+Modelling and characterization of transient behaviour and electrical-stress instability.
 
-## Trap and parasitic-resistance characterization in MOSFETs
+Ferroelectric HfZrO<sub>2</sub> transistors are attractive as non-volatile memory, but
+what limits them as a *memory cell* is often not the ferroelectric — it is the
+interfacial layer between it and the channel. The published work quantifies that:
+read-after-write latency and the charge-trapping dynamics that set it, the role the
+interfacial layer plays in memory-cell failure, the interaction between channel carriers
+and remote traps across the HfZrO<sub>2</sub>/SiO<sub>2</sub> interface, and how trapping
+evolves with endurance cycling and temperature.
 
-An earlier and continuing line of work builds general extraction techniques for silicon
-devices — separating parasitic resistances from intrinsic behaviour, mapping the spatial
-and energy distribution of traps through capacitance-based and deep-depletion C–V methods,
-and characterizing interface traps in nanosheet gate-all-around MOSFETs from subthreshold
-I–V characteristics.
+A related collaboration takes the same material in a different direction: a programmable
+ferroelectric rectifier used as the element of a neuromorphic crossbar array.
 
-## Ferroelectric devices beyond the transistor
+## Ferroelectric TFTs
 
-Two recent collaborations push the same materials into different roles: a programmable
-ferroelectric rectifier used as the element of a neuromorphic crossbar array, where the
-device's rectifying behaviour is what makes the array reliable and efficient; and the
-effect of proton irradiation on the SiN<sub>x</sub> and Si–SiO<sub>2</sub> interfaces of
-a FLASH memory cell — the same interface-trap question, asked of a radiation environment.
+Characterization of fabrication conditions, particularly thermal process sequence.
 
-## Method
+Here the questions are structural. How device structure shapes ferroelectric switching
+characteristics; how source/drain resistance together with subgap density of states sets
+the switching-speed limit in IGZO/HfZrO<sub>x</sub> ferroelectric TFTs; how defects
+mediate the memory window in IGZO-channel devices; and how remnant polarization is
+distributed spatially in an inverted-staggered stack.
 
-The unifying idea across these projects is **separation**. A conventional I–V or C–V
-sweep reports one lumped number where several physical mechanisms overlap. Each technique
-above is designed so that a measurable quantity can be attributed to one mechanism —
-a specific trap population, a specific resistance, a specific interface — instead of to a
-fitting parameter.
+## Amorphous oxide semiconductor (a-IGZO) TFTs
+
+Extraction techniques for sub-bandgap density of states, parasitic resistances and
+conduction-band-minimum energy; modelling of opto-electronic characteristics;
+characterization of transient properties.
+
+In a-IGZO thin-film transistors the quantities that matter most are the hardest to reach
+directly. The methods developed for them include photonic I–V with the photogating effect
+and photovoltaic-de-embedded photonic C–V for subgap density of states, extraction of the
+conduction-band-minimum energy, simultaneous extraction of mobility enhancement factor and
+threshold voltage in the presence of parasitic resistance, low-temperature intrinsic
+field-effect mobility separated from contact resistance, low-frequency noise as a probe of
+contact-metal effects, and trap dynamics recovered from transient response.
+
+## Silicon MOSFETs, including GAA FETs and NAND flash
+
+Extraction of interface states and parasitic resistance; modelling of opto-electronic
+characteristics; equivalent-capacitance modelling; proton-irradiation effects.
+
+The earliest and most general line of work. It covers alternating-current and
+current-to-transconductance-ratio techniques for separating parasitic resistances from
+intrinsic device behaviour, capacitance-based and deep-depletion C–V methods for mapping
+the spatial and energy distribution of traps across the substrate, interface-trap
+characterization in silicon nanosheet gate-all-around MOSFETs from subthreshold I–V
+characteristics, and the effect of proton irradiation on the SiN<sub>x</sub> and
+Si–SiO<sub>2</sub> interfaces of a flash memory cell.
 
 ---
 
