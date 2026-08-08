@@ -1,0 +1,44 @@
+{
+  "_comment": [
+    "JSON Resume data, loaded by jekyll-get-json (see jekyll_get_json in _config.yml).",
+    "The al-folio demo content (Albert Einstein, with a phone number and street address) was",
+    "removed. This site's CV page uses cv_format: rendercv, so it reads _data/cv.yml instead —",
+    "this file is kept only so the jekyll_get_json step has something valid to load.",
+    "Do not put a home address or personal phone number here: this repository is public."
+  ],
+  "basics": {
+    "name": "Haesung Kim",
+    "label": "",
+    "image": "",
+    "email": "kim5425@purdue.edu",
+    "summary": "",
+    "location": {
+      "city": "West Lafayette",
+      "region": "Indiana",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "ORCID",
+        "username": "0000-0002-3392-9444",
+        "url": "https://orcid.org/0000-0002-3392-9444"
+      },
+      {
+        "network": "GitHub",
+        "username": "kim5425",
+        "url": "https://github.com/kim5425"
+      }
+    ]
+  },
+  "work": [],
+  "education": [],
+  "publications": [],
+  "projects": [],
+  "volunteer": [],
+  "awards": [],
+  "certificates": [],
+  "skills": [],
+  "languages": [],
+  "interests": [],
+  "references": []
+}

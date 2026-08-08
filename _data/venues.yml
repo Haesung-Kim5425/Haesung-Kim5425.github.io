@@ -1,0 +1,54 @@
+# Venue styling for the publications page. A key matching a bib entry's `abbr` field
+# gets the colour and link below. Entries without an `abbr` are unaffected — this file
+# is presentation only and never changes which papers are listed.
+#
+# The al-folio demo venues (AJP, PhysRev, Vision) were removed. The venues below are the
+# journals and conferences that actually appear in the bibliography.
+
+"IEEE TED":
+  url: https://ieee-eds.org/publications/ieee-transactions-on-electron-devices/
+  color: "#00629b"
+
+"IEEE EDL":
+  url: https://ieee-eds.org/publications/ieee-electron-device-letters/
+  color: "#00629b"
+
+"APL":
+  url: https://pubs.aip.org/aip/apl
+  color: "#0b3d91"
+
+"SSE":
+  url: https://www.sciencedirect.com/journal/solid-state-electronics
+  color: "#e9711c"
+
+"Nat. Commun.":
+  url: https://www.nature.com/ncomms/
+  color: "#006699"
+
+"Adv. Electron. Mater.":
+  url: https://advanced.onlinelibrary.wiley.com/journal/2199160x
+  color: "#3b5998"
+
+"Nanoscale":
+  url: https://www.rsc.org/journals-books-databases/about-journals/nanoscale/
+  color: "#7b1fa2"
+
+"MSSP":
+  url: https://www.sciencedirect.com/journal/materials-science-in-semiconductor-processing
+  color: "#e9711c"
+
+"Curr. Appl. Phys.":
+  url: https://www.sciencedirect.com/journal/current-applied-physics
+  color: "#e9711c"
+
+"NET":
+  url: https://www.sciencedirect.com/journal/nuclear-engineering-and-technology
+  color: "#e9711c"
+
+"SNW":
+  url: https://www.sinano.org/
+  color: "#555555"
+
+"IEEE NANO":
+  url: https://ieeenano.org/
+  color: "#00629b"

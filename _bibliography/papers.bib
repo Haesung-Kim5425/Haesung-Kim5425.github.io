@@ -1,0 +1,359 @@
+% ============================================================================
+% GENERATED FILE - DO NOT EDIT.
+%
+% Copied verbatim from the publication source of truth:
+%     achievements/publications.bib   (owned by the Academic Profile hub session)
+%
+% Any edit made here is overwritten the next time bin/sync-sot.ps1 runs. To change
+% what the website shows, change the SoT and re-run:
+%
+%     pwsh -File bin/sync-sot.ps1
+%
+% Synced: 2026-08-08 00:02:35   |   entries: 25
+% ============================================================================
+% publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
+% 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
+% 소스: ORCID 0000-0002-3392-9444 (정본) + Zotero 라이브러리 대조. 지표는 metrics.md.
+%
+% 검증 이력
+%   2026-08-07 초기 동기화. 3개 소스를 교차 대조해 25건 확정.
+%     ORCID works                21건 (정본)
+%     + Zotero 대조 누락 발견      3건 (오너 제1저자 2건 포함)
+%     + CV(2025-11-10) 대조 누락   1건 (10.1166/jnn.2021.19391)
+%                                = 25건
+%   검증 방법: 각 DOI를 Crossref REST API(api.crossref.org/works/{doi})로 resolve해
+%             청구 제목 vs 등록 레코드 제목을 대조(Topaz 조작 패턴 게이트).
+%             결과 25/25 matched, 철회(retraction) 0건.
+%   ※ citation-audit 스킬의 Scholar Sidekick MCP는 "not subscribed" 로 사용 불가 →
+%     동등한 제목-대조 검증을 Crossref 원본으로 수행. 구독 복구 시 재검증 권장.
+%   서지 필드(저자·권·호·페이지·연도)는 전부 Crossref 레코드에서 생성 — 수기 입력 없음.
+%
+% ★ 이름 표기 변형 주의
+%   10.1166/jnn.2021.19391 는 published record 상 저자명이 "Hae Sung Kim"(띄어쓰기)이라
+%   ORCID·Zotero 어느 쪽의 "Haesung Kim" 검색에서도 안 잡혔다. CV 대조로만 발견.
+%   → 향후 동기화 때 "Hae Sung" / "Haesung" 양쪽으로 검색할 것.
+%
+% 미포함(공개 노출 금지) → candidates.md 참조
+%   - 10.1038/s41586-025-09793-3 (Nature, 2025) "Haesung Kim" 동명이인 의심(삼성 소속 저자군)
+%
+% 총 25건 = [at]article 22 + [at]inproceedings 2 + [at]misc(프리프린트) 1
+%
+% note 필드 규약 (렌더가 읽어야 함)
+%   note = {Co-first author}  → 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
+%   keywords = {preprint}     → 프리프린트. verified 논문과 섞어 표시하지 말 것. 1건.
+
+@article{kim2020alternating,
+  title        = {Alternating Current-Based Technique for Separate Extraction of Parasitic Resistances in MISFETs With or Without the Body Contact},
+  author       = {Kim, Haesung and Yoo, Han Bin and Yu, Jin-Tae and Ryu, Ji Hee and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {IEEE Electron Device Letters},
+  year         = {2020},
+  volume       = {41},
+  number       = {10},
+  pages        = {1528-1531},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/LED.2020.3020405},
+  url          = {https://doi.org/10.1109/LED.2020.3020405}
+}
+
+@article{yoo2020deep,
+  title        = {Deep depletion capacitance–voltage technique for spatial distribution of traps across the substrate in MOS structures},
+  author       = {Yoo, Han Bin and Yu, Jintae and Kim, Haesung and Ryu, Ji Hee and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {Solid-State Electronics},
+  year         = {2020},
+  volume       = {173},
+  pages        = {107905},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2020.107905},
+  url          = {https://doi.org/10.1016/j.sse.2020.107905}
+}
+
+@article{kim2021currenttotransconductance,
+  title        = {Current-to-transconductance ratio technique for simultaneous extraction of threshold voltage and parasitic resistances in MOSFETs},
+  author       = {Kim, Haesung and Yoo, Han Bin and Ryu, Ji Hee and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {Solid-State Electronics},
+  year         = {2021},
+  volume       = {183},
+  pages        = {108133},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2021.108133},
+  url          = {https://doi.org/10.1016/j.sse.2021.108133}
+}
+
+@article{yoo2021modeling,
+  title        = {Modeling and characterization of photovoltaic and photoconductive effects in insulated-gate field effect transistors under optical excitation},
+  author       = {Yoo, Han Bin and Kim, Haesung and Ryu, Ji Hee and Park, Jingyu and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {Solid-State Electronics},
+  year         = {2021},
+  volume       = {186},
+  pages        = {108139},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2021.108139},
+  url          = {https://doi.org/10.1016/j.sse.2021.108139}
+}
+
+@article{yu2021characterization,
+  title        = {Characterization of Spatial Distribution of Trap Across the Substrate in Metal-Insulator-Semiconductor Structure with Band Bending Effect},
+  author       = {Yu, Jintae and Yoo, Han Bin and Kim, Hae Sung and Ryu, Ji Hee and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {Journal of Nanoscience and Nanotechnology},
+  year         = {2021},
+  volume       = {21},
+  number       = {8},
+  pages        = {4315-4319},
+  publisher    = {American Scientific Publishers},
+  doi          = {10.1166/jnn.2021.19391},
+  url          = {https://doi.org/10.1166/jnn.2021.19391},
+  note         = {Author name appears as ``Hae Sung Kim'' in the published record (spelling variant of Haesung Kim)}
+}
+
+@inproceedings{yoo2022characterization,
+  title        = {Characterization Technique for Interface Traps in Si Nanosheet GAA MOSFETs through Subthreshold I-V Characteristics},
+  author       = {Yoo, Han Bin and Kim, Haesung and Lee, Yongwoo and Ryu, Ji Hee and Park, Ju Young and Yang, Hyo Jin and Bae, Jong-Ho and Kim, Dae Hwan and Choi, Sung-Jin and Kim, Dong Myong},
+  booktitle    = {2022 IEEE 22nd International Conference on Nanotechnology (NANO)},
+  year         = {2022},
+  pages        = {116-119},
+  publisher    = {IEEE},
+  doi          = {10.1109/NANO54668.2022.9928778},
+  url          = {https://doi.org/10.1109/NANO54668.2022.9928778},
+  note         = {Co-first author}
+}
+
+@misc{kim2023capacitancebased,
+  title        = {Capacitance-Based Extraction Technique for the Spatial and Energy Distributions of Traps in Si Mosfets},
+  author       = {Kim, Dong Myong and Ryu, Ji Hee and Yoo, Han Bin and Kim, Haesung and Park, Ju Young and Han, Seung Hyeop and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan},
+  year         = {2023},
+  publisher    = {Elsevier BV},
+  doi          = {10.2139/ssrn.4377528},
+  url          = {https://doi.org/10.2139/ssrn.4377528},
+  howpublished = {Preprint, SSRN},
+  note         = {Preprint --- not a peer-reviewed journal publication},
+  keywords     = {preprint}
+}
+
+@article{kim2023extraction,
+  title        = {Extraction Technique for the Conduction Band Minimum Energy in Amorphous Indium–Gallium–Zinc–Oxide Thin Film Transistors},
+  author       = {Kim, Haesung and Yoo, Han Bin and Lee, Heesung and Ryu, Ji Hee and Park, Ju Young and Han, Seung Hyeop and Yang, Hyojin and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {IEEE Transactions on Electron Devices},
+  year         = {2023},
+  volume       = {70},
+  number       = {6},
+  pages        = {3126-3130},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/TED.2023.3269735},
+  url          = {https://doi.org/10.1109/TED.2023.3269735}
+}
+
+@article{park2023simultaneous,
+  title        = {Simultaneous Extraction of Mobility Enhancement Factor and Threshold Voltage With Parasitic Resistances in Amorphous Oxide Semiconductor Thin-Film Transistors},
+  author       = {Park, Ju Young and Kim, Haesung and Yoo, Han Bin and Ryu, Ji Hee and Han, Seung Hyeop and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {IEEE Transactions on Electron Devices},
+  year         = {2023},
+  volume       = {70},
+  number       = {5},
+  pages        = {2312-2316},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/TED.2023.3253468},
+  url          = {https://doi.org/10.1109/TED.2023.3253468},
+  note         = {Co-first author}
+}
+
+@article{han2024photovoltaic,
+  title        = {Photovoltaic Effect De-Embedded Photonic C–V Characterization of Subgap Density of States in Amorphous Oxide Semiconductor Thin-Film Transistors},
+  author       = {Han, Seung Hyeop and Kim, Haesung and Bae, Jong-Ho and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong},
+  journal      = {IEEE Transactions on Electron Devices},
+  year         = {2024},
+  volume       = {71},
+  number       = {11},
+  pages        = {6795-6798},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/TED.2024.3469161},
+  url          = {https://doi.org/10.1109/TED.2024.3469161},
+  note         = {Co-first author}
+}
+
+@article{kim2024comprehensive,
+  title        = {Comprehensive analysis of read-after-write latency in HfZrOX-based ferroelectric field-effect-transistors with SiO2 interfacial layer},
+  author       = {Kim, Haesung and Yang, Hyojin and Lee, Seongwon and Yun, Sanghyuk and Park, Junseong and Park, Sejun and Lee, Ha-Neul and Kim, Hyeonsik and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
+  journal      = {Applied Physics Letters},
+  year         = {2024},
+  volume       = {124},
+  number       = {3},
+  publisher    = {AIP Publishing},
+  doi          = {10.1063/5.0172204},
+  url          = {https://doi.org/10.1063/5.0172204}
+}
+
+@article{lee2024analysis,
+  title        = {Analysis of the Role of Interfacial Layer in Ferroelectric FET Failure as a Memory Cell},
+  author       = {Lee, Seongwon and Kim, Haesung and Yang, Hyojin and Yun, Sanghyuk and Park, Junseong and Lee, Haneul and Park, Sejun and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
+  journal      = {IEEE Electron Device Letters},
+  year         = {2024},
+  volume       = {45},
+  number       = {4},
+  pages        = {562-565},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/LED.2024.3360419},
+  url          = {https://doi.org/10.1109/LED.2024.3360419},
+  note         = {Co-first author}
+}
+
+@article{yang2024exploration,
+  title        = {Exploration of structural influences on the ferroelectric switching characteristics of ferroelectric thin-film transistors},
+  author       = {Yang, Hyojin and Park, Sejun and Yun, Sanghyuk and Kim, Haesung and Lee, Haneul and Park, Min-Kyu and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Dongseok and Bae, Jong-Ho},
+  journal      = {Nanoscale},
+  year         = {2024},
+  volume       = {16},
+  number       = {42},
+  pages        = {19856-19864},
+  publisher    = {Royal Society of Chemistry (RSC)},
+  doi          = {10.1039/d4nr02096k},
+  url          = {https://doi.org/10.1039/d4nr02096k}
+}
+
+@article{kim2025photonic,
+  title        = {Photonic I–V Technique With Photogating Effect for Extended Extraction of Subgap Density of States in Amorphous Oxide Semiconductor TFTs},
+  author       = {Kim, Haesung and Hyeop Han, Seung and Jeong, Hyunwook and Yang, Hyojin and Choi, Sung-Jin and Hwan Kim, Dae and Bae, Jong-Ho and Myong Kim, Dong},
+  journal      = {IEEE Transactions on Electron Devices},
+  year         = {2025},
+  volume       = {72},
+  number       = {5},
+  pages        = {2751-2755},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/TED.2025.3547707},
+  url          = {https://doi.org/10.1109/TED.2025.3547707}
+}
+
+@article{park2025analysis,
+  title        = {Analysis of operation delay and switching speed limitation due to source/drain resistance and subgap density of states in amorphous InGaZnOx/HfZrOx ferroelectric thin-film transistor},
+  author       = {Park, Sejun and Yang, Hyojin and Kim, Haesung and Jeong, Hyunwook and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Park, Min-Kyu and Bae, Jong-Ho},
+  journal      = {Solid-State Electronics},
+  year         = {2025},
+  volume       = {229},
+  pages        = {109203},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2025.109203},
+  url          = {https://doi.org/10.1016/j.sse.2025.109203}
+}
+
+@inproceedings{yang2025quantitative,
+  title        = {Quantitative Analysis of Endurance-Dependent Charge Trapping Dynamics in Ferroelectric Field-Effect Transistors with Temperature Effects},
+  author       = {Yang, Hyojin and Kim, Haesung and Han, Changhyeon and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
+  booktitle    = {2025 Silicon Nanoelectronics Workshop (SNW)},
+  year         = {2025},
+  pages        = {74-75},
+  publisher    = {IEEE},
+  doi          = {10.23919/SNW65111.2025.11097276},
+  url          = {https://doi.org/10.23919/SNW65111.2025.11097276}
+}
+
+@article{choi2026characterization,
+  title        = {Characterization of trap dynamics via transient response in amorphous InGaZnO thin-film transistors},
+  author       = {Choi, Yubin and Yang, Hyojin and Kim, Hwan Jin and Park, Sejun and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kim, Haesung and Bae, Jong-Ho},
+  journal      = {Applied Physics Letters},
+  year         = {2026},
+  volume       = {128},
+  number       = {24},
+  publisher    = {AIP Publishing},
+  doi          = {10.1063/5.0332203},
+  url          = {https://doi.org/10.1063/5.0332203}
+}
+
+@article{kim2026analysis,
+  title        = {Analysis of spatial distribution of remnant polarization in inverted staggered a-IGZO/HZO ferroelectric thin-film transistor using capacitance-voltage characteristics},
+  author       = {Kim, Hwan Jin and Yang, Hyojin and Kim, Haesung and Park, Sejun and Lee, Ha-Neul and Choi, Sung-Jin and Kim, Dong Myong and Kim, Dae Hwan and Park, Min-Kyu and Bae, Jong-Ho},
+  journal      = {Solid-State Electronics},
+  year         = {2026},
+  volume       = {235},
+  pages        = {109358},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2026.109358},
+  url          = {https://doi.org/10.1016/j.sse.2026.109358}
+}
+
+@article{kim2026characterization,
+  title        = {Characterization of Low-Temperature Intrinsic Field-Effect Mobility With Contact Resistances in Amorphous InGaZnO Thin Film Transistors},
+  author       = {Kim, Haesung and Park, Ju Young and Han, Seung Hyeop and Yang, Hyojin and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Bae, Jong-Ho and Kim, Dong Myong},
+  journal      = {IEEE Transactions on Electron Devices},
+  year         = {2026},
+  volume       = {73},
+  number       = {7},
+  pages        = {4341-4345},
+  publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
+  doi          = {10.1109/TED.2026.3691120},
+  url          = {https://doi.org/10.1109/TED.2026.3691120}
+}
+
+@article{kim2026impact,
+  title        = {Impact of proton irradiation on SiNx and Si–SiO2 interfaces in FLASH memory cell},
+  author       = {Kim, Haesung and Park, Junseong and Im, Jisung and Kim, Hansol and Kim, Yu-Mi and Park, Kwanseo and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Yoon, Young Jun and Woo, Sung Yun and Bae, Jong-Ho},
+  journal      = {Nuclear Engineering and Technology},
+  year         = {2026},
+  volume       = {58},
+  number       = {10},
+  pages        = {104433},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.net.2026.104433},
+  url          = {https://doi.org/10.1016/j.net.2026.104433}
+}
+
+@article{kim2026programmable,
+  title        = {Programmable ferroelectric rectifier for reliable and efficient neuromorphic crossbar array},
+  author       = {Kim, Youngmin and Lee, Yoon Jung and Yang, Jiwoong and Kim, Byungsoo and Kim, Seung Ju and Kim, Jaehyun and Im, Inhyuk and Kim, Jae Young and Rui, He and Kim, Haesung and Bark, Chung Wung and Park, Min Hyuk and Kim, Dae Hwan and Choi, Sung-Jin and Yang, J. Joshua and Lee, Sanghan and Jang, Ho Won},
+  journal      = {Nature Communications},
+  year         = {2026},
+  volume       = {17},
+  number       = {1},
+  publisher    = {Springer Science and Business Media LLC},
+  doi          = {10.1038/s41467-026-70727-2},
+  url          = {https://doi.org/10.1038/s41467-026-70727-2}
+}
+
+@article{kim2026unveiling,
+  title        = {Unveiling charge trapping dynamics in SiO2/HfZrOX–based ferroelectric field–effect–transistors to minimize read–after–write latency},
+  author       = {Kim, Haesung and Yang, Hyojin and Choi, Yubin and Kim, Hwanjin and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
+  journal      = {Current Applied Physics},
+  year         = {2026},
+  volume       = {89},
+  pages        = {181-185},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.cap.2026.06.007},
+  url          = {https://doi.org/10.1016/j.cap.2026.06.007}
+}
+
+@article{lee2026quantitative,
+  title        = {Quantitative Analysis on the Interaction Between Channel Carrier and Remote Trap in Hf$_x$Zr$_{1-x}$O$_2$/SiO$_2$ Interface in Ferroelectric Field-Effect-Transistor},
+  author       = {Lee, Haneul and Kim, Sujong and Han, Changhyeon and Kim, Haesung and Yang, Hyojin and Park, Sejun and Yun, Sanghyuk and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
+  journal      = {Advanced Electronic Materials},
+  year         = {2026},
+  volume       = {12},
+  number       = {2},
+  publisher    = {Wiley},
+  doi          = {10.1002/aelm.202500549},
+  url          = {https://doi.org/10.1002/aelm.202500549}
+}
+
+@article{park2026exploring,
+  title        = {Exploring low-frequency noise dynamics in a-IGZO TFTs: Unveiling the impact of contact metal variations for advanced semiconductor applications},
+  author       = {Park, Junseong and Kim, Haesung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Bae, Jong-Ho},
+  journal      = {Solid-State Electronics},
+  year         = {2026},
+  volume       = {231},
+  pages        = {109271},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.sse.2025.109271},
+  url          = {https://doi.org/10.1016/j.sse.2025.109271},
+  note         = {Co-first author}
+}
+
+@article{yang2026defectmediated,
+  title        = {Defect-mediated enhancement of memory window in IGZO-channel ferroelectric field effect transistors},
+  author       = {Yang, Hyojin and Kim, Haesung and Kim, Hwan Jin and Kim, Dong Myong and Choi, Sung-Jin and Kim, Dae Hwan and Lee, Yoon Jung and Bae, Jong-Ho},
+  journal      = {Materials Science in Semiconductor Processing},
+  year         = {2026},
+  volume       = {204},
+  pages        = {110268},
+  publisher    = {Elsevier BV},
+  doi          = {10.1016/j.mssp.2025.110268},
+  url          = {https://doi.org/10.1016/j.mssp.2025.110268}
+}
+
+

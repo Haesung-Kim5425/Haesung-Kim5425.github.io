@@ -1,0 +1,19 @@
+# Social / profile links shown under the About page photo and in the footer.
+# Rendered by the jekyll-socials plugin: https://github.com/george-gca/jekyll-socials
+#
+# ★ Public site. Only work contact details belong here — never a home address or
+#   personal phone number. Never add an ID that has not been confirmed by the owner:
+#   a wrong ORCID / Scholar link points visitors at somebody else's record.
+
+email: kim5425@purdue.edu # Purdue work address (site-wide protect_email: true keeps it out of the raw HTML)
+orcid_id: 0000-0002-3392-9444 # verified against pub.orcid.org (name: Haesung Kim), 2026-08-07
+github_username: kim5425
+
+rss_icon: false # no blog on this site, so no feed to advertise
+
+# --- Pending owner confirmation --------------------------------------------
+# Left commented out on purpose. Uncomment only once the owner confirms the ID.
+# scholar_userid: # Google Scholar profile ID — needed before publication badges can be turned back on
+# linkedin_username:
+# research_gate_profile:
+# cv_pdf: /assets/pdf/cv.pdf # enable after the hub session renders the CV PDF into assets/pdf/

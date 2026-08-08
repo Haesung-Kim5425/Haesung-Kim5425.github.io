@@ -1,0 +1,15 @@
+# Optional: turns a coauthor's surname in the publications list into a link to their page.
+# Keyed by lowercase surname; `firstname` lists every initial/spelling used in the .bib so
+# the right person is matched.
+#
+# ★ EMPTIED ON PURPOSE. al-folio shipped this file full of demo names (Podolsky, Rosen,
+#   Schrödinger, J. S. Bach). Linking a real coauthor to the wrong page is worse than not
+#   linking at all, so nothing is listed until each URL is confirmed.
+#
+# Example of the format, for when real entries are added:
+#
+#   "bae":
+#     - firstname: ["Jong-Ho", "J.-H."]
+#       url: https://example.edu/people/jong-ho-bae
+#
+# Adding a name here is presentation only — it never changes which papers are listed.

@@ -1,0 +1,19 @@
+# Per-paper Google Scholar citation counts, normally written by the
+# .github/workflows/update-citations.yml job (bin/update_scholar_citations.py).
+#
+# ★ EMPTIED ON PURPOSE. This file shipped with al-folio's demo data — Albert Einstein's
+#   Scholar record, thousands of citations against papers that are not this author's.
+#   Publishing inflated or borrowed citation numbers on a public academic page is a
+#   reputational risk, so nothing is asserted here.
+#
+# To turn citation counts back on:
+#   1. Confirm the owner's Google Scholar profile ID and set `scholar_userid` in
+#      _data/socials.yml.
+#   2. Set enable_publication_badges.google_scholar: true in _config.yml.
+#   3. Restore .github/workflows/update-citations.yml (deleted with the other
+#      upstream-only workflows) so this file is regenerated on a schedule.
+# Any number that appears here must be machine-fetched, never typed by hand.
+
+metadata:
+  last_updated:
+papers: {}
