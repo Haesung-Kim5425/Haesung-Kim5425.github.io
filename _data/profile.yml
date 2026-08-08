@@ -128,5 +128,7 @@ exclude:
   - "GPA"
   - "date of birth"
   - "gender, nationality"
-  # 동명이인 의심 — 판정 전까지 어떤 렌더에도 넣지 않는다. candidates.md A절 참조.
-  - "DOI 10.1038/s41586-025-09793-3 (Nature 2025) — identity unconfirmed"
+  # ★ 동명이인 확정(오너 판정 2026-08-08) — 오너 논문이 아니다. 어떤 렌더에도 넣지 않는다.
+  #   판정이 끝났어도 이 목록에서 빼지 않는다: 동기화가 다시 집어오는 걸 막는 영구 가드다.
+  #   상세는 candidates.md A절.
+  - "DOI 10.1038/s41586-025-09793-3 (Nature 2025) — different person, permanently excluded"
