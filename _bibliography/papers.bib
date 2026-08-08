@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 12:05:49   |   entries: 25
+% Synced: 2026-08-08 14:33:13   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -54,12 +54,29 @@
 %   (2026-08-07 실제로 이 사고가 났다 — Homepage 세션 al-folio 빌드가 통째로 실패.
 %    엔트리 타입을 주석에 쓸 때는 '＠article' 대신 'journal article' 처럼 풀어 쓴다.)
 %
-% note 필드 규약 (렌더가 읽어야 함)
-%   authorship = {co-first}   -> 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
-%       ★ 표시 문구가 아니라 의미값이다. 렌더가 표현을 정한다(웹=배지, CV=단검표 등).
-%       note 에 넣지 않는 이유: note 는 자유서술 필드라 CV·biosketch·홈페이지가 각자
-%       문자열 매칭을 해야 하고, 문구가 바뀌면 조용히 깨진다. 의미값은 전용 필드로 둔다.
-%   note = {...}                -> 자유서술 전용(프리프린트 설명·이름 표기 변형 등). 매칭 대상 아님.
+% 필드 규약 (렌더가 읽어야 함)
+%
+%   authorship = {...}  -> ★ 저자 역할. **25건 전부에 명시돼 있다**(2026-08-08 오너 요청).
+%       값(쉼표 결합 가능):
+%         first          제1저자 (저자 목록 첫 번째)
+%         co-first       공동 제1저자 (원문에 equal-contribution 명시가 있는 경우만)
+%         corresponding  교신저자
+%         co-author      공저 참여
+%       ★★ **빈 값을 두지 말 것.** "필드 없음"이 co-author 인지 아직 안 적은 것인지 구분이 안 된다.
+%          공저자도 반드시 {co-author} 로 명시한다. 이게 이 규약의 존재 이유다.
+%       ★★ **렌더는 반드시 contains 로 매칭할 것.** 정확 일치로 하면 {first,co-first} 같은
+%          결합 값을 놓쳐 **배지·단검표가 조용히 사라진다.** 실제로 CV 생성기가 그렇게 짜여 있었고
+%          이 규약 도입 때 고쳤다.
+%       현재 분포: first 5 · first,co-first 3 · co-first 5 · co-author 12 · corresponding 0
+%         → 주저자(first 또는 co-first 포함) 13건 / 공저자 12건 / 합 25건
+%       ★ 요약 통계(총 n편·주저자 n편·공저자 m편)는 **이 필드에서 세어 계산한다.**
+%          어느 렌더에도 숫자를 하드코딩하지 말 것 — 논문이 늘면 즉시 틀린 값이 된다.
+%
+%       co-first 근거: CV(2025-11-10판) 표기 5건 + 2026-08-08 원문 PDF 1쪽 직접 확인 3건
+%         (10.1109/LED.2020.3020405 · 10.1016/j.sse.2021.108133 · 10.1109/TED.2023.3269735
+%          — 셋 다 "Haesung Kim and Han Bin Yoo contributed equally to this work" 명시)
+%
+%   note = {...}        -> 자유서술 전용(프리프린트 설명·이름 표기 변형 등). 매칭 대상 아님.
 %
 % ★★★ 필드 규약을 바꾸면 반드시 렌더 세션에 통보할 것 (2026-08-08 확정)
 %   렌더(홈페이지·CV·biosketch)는 모르는 필드를 만나면 **에러 없이 그냥 안 그린다.**
@@ -78,12 +95,10 @@
 %          공저 참여만 한 논문은 저널 가시성이 아무리 높아도 대표논문이 아니다.
 %          (2026-08-08 Nature Communications 논문(17인 중 10번째)을 이 규칙으로 제외했다)
 %       → selected 를 붙이기 전에 저자 위치를 반드시 확인할 것.
-%   authorship = {corresponding} 또는 {co-first,corresponding}
-%       -> 교신저자. **현재 0건이며, 이는 "확인 결과 없음"이다** (정보 부재가 아니다).
-%          2026-08-08 제1저자 논문 7건의 원문 PDF 1쪽을 직접 읽어 확인했다. 교신저자는
-%          전부 지도교수급(D. M. Kim / J.-H. Bae / D. Kwon / Y. J. Yoon / S. Y. Woo)이었다.
-%          미확인 1건: 10.1109/TED.2026.3691120 (Zotero에 PDF 없음). 상세는 candidates.md E-1절.
-%       ★ 렌더는 값을 contains 로 매칭할 것 — {co-first,corresponding} 처럼 결합될 수 있다.
+%   ※ 교신저자(corresponding) 0건인 이유: **확인 결과 없음**이다(정보 부재 아님).
+%     2026-08-08 제1저자 논문 7건의 원문 PDF 1쪽을 직접 읽어 확인했고, 교신저자는 전부
+%     지도교수급(D. M. Kim / J.-H. Bae / D. Kwon / Y. J. Yoon / S. Y. Woo)이었다.
+%     미확인 1건: 10.1109/TED.2026.3691120 (Zotero에 PDF 없음). 상세는 candidates.md E-1절.
 
 @article{kim2020alternating,
   title        = {Alternating Current-Based Technique for Separate Extraction of Parasitic Resistances in MISFETs With or Without the Body Contact},
@@ -96,7 +111,8 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/LED.2020.3020405},
   url          = {https://doi.org/10.1109/LED.2020.3020405},
-  selected     = {true}
+  selected     = {true},
+  authorship   = {first,co-first}
 }
 
 @article{yoo2020deep,
@@ -108,7 +124,8 @@
   pages        = {107905},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2020.107905},
-  url          = {https://doi.org/10.1016/j.sse.2020.107905}
+  url          = {https://doi.org/10.1016/j.sse.2020.107905},
+  authorship   = {co-author}
 }
 
 @article{kim2021currenttotransconductance,
@@ -120,7 +137,8 @@
   pages        = {108133},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2021.108133},
-  url          = {https://doi.org/10.1016/j.sse.2021.108133}
+  url          = {https://doi.org/10.1016/j.sse.2021.108133},
+  authorship   = {first,co-first}
 }
 
 @article{yoo2021modeling,
@@ -132,7 +150,8 @@
   pages        = {108139},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2021.108139},
-  url          = {https://doi.org/10.1016/j.sse.2021.108139}
+  url          = {https://doi.org/10.1016/j.sse.2021.108139},
+  authorship   = {co-author}
 }
 
 @article{yu2021characterization,
@@ -146,7 +165,8 @@
   publisher    = {American Scientific Publishers},
   doi          = {10.1166/jnn.2021.19391},
   url          = {https://doi.org/10.1166/jnn.2021.19391},
-  note         = {Author name appears as ``Hae Sung Kim'' in the published record (spelling variant of Haesung Kim)}
+  note         = {Author name appears as ``Hae Sung Kim'' in the published record (spelling variant of Haesung Kim)},
+  authorship   = {co-author}
 }
 
 @inproceedings{yoo2022characterization,
@@ -158,7 +178,7 @@
   publisher    = {IEEE},
   doi          = {10.1109/NANO54668.2022.9928778},
   url          = {https://doi.org/10.1109/NANO54668.2022.9928778},
-  authorship         = {co-first}
+  authorship   = {co-first}
 }
 
 @misc{kim2023capacitancebased,
@@ -170,7 +190,8 @@
   url          = {https://doi.org/10.2139/ssrn.4377528},
   howpublished = {Preprint, SSRN},
   note         = {Preprint --- not a peer-reviewed journal publication},
-  keywords     = {preprint}
+  keywords     = {preprint},
+  authorship   = {co-author}
 }
 
 @article{kim2023extraction,
@@ -184,7 +205,8 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2023.3269735},
   url          = {https://doi.org/10.1109/TED.2023.3269735},
-  selected     = {true}
+  selected     = {true},
+  authorship   = {first,co-first}
 }
 
 @article{park2023simultaneous,
@@ -198,7 +220,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2023.3253468},
   url          = {https://doi.org/10.1109/TED.2023.3253468},
-  authorship         = {co-first}
+  authorship   = {co-first}
 }
 
 @article{han2024photovoltaic,
@@ -212,7 +234,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2024.3469161},
   url          = {https://doi.org/10.1109/TED.2024.3469161},
-  authorship         = {co-first}
+  authorship   = {co-first}
 }
 
 @article{kim2024comprehensive,
@@ -225,7 +247,8 @@
   publisher    = {AIP Publishing},
   doi          = {10.1063/5.0172204},
   url          = {https://doi.org/10.1063/5.0172204},
-  selected     = {true}
+  selected     = {true},
+  authorship   = {first}
 }
 
 @article{lee2024analysis,
@@ -239,7 +262,7 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/LED.2024.3360419},
   url          = {https://doi.org/10.1109/LED.2024.3360419},
-  authorship         = {co-first}
+  authorship   = {co-first}
 }
 
 @article{yang2024exploration,
@@ -252,7 +275,8 @@
   pages        = {19856-19864},
   publisher    = {Royal Society of Chemistry (RSC)},
   doi          = {10.1039/d4nr02096k},
-  url          = {https://doi.org/10.1039/d4nr02096k}
+  url          = {https://doi.org/10.1039/d4nr02096k},
+  authorship   = {co-author}
 }
 
 @article{kim2025photonic,
@@ -266,7 +290,8 @@
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2025.3547707},
   url          = {https://doi.org/10.1109/TED.2025.3547707},
-  selected     = {true}
+  selected     = {true},
+  authorship   = {first}
 }
 
 @article{park2025analysis,
@@ -278,7 +303,8 @@
   pages        = {109203},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2025.109203},
-  url          = {https://doi.org/10.1016/j.sse.2025.109203}
+  url          = {https://doi.org/10.1016/j.sse.2025.109203},
+  authorship   = {co-author}
 }
 
 @inproceedings{yang2025quantitative,
@@ -289,7 +315,8 @@
   pages        = {74-75},
   publisher    = {IEEE},
   doi          = {10.23919/SNW65111.2025.11097276},
-  url          = {https://doi.org/10.23919/SNW65111.2025.11097276}
+  url          = {https://doi.org/10.23919/SNW65111.2025.11097276},
+  authorship   = {co-author}
 }
 
 @article{choi2026characterization,
@@ -301,7 +328,8 @@
   number       = {24},
   publisher    = {AIP Publishing},
   doi          = {10.1063/5.0332203},
-  url          = {https://doi.org/10.1063/5.0332203}
+  url          = {https://doi.org/10.1063/5.0332203},
+  authorship   = {co-author}
 }
 
 @article{kim2026analysis,
@@ -313,7 +341,8 @@
   pages        = {109358},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2026.109358},
-  url          = {https://doi.org/10.1016/j.sse.2026.109358}
+  url          = {https://doi.org/10.1016/j.sse.2026.109358},
+  authorship   = {co-author}
 }
 
 @article{kim2026characterization,
@@ -326,7 +355,8 @@
   pages        = {4341-4345},
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2026.3691120},
-  url          = {https://doi.org/10.1109/TED.2026.3691120}
+  url          = {https://doi.org/10.1109/TED.2026.3691120},
+  authorship   = {first}
 }
 
 @article{kim2026impact,
@@ -340,7 +370,8 @@
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.net.2026.104433},
   url          = {https://doi.org/10.1016/j.net.2026.104433},
-  selected     = {true}
+  selected     = {true},
+  authorship   = {first}
 }
 
 @article{kim2026programmable,
@@ -352,7 +383,8 @@
   number       = {1},
   publisher    = {Springer Science and Business Media LLC},
   doi          = {10.1038/s41467-026-70727-2},
-  url          = {https://doi.org/10.1038/s41467-026-70727-2}
+  url          = {https://doi.org/10.1038/s41467-026-70727-2},
+  authorship   = {co-author}
 }
 
 @article{kim2026unveiling,
@@ -364,7 +396,8 @@
   pages        = {181-185},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.cap.2026.06.007},
-  url          = {https://doi.org/10.1016/j.cap.2026.06.007}
+  url          = {https://doi.org/10.1016/j.cap.2026.06.007},
+  authorship   = {first}
 }
 
 @article{lee2026quantitative,
@@ -376,7 +409,8 @@
   number       = {2},
   publisher    = {Wiley},
   doi          = {10.1002/aelm.202500549},
-  url          = {https://doi.org/10.1002/aelm.202500549}
+  url          = {https://doi.org/10.1002/aelm.202500549},
+  authorship   = {co-author}
 }
 
 @article{park2026exploring,
@@ -389,7 +423,7 @@
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.sse.2025.109271},
   url          = {https://doi.org/10.1016/j.sse.2025.109271},
-  authorship         = {co-first}
+  authorship   = {co-first}
 }
 
 @article{yang2026defectmediated,
@@ -401,7 +435,8 @@
   pages        = {110268},
   publisher    = {Elsevier BV},
   doi          = {10.1016/j.mssp.2025.110268},
-  url          = {https://doi.org/10.1016/j.mssp.2025.110268}
+  url          = {https://doi.org/10.1016/j.mssp.2025.110268},
+  authorship   = {co-author}
 }
 
 

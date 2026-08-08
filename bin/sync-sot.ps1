@@ -158,6 +158,117 @@ $entryMatches = [regex]::Matches($sotText, '(?m)^\s*@(?!string\b|preamble\b|comm
 $entryCount   = $entryMatches.Count
 $byType = $entryMatches | Group-Object { $_.Groups[1].Value.ToLower() } | Sort-Object Name
 
+# --------------------------------------------------------------------------------------
+# Publication statistics -> _data/pubstats.yml
+#
+# The page needs "N papers, n as primary author, m as co-author". Those numbers must never
+# be typed into the page: they change with every publication, and a hand-written count
+# that nobody updates is a false claim on a public academic page. They are counted from
+# the bibliography here, on every sync, so they cannot drift from the list beside them.
+#
+# Primary authorship is taken from the `authorship` field when the entry has one, and
+# from the author list position when it does not. Both are computed either way and a
+# disagreement is reported: the field is the source of truth, and position is the check
+# on it. Entries carrying no `authorship` at all are counted separately rather than
+# silently assumed to be co-authored -- "not recorded" and "co-author" are different
+# facts, and collapsing them is how a record quietly loses information.
+# --------------------------------------------------------------------------------------
+$ownerNames = @('Kim, Haesung', 'Kim, Hae Sung')
+$statEntries = [regex]::Matches($sotText, '(?ms)^@(?!string\b|preamble\b|comment\b)([A-Za-z]+)\s*\{(.*?)(?=^@|\z)')
+
+$stat = [ordered]@{
+    total = 0; article = 0; inproceedings = 0; misc = 0
+    preprint = 0; peer_reviewed = 0
+    primary = 0; co_author = 0
+    role_first = 0; role_co_first = 0; role_corresponding = 0; role_co_author = 0; role_unrecorded = 0
+}
+$roleMismatch = @()
+
+foreach ($m in $statEntries) {
+    $type = $m.Groups[1].Value.ToLower()
+    $body = $m.Groups[2].Value
+    $stat.total++
+    if ($stat.Contains($type)) { $stat[$type]++ }
+
+    $isPreprint = $body -match '(?ms)keywords\s*=\s*\{[^}]*preprint'
+    if ($isPreprint) { $stat.preprint++ } else { $stat.peer_reviewed++ }
+
+    # Author position. The field spans lines, so match across them.
+    $authorField = ([regex]::Match($body, '(?ms)author\s*=\s*\{(.*?)\}')).Groups[1].Value
+    $authors = ($authorField -replace '\s+', ' ') -split '\s+and\s+'
+    $pos = 0
+    for ($i = 0; $i -lt $authors.Count; $i++) {
+        $a = $authors[$i].Trim()
+        foreach ($n in $ownerNames) { if ($a.StartsWith($n)) { $pos = $i + 1; break } }
+        if ($pos) { break }
+    }
+
+    $roleField = ([regex]::Match($body, '(?ms)authorship\s*=\s*\{([^}]*)\}')).Groups[1].Value
+    $hasRole = -not [string]::IsNullOrWhiteSpace($roleField)
+    if ($hasRole) {
+        if ($roleField -match 'co-first')      { $stat.role_co_first++ }
+        if ($roleField -match 'corresponding') { $stat.role_corresponding++ }
+        if ($roleField -match '(^|,)\s*first') { $stat.role_first++ }
+        if ($roleField -match 'co-author')     { $stat.role_co_author++ }
+    }
+    else { $stat.role_unrecorded++ }
+
+    # Primary = first-listed author, or shared first authorship.
+    $primaryByPosition = ($pos -eq 1)
+    $primaryByField    = $hasRole -and ($roleField -match 'co-first' -or $roleField -match '(^|,)\s*first' -or $roleField -match 'corresponding')
+    $isPrimary = if ($hasRole) { $primaryByField -or $primaryByPosition } else { $primaryByPosition }
+    if ($isPrimary) { $stat.primary++ } else { $stat.co_author++ }
+
+    if ($hasRole -and ($primaryByField -ne $primaryByPosition) -and -not ($roleField -match 'co-first' -and $pos -ne 1)) {
+        $key = ([regex]::Match($body, '^([^,]*),')).Groups[1].Value.Trim()
+        $roleMismatch += "$key : authorship='$roleField' but author position is $pos"
+    }
+}
+
+if ($roleMismatch.Count -gt 0) {
+    Write-Warning "authorship field disagrees with author position in $($roleMismatch.Count) entry(ies):"
+    foreach ($r in $roleMismatch) { Write-Warning "    $r" }
+}
+
+$statsYaml = @"
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Counted from the bibliography by bin/sync-sot.ps1 on every sync, so these numbers
+# cannot drift from the list they describe. Never write a publication count into a page
+# by hand: it is wrong the day the next paper appears, and nobody notices.
+#
+# primary         = first-listed author, or shared first authorship, or corresponding
+# co_author       = everything else
+# role_unrecorded = entries with no authorship field at all. Not the same as
+#                   co-authored - it means the record does not say.
+#
+# NOTE: no backticks in this block. It lives in a PowerShell double-quoted here-string,
+# where a backtick is the escape character - "authorship" written with backticks around
+# it emitted a literal BEL (0x07) into the file, and YAML refuses to parse a control
+# character, taking the whole site build down with it.
+# ============================================================================
+
+total: $($stat.total)
+article: $($stat.article)
+inproceedings: $($stat.inproceedings)
+misc: $($stat.misc)
+peer_reviewed: $($stat.peer_reviewed)
+preprint: $($stat.preprint)
+primary: $($stat.primary)
+co_author: $($stat.co_author)
+role_first: $($stat.role_first)
+role_co_first: $($stat.role_co_first)
+role_corresponding: $($stat.role_corresponding)
+role_co_author: $($stat.role_co_author)
+role_unrecorded: $($stat.role_unrecorded)
+"@
+
+$statsPath = Join-Path $here '..\_data\pubstats.yml'
+$statsOld = ''
+if (Test-Path -LiteralPath $statsPath) { $statsOld = Get-Content -LiteralPath $statsPath -Raw -Encoding UTF8 }
+$statsChanged = ($statsOld -ne $statsYaml)
+
 $stamp = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
 $header = @"
 % ============================================================================
@@ -473,12 +584,16 @@ else {
     Write-Host "Profile: source not found at $ProfileSourcePath -- leaving the committed copies alone."
 }
 
+Write-Host "Stats  : $($stat.total) papers -- primary $($stat.primary), co-author $($stat.co_author)" -NoNewline
+if ($stat.role_unrecorded -gt 0) { Write-Host "  ($($stat.role_unrecorded) with no authorship field)" -ForegroundColor Yellow } else { Write-Host "" }
+
 if ($Check) {
-    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged) {
+    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged -or $statsChanged) {
         if ($changed)         { Write-Host "CHECK: bibliography out of date." -ForegroundColor Yellow }
         if ($cvChanged)       { Write-Host "CHECK: CV PDF out of date." -ForegroundColor Yellow }
         if ($profileChanged)  { Write-Host "CHECK: profile out of date." -ForegroundColor Yellow }
         if ($socialsChanged)  { Write-Host "CHECK: generated socials.yml out of date." -ForegroundColor Yellow }
+        if ($statsChanged)    { Write-Host "CHECK: generated pubstats.yml out of date." -ForegroundColor Yellow }
         Write-Host "       run without -Check to sync." -ForegroundColor Yellow
         exit 2
     }
@@ -512,6 +627,12 @@ if ($profileChanged -or ($profileText -and -not (Test-Path -LiteralPath $Profile
 if ($socialsChanged) {
     [System.IO.File]::WriteAllText($SocialsPath, $socialsNew, (New-Object System.Text.UTF8Encoding($false)))
     Write-Host "socials.yml regenerated." -ForegroundColor Green
+    $wroteSomething = $true
+}
+
+if ($statsChanged) {
+    [System.IO.File]::WriteAllText($statsPath, $statsYaml, (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "pubstats.yml regenerated." -ForegroundColor Green
     $wroteSomething = $true
 }
 

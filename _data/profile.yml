@@ -45,20 +45,26 @@ name:
 #   ⚠ 단, 오너의 **게재 논문에 인쇄된 affiliation 은 "Birck Nanotechnology Center"** 다
 #     (10.1016/j.net.2026.104433, 10.1016/j.cap.2026.06.007 원문 확인). 서지와 프로필 표기가
 #     다른 것은 정상이지만, 인지하고 있을 것. 상세는 record.md.
-#   미확인: 학과 소속(Specere Lab은 School of Mechanical Engineering 소속이나
-#     **오너 본인의 임용 단위가 ME인지 Birck인지는 확인 불가**) → 추측해서 넣지 않는다.
+#   2026-08-08 오너 추가 확정: **학과 = School of Mechanical Engineering** (기존 "확인 불가" 해소),
+#     그리고 **Birck Nanotechnology Center 병기**. 둘 다 오너 직접 지시다.
 position:
   title: "Postdoctoral Researcher"
   advisor: "Prof. Thomas Beechem"
   lab: "Specere Lab"
   lab_url: "https://specere.org"
+  department: "School of Mechanical Engineering"   # 오너 직접 확정 2026-08-08
+  center: "Birck Nanotechnology Center"            # 랩이 쓰는 센터. 오너 지시로 병기(2026-08-08)
   unit: "Specere Lab"
   organization: "Purdue University"
   city: "West Lafayette"
   region: "IN"
   country: "USA"
-  # 공개물에 쓸 확정 표기. 오피스 호수·번지는 오너 지시로 제외(2026-08-08).
-  display: "Specere Lab, Purdue University, West Lafayette, IN"
+  # ★ 두 가지 길이를 둔다 — 한 줄에 넷을 다 넣으면 웹에서 길어진다.
+  #   display      : 웹 Contact·About 등 한 줄 표기 (랩 + 센터 + 대학)
+  #   display_full : CV·biosketch 등 지면 표기 (학과까지)
+  #   오피스 호수·번지는 오너 지시로 영구 제외(2026-08-08).
+  display: "Specere Lab, Birck Nanotechnology Center, Purdue University"
+  display_full: "Specere Lab, School of Mechanical Engineering, Birck Nanotechnology Center, Purdue University, West Lafayette, IN"
   since: "2025-08-31"   # Purdue 고용증빙(PSLF ECF, 2026-04-06 발급) 기준 정확한 시작일
 
 contact:
@@ -124,12 +130,12 @@ style:
 bio:
   short: >-
     Haesung Kim is a postdoctoral researcher at the Specere Lab,
-    Purdue University, working on opto-electronic characterization and physics-based
+    Birck Nanotechnology Center, Purdue University, working on opto-electronic characterization and physics-based
     modeling of semiconductor devices. Haesung received a Ph.D. in Electrical
     Engineering from Kookmin University, Seoul, Korea, in 2025.
   long: >-
     Haesung Kim is a postdoctoral researcher at the Specere Lab,
-    Purdue University, advised by Prof. Thomas Beechem. The work centers on developing
+    Birck Nanotechnology Center, Purdue University, advised by Prof. Thomas Beechem. The work centers on developing
     characterization techniques and physics-based models that extract device parameters
     which are otherwise difficult to separate — parasitic resistances, interface and
     subgap trap distributions, and the conduction band minimum — using opto-electronic

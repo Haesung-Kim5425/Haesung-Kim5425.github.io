@@ -1,0 +1,31 @@
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Counted from the bibliography by bin/sync-sot.ps1 on every sync, so these numbers
+# cannot drift from the list they describe. Never write a publication count into a page
+# by hand: it is wrong the day the next paper appears, and nobody notices.
+#
+# primary         = first-listed author, or shared first authorship, or corresponding
+# co_author       = everything else
+# role_unrecorded = entries with no authorship field at all. Not the same as
+#                   co-authored - it means the record does not say.
+#
+# NOTE: no backticks in this block. It lives in a PowerShell double-quoted here-string,
+# where a backtick is the escape character - "authorship" written with backticks around
+# it emitted a literal BEL (0x07) into the file, and YAML refuses to parse a control
+# character, taking the whole site build down with it.
+# ============================================================================
+
+total: 25
+article: 22
+inproceedings: 2
+misc: 1
+peer_reviewed: 24
+preprint: 1
+primary: 13
+co_author: 12
+role_first: 8
+role_co_first: 8
+role_corresponding: 0
+role_co_author: 12
+role_unrecorded: 0

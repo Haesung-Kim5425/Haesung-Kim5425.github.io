@@ -14,6 +14,32 @@ nav_order: 1
   re-run bin/sync-sot.ps1.
 {% endcomment %}
 
+{% comment %}
+  Summary counts. Every number here comes from _data/pubstats.yml, which bin/sync-sot.ps1
+  recomputes from the bibliography on every sync — so it cannot disagree with the list
+  below it. Do not write a count into this page by hand: it would be wrong the day the
+  next paper appears, and nobody would notice.
+
+  "Primary author" means first-listed, shared first, or corresponding. The record does not
+  yet carry an explicit role on every entry; until it does, entries without one are
+  classified by author position, and pubstats.yml reports how many those are.
+{% endcomment %}
+{% assign s = site.data.pubstats %}
+
+<p style="font-size: 0.95em; margin-bottom: 1.5rem;">
+  <strong>{{ s.peer_reviewed }}</strong> peer-reviewed papers —
+  <strong>{{ s.primary }}</strong> as primary author,
+  <strong>{{ s.co_author }}</strong> as co-author.
+  {% if s.preprint > 0 %}
+    {{ s.preprint }} preprint listed separately below.
+  {% endif %}
+  <br />
+  <span style="color: var(--global-text-color-light);">
+    {{ s.article }} journal articles, {{ s.inproceedings }} conference papers. Primary
+    author means first-listed, shared first, or corresponding.
+  </span>
+</p>
+
 <!-- Bibsearch Feature -->
 
 {% include bib_search.liquid %}

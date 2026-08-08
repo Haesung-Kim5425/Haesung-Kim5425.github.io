@@ -13,6 +13,7 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p><a href="https://specere.org">Specere Lab</a></p>
+    <p>Birck Nanotechnology Center</p>
     <p>Purdue University</p>
     <p>West Lafayette, IN, USA</p>
   # Same caveat as the subtitle above: front matter is static, so these repeat

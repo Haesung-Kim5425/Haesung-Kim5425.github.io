@@ -8,13 +8,14 @@
   placed just above the journal/date line. Using the hook rather than overriding the
   411-line theme layout means theme upgrades keep working.
 
-  Why this exists: two facts in the bibliography carry real academic weight and were
-  rendering as ordinary grey text, indistinguishable from a journal name —
+  What it renders, and why each earns a badge rather than plain text:
 
-    * co-first authorship (`authorship = {co-first}`, 5 entries) — this feeds directly
-      into how a publication record is assessed; burying it costs the author.
-    * preprint status (`keywords = {preprint}`, 1 entry) — the opposite problem: a
-      non-peer-reviewed item must never read as a journal publication on a public page.
+    * AUTHOR ROLE (`authorship`) — first, co-first, corresponding, co-author. This is what
+      a reader of an academic publication list is actually trying to establish, and it is
+      not recoverable by eye from a list of seventeen names. Every entry carries one, so
+      "no badge" never has to be interpreted.
+    * PREPRINT (`keywords = {preprint}`) — the opposite concern: a non-peer-reviewed item
+      must never read as a journal publication on a public page.
 
   Both are semantic values set in the bibliography source of truth, deliberately kept out
   of the free-text `note` field so that no renderer has to string-match prose that might
@@ -22,11 +23,21 @@
   true. Colours come from al-folio's theme custom properties, so the badges follow
   light/dark mode without any extra stylesheet.
 
+  ── Matching ──
+  Roles combine: `first,co-first` means listed first AND credited as shared first. Split
+  on the comma and test exact tokens rather than using `contains` on the whole string —
+  "co-first" contains "first", so a substring test would badge every shared-first paper as
+  plain first authorship too.
+
+  Where both apply, only "Co-first author" is shown. Printing "First author · Co-first
+  author" side by side says the same thing twice and reads as a contradiction.
+
   `authorship` is listed in `filtered_bibtex_keywords` in _config.yml, which stops the
   theme from also dumping it as a raw field on the page.
 {%- endcomment -%}
 
-{%- assign flag_style = "display:inline-block;margin:0 0 0.25rem 0;padding:0.1rem 0.5rem;border-radius:0.2rem;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;line-height:1.5;" -%}
+{%- assign flag_style = "display:inline-block;margin:0 0.35rem 0.25rem 0;padding:0.1rem 0.5rem;border-radius:0.2rem;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;line-height:1.5;" -%}
+{%- assign roles = entry.authorship | replace: " ", "" | split: "," -%}
 
 {%- if entry.keywords contains "preprint" -%}
   <span
@@ -36,10 +47,37 @@
   >
 {%- endif -%}
 
-{%- if entry.authorship contains "co-first" -%}
+{%- if roles contains "co-first" -%}
   <span
     style="{{ flag_style }}color:var(--global-theme-color);border:1px solid var(--global-theme-color);background:transparent;"
     title="Shared first authorship on this paper."
     >Co-first author</span
+  >
+{%- elsif roles contains "first" -%}
+  <span
+    style="{{ flag_style }}color:var(--global-theme-color);border:1px solid var(--global-theme-color);background:transparent;"
+    title="First-listed author on this paper."
+    >First author</span
+  >
+{%- endif -%}
+
+{%- if roles contains "corresponding" -%}
+  <span
+    style="{{ flag_style }}color:var(--global-card-bg-color);border:1px solid var(--global-theme-color);background:var(--global-theme-color);"
+    title="Corresponding author on this paper."
+    >Corresponding author</span
+  >
+{%- endif -%}
+
+{%- comment -%}
+  Co-authorship is stated, not advertised: a lighter border and muted text. It is the
+  answer to "what was the role here", not a claim to make loudly, and twelve shouting
+  badges would drown out the eight that matter.
+{%- endcomment -%}
+{%- if roles contains "co-author" -%}
+  <span
+    style="{{ flag_style }}font-weight:500;color:var(--global-text-color-light);border:1px solid var(--global-divider-color);background:transparent;"
+    title="Contributing author on this paper."
+    >Co-author</span
   >
 {%- endif -%}
