@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /research/
-title: research
+title: Research
 description: Four device families, one recurring problem — telling overlapping mechanisms apart.
 nav: true
 nav_order: 2

@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /publications/
-title: publications
+title: Publications
 description: In reverse chronological order. Rendered automatically from the group's verified BibTeX record — see the note at the bottom of the page.
 nav: true
 nav_order: 1

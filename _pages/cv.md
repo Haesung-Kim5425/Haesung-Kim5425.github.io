@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /cv/
-title: cv
+title: CV
 nav: true
 nav_order: 3
 description: Full curriculum vitae, generated from the same record as the publications list.

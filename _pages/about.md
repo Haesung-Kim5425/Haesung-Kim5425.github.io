@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 # Front matter cannot read data files, so the lab name and URL are repeated here from
 # profile.yml (position.lab / position.lab_url). If either changes there, change it here

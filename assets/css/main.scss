@@ -1,0 +1,102 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+/* Built-in Sass modules you’ll likely use across partials */
+@use "sass:math";
+@use "sass:string";
+
+/* Configure your design tokens BEFORE loading any of your partials.
+   Make sure `_sass/_variables.scss` declares `$max-content-width: 72rem !default;` */
+@use "variables" with (
+  $max-content-width: {{ site.max_width | default:  "930px" }}
+);
+
+/* Your project partials — convert these files to `@use "variables";`
+   (or `@use "variables" as *;`) inside each file and qualify variables if needed. */
+@use "themes";
+@use "layout";
+
+// Core styles organized by usage
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "publications";
+@use "components";
+@use "utilities";
+
+// Other specialized styles
+@use "tabs";
+@use "teachings";
+@use "typograms";
+
+// ===========================================================================
+// LOCAL OVERRIDE of al_folio_core's assets/css/main.scss.
+//
+// Everything above this line is the theme's file, copied verbatim. Only the
+// block below is ours. On a theme upgrade, diff the copy in
+//   vendor/bundle/ruby/*/gems/al_folio_core-*/assets/css/main.scss
+// against everything above, take their version, and re-append this block.
+//
+// This file is the theme's designated stylesheet entry point and is short and
+// stable, which is why it is the right place to extend. al-folio's other
+// customisation hook, `page._styles`, is per-page and is not available in the
+// about layout, so it cannot carry site-wide rules.
+// ===========================================================================
+
+// --- Justified body prose --------------------------------------------------
+// Owner's preference.
+//
+// Applied only from 768px up, on purpose. Justification needs enough characters
+// per line to distribute the slack invisibly; measured on this site it is about
+// 83 characters at desktop width, which is comfortably inside the range where it
+// looks right, and about 35 on a 375px phone, which is not. Below that the same
+// rule produces visible rivers of whitespace between words — the paragraph reads
+// worse justified than ragged-right.
+//
+// Hyphenation would soften the narrow case, and `hyphens: auto` is set for
+// browsers that honour it (`lang: en` in _config.yml is what enables it at all).
+// But it cannot be relied on: measuring a paragraph with hyphens on and off gave
+// exactly the same height here, so this engine is not hyphenating. Hence the
+// breakpoint rather than trusting hyphenation to rescue narrow columns.
+//
+// To justify at every width regardless, delete the media query wrapper.
+@media (min-width: 768px) {
+  .post article p {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    overflow-wrap: break-word;
+  }
+}
+
+// Except where the text is not prose: the address block under the profile
+// photo is a stack of short lines, and anything inside the publication list is
+// metadata. Justifying either just spaces out short lines oddly.
+.post article .profile .more-info p,
+.post article .publications p {
+  text-align: initial;
+  hyphens: manual;
+}
+
+@media (min-width: 768px) {
+  .post article .profile .more-info p,
+  .post article .publications p {
+    text-align: initial;
+  }
+}
+
+// --- Sentence case on the theme's own headings -----------------------------
+// Owner's preference: a capital first letter. The section headings on the
+// front page ("news", "selected publications") are written lower-case inside
+// the theme's about layout, so they cannot be fixed from a page's front
+// matter the way the page titles were.
+//
+// ::first-letter rather than text-transform: capitalize — capitalize would
+// title-case every word, turning "selected publications" into "Selected
+// Publications" and, worse, any acronym-led heading into something wrong.
+.post article > h2::first-letter {
+  text-transform: uppercase;
+}
