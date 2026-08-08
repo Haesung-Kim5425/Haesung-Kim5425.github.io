@@ -3,13 +3,15 @@
     Copies the academic record's artefacts into the site. One-way, record -> site.
 
 .DESCRIPTION
-    Two things the site publishes are produced outside this repository, by the session
-    that owns the academic record:
+    What the site publishes is produced outside this repository, by the session that owns
+    the academic record:
 
         ../achievements/publications.bib   -> _bibliography/papers.bib
+        ../achievements/profile.yml        -> _data/profile.yml
+                                           -> _data/socials.yml   (generated from it)
         ../cv/Haesung_Kim_CV.pdf           -> assets/pdf/Haesung_Kim_CV.pdf
 
-    Both have to be copied in. jekyll-scholar can only read a .bib inside the site root,
+    All of it has to be copied in. jekyll-scholar can only read a .bib inside the site root,
     and the GitHub Actions build only ever checks out this repository -- so nothing
     downstream can notice if a copy falls behind its source. This script is that copy, and
     it is the ONLY sanctioned way for either destination to change.
@@ -40,6 +42,13 @@ param(
     [string]$CvSourcePath,
     [string]$CvDestPath,
 
+    # The machine-readable profile: name, position, contact, ids, style rules, bio, metrics.
+    [string]$ProfileSourcePath,
+    [string]$ProfileDestPath,
+
+    # Generated from the profile above; consumed by jekyll-socials.
+    [string]$SocialsPath,
+
     # Report what would change without writing anything.
     [switch]$Check,
 
@@ -59,6 +68,9 @@ if (-not $SotPath)      { $SotPath      = Join-Path $here '..\..\achievements\pu
 if (-not $DestPath)     { $DestPath     = Join-Path $here '..\_bibliography\papers.bib' }
 if (-not $CvSourcePath) { $CvSourcePath = Join-Path $here '..\..\cv\Haesung_Kim_CV.pdf' }
 if (-not $CvDestPath)   { $CvDestPath   = Join-Path $here '..\assets\pdf\Haesung_Kim_CV.pdf' }
+if (-not $ProfileSourcePath) { $ProfileSourcePath = Join-Path $here '..\..\achievements\profile.yml' }
+if (-not $ProfileDestPath)   { $ProfileDestPath   = Join-Path $here '..\_data\profile.yml' }
+if (-not $SocialsPath)       { $SocialsPath       = Join-Path $here '..\_data\socials.yml' }
 
 if (-not (Test-Path -LiteralPath $SotPath)) {
     Write-Error "SoT not found: $SotPath`nThe hub session owns this file. Ask it to create the file before syncing."
@@ -213,10 +225,193 @@ else {
     Write-Host "CV    : source not found at $CvSourcePath -- leaving the committed copy alone."
 }
 
+# --------------------------------------------------------------------------------------
+# Profile (name, position, contact, ids, style rules, bio, metrics)
+#
+# Unlike the bibliography, this file carries contact details, and it is copied into a
+# PUBLIC repository. Two gates before anything is written:
+#
+#   1. meta.public_safe must be literally true. The record's author sets it, and it is an
+#      explicit statement that the file was written to be published. Absent or false, the
+#      sync refuses rather than assuming.
+#   2. An independent scan for the things the record says must never be published. Gate 1
+#      is a claim; this is a check. The point of a second gate is that it does not trust
+#      the first.
+#
+# The site's _data/socials.yml is then GENERATED from it, so the email, ORCID and Scholar
+# id exist in exactly one place across the whole system.
+# --------------------------------------------------------------------------------------
+$profileChanged = $false
+$socialsChanged = $false
+$profileText    = $null
+
+if (Test-Path -LiteralPath $ProfileSourcePath) {
+    $ProfileSourcePath = (Resolve-Path -LiteralPath $ProfileSourcePath).Path
+    $profileText = (Get-Content -LiteralPath $ProfileSourcePath -Raw -Encoding UTF8).TrimStart([char]0xFEFF)
+
+    Write-Host "Profile: $ProfileSourcePath"
+
+    # Gate 1 -- explicit publication consent.
+    if ($profileText -notmatch '(?m)^\s*public_safe\s*:\s*true\s*(#.*)?$') {
+        Write-Host ""
+        Write-Host "SYNC REFUSED - profile.yml is not marked public_safe." -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  This file is copied into a public repository. It is only copied when its"
+        Write-Host "  author has declared it safe to publish, with 'public_safe: true' under meta."
+        Write-Host "  Found no such line. Nothing was written."
+        Write-Host ""
+        exit 3
+    }
+
+    # Gate 2 -- look for the excluded items regardless of what gate 1 claimed.
+    $forbidden = @(
+        # International form (+1-765-..., +82-10-...). The leading '+' is required so this
+        # cannot fire on an ORCID iD, which is four groups of four digits and would
+        # otherwise look like a phone number to a looser pattern.
+        @{ name = 'phone number';          pattern = '(?<!\d)\+\d{1,3}[-. ]\d{2,4}[-. ]\d{3,4}[-. ]\d{3,4}(?!\d)' },
+        # Bare North American form. The lookarounds keep it off longer digit runs.
+        @{ name = 'phone number';          pattern = '(?<!\d)\d{3}[-. ]\d{3}[-. ]\d{4}(?!\d)' },
+        @{ name = 'office street address'; pattern = '(?i)\d{3,5}\s+Mitch\s+Daniels' },
+        @{ name = 'date of birth';         pattern = '(?<!\d)19\d{2}-\d{2}-\d{2}(?!\d)' },
+        @{ name = 'GPA';                   pattern = '(?<!\d)[0-4]\.\d{1,2}\s*/\s*4\.5(?!\d)' }
+    )
+
+    # Two kinds of line are not evidence of a leak and must not be scanned:
+    #   - comments, which is where the file explains what it must never contain;
+    #   - the `exclude:` block, which is a list of exactly those things, written as data.
+    # Scanning either would make the file fail for correctly documenting its own rules.
+    $scannable = New-Object System.Collections.Generic.List[string]
+    $inExclude = $false
+    foreach ($line in ($profileText -split "`n")) {
+        if ($line -match '^[A-Za-z_]') { $inExclude = ($line -match '^exclude\s*:') }
+        if ($inExclude) { continue }
+        if ($line.TrimStart().StartsWith('#')) { continue }
+        $scannable.Add($line)
+    }
+
+    $found = @()
+    foreach ($f in $forbidden) {
+        foreach ($line in $scannable) {
+            if ($line -match $f.pattern) { $found += "$($f.name): $($line.Trim())" }
+        }
+    }
+    if ($found.Count -gt 0) {
+        Write-Host ""
+        Write-Host "SYNC REFUSED - profile.yml contains data the record marks as never-publish." -ForegroundColor Red
+        Write-Host ""
+        foreach ($f in $found) { Write-Host "    $f" -ForegroundColor Yellow }
+        Write-Host ""
+        Write-Host "  It is marked public_safe, but this check does not take that on trust."
+        Write-Host "  Remove the value from profile.yml (it belongs in record.md, which is never"
+        Write-Host "  copied here), then sync again. Nothing was written."
+        Write-Host ""
+        exit 3
+    }
+
+    # Cross-check the author-name variants against _config.yml. jekyll-scholar reads its
+    # name list from _config.yml, which cannot read a data file, so that one value has to
+    # be duplicated -- and a mismatch fails silently, printing the owner's own name
+    # unbolded on their own papers. Compare them here instead of hoping.
+    $variants = [regex]::Matches($profileText, '(?m)^\s*-\s*"(Kim,[^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+    if ($variants.Count -gt 0) {
+        $configPath = Join-Path $here '..\_config.yml'
+        if (Test-Path -LiteralPath $configPath) {
+            $configText = Get-Content -LiteralPath $configPath -Raw -Encoding UTF8
+            $given = $variants | ForEach-Object { ($_ -split ',\s*')[1] }
+            foreach ($g in $given) {
+                if ($configText -notmatch [regex]::Escape($g)) {
+                    Write-Warning "profile.yml lists the name variant '$g' but _config.yml's scholar.first_name does not."
+                    Write-Warning "Papers published under that spelling will render with the author's name unbolded."
+                }
+            }
+        }
+    }
+
+    $profileHeader = @"
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Copied from the machine-readable profile in the academic record:
+#     achievements/profile.yml
+#
+# Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
+# ============================================================================
+
+"@
+    $profileNew = $profileHeader + $profileText
+
+    $profileOldBody = ''
+    if (Test-Path -LiteralPath $ProfileDestPath) {
+        $raw = Get-Content -LiteralPath $ProfileDestPath -Raw -Encoding UTF8
+        if ($null -ne $raw) { $profileOldBody = [regex]::Replace($raw, '(?s)^# =+.*?^# =+[ \t]*\r?\n', '', 'Multiline') }
+    }
+    $profileChanged = ($profileOldBody -ne $profileText)
+
+    # ---- Generate _data/socials.yml -------------------------------------------------
+    # jekyll-socials reads site.data.socials.*, so these values cannot simply be looked up
+    # from the profile at render time. Generating the file keeps a single origin.
+    function Get-One([string]$pattern, [string]$label) {
+        $m = [regex]::Matches($profileText, $pattern)
+        if ($m.Count -ne 1) {
+            Write-Host ""
+            Write-Host "SYNC REFUSED - expected exactly one '$label' in profile.yml, found $($m.Count)." -ForegroundColor Red
+            Write-Host "  Refusing to guess. A wrong value here is published as the owner's own." -ForegroundColor Red
+            Write-Host ""
+            exit 3
+        }
+        return $m[0].Groups[1].Value.Trim()
+    }
+    $pEmail    = Get-One '(?m)^\s{2,}email\s*:\s*"([^"]+)"'          'contact.email'
+    $pOrcid    = Get-One '(?m)^\s{2,}orcid\s*:\s*"([^"]+)"'          'ids.orcid'
+    $pScholar  = Get-One '(?m)^\s{2,}google_scholar\s*:\s*"([^"]+)"' 'ids.google_scholar'
+
+    if ($pEmail -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { Write-Host "SYNC REFUSED - '$pEmail' does not look like an email address." -ForegroundColor Red; exit 3 }
+    if ($pOrcid -notmatch '^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$') { Write-Host "SYNC REFUSED - '$pOrcid' does not look like an ORCID iD." -ForegroundColor Red; exit 3 }
+
+    $socialsNew = @"
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Built by bin/sync-sot.ps1 from achievements/profile.yml. The email address, ORCID and
+# Scholar id below exist in exactly one place in the whole system - that file - because
+# they were once duplicated across three files here and a stale address on a public page
+# is a dead contact route nobody notices.
+#
+# To change any of them, change achievements/profile.yml and re-run:
+#     pwsh -File bin/sync-sot.ps1
+# ============================================================================
+
+email: $pEmail
+orcid_id: $pOrcid
+scholar_userid: $pScholar
+
+# --- Site-local, not part of the academic record --------------------------------------
+# github_username is where this site is hosted rather than a research identifier, and the
+# CV path is a location inside this repository. Neither belongs in the shared profile.
+github_username: kim5425
+cv_pdf: /assets/pdf/Haesung_Kim_CV.pdf
+rss_icon: false # no blog on this site, so no feed to advertise
+"@
+
+    $socialsOld = ''
+    if (Test-Path -LiteralPath $SocialsPath) { $socialsOld = Get-Content -LiteralPath $SocialsPath -Raw -Encoding UTF8 }
+    $socialsChanged = ($socialsOld -ne $socialsNew)
+
+    Write-Host "     -> $ProfileDestPath" -NoNewline
+    if ($profileChanged) { Write-Host "  [differs]" -ForegroundColor Yellow } else { Write-Host "  [current]" }
+    Write-Host "     -> $SocialsPath (generated)" -NoNewline
+    if ($socialsChanged) { Write-Host "  [differs]" -ForegroundColor Yellow } else { Write-Host "  [current]" }
+}
+else {
+    Write-Host "Profile: source not found at $ProfileSourcePath -- leaving the committed copies alone."
+}
+
 if ($Check) {
-    if ($changed -or $cvChanged) {
-        if ($changed)   { Write-Host "CHECK: bibliography out of date." -ForegroundColor Yellow }
-        if ($cvChanged) { Write-Host "CHECK: CV PDF out of date." -ForegroundColor Yellow }
+    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged) {
+        if ($changed)         { Write-Host "CHECK: bibliography out of date." -ForegroundColor Yellow }
+        if ($cvChanged)       { Write-Host "CHECK: CV PDF out of date." -ForegroundColor Yellow }
+        if ($profileChanged)  { Write-Host "CHECK: profile out of date." -ForegroundColor Yellow }
+        if ($socialsChanged)  { Write-Host "CHECK: generated socials.yml out of date." -ForegroundColor Yellow }
         Write-Host "       run without -Check to sync." -ForegroundColor Yellow
         exit 2
     }
@@ -238,6 +433,18 @@ if ($cvChanged) {
     if (-not (Test-Path -LiteralPath $cvDestDir)) { New-Item -ItemType Directory -Path $cvDestDir | Out-Null }
     Copy-Item -LiteralPath $CvSourcePath -Destination $CvDestPath -Force
     Write-Host "CV PDF synced." -ForegroundColor Green
+    $wroteSomething = $true
+}
+
+if ($profileChanged -or ($profileText -and -not (Test-Path -LiteralPath $ProfileDestPath))) {
+    [System.IO.File]::WriteAllText($ProfileDestPath, $profileNew, (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "Profile synced." -ForegroundColor Green
+    $wroteSomething = $true
+}
+
+if ($socialsChanged) {
+    [System.IO.File]::WriteAllText($SocialsPath, $socialsNew, (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "socials.yml regenerated." -ForegroundColor Green
     $wroteSomething = $true
 }
 

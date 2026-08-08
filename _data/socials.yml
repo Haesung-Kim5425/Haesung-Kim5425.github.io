@@ -1,33 +1,22 @@
-# Social / profile links shown under the About page photo and in the footer.
-# Rendered by the jekyll-socials plugin: https://github.com/george-gca/jekyll-socials
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
 #
-# ★ Public site. Only work contact details belong here — never a home address or
-#   personal phone number. Never add an ID that has not been confirmed by the owner:
-#   a wrong ORCID / Scholar link points visitors at somebody else's record.
+# Built by bin/sync-sot.ps1 from achievements/profile.yml. The email address, ORCID and
+# Scholar id below exist in exactly one place in the whole system - that file - because
+# they were once duplicated across three files here and a stale address on a public page
+# is a dead contact route nobody notices.
+#
+# To change any of them, change achievements/profile.yml and re-run:
+#     pwsh -File bin/sync-sot.ps1
+# ============================================================================
 
-# ★ SINGLE COPY. This is the only place in the site that holds the email address.
-#   Every page renders it from here (the contact page via
-#   {% al_email_protect_link site.data.socials.email %}, the footer icons via
-#   jekyll-socials). _data/cv.yml and assets/json/resume.json deliberately leave it out.
-#   The address is tied to the current Purdue post and will stop working on a move, so
-#   there must be exactly one line to change. Do not paste it anywhere else.
-#   Owner approved publishing it on 2026-08-08.
 email: kim5425@purdue.edu
-orcid_id: 0000-0002-3392-9444 # verified against pub.orcid.org (name: Haesung Kim), 2026-08-07
-github_username: kim5425
-
-# Google Scholar profile. Attribution confirmed by the hub session on 2026-08-07: the
-# profile lists "Post-doctoral Researcher, Purdue University" with a verified purdue.edu
-# address. The aggregate metrics from it are shown on the publications page, always with
-# their retrieval date.
+orcid_id: 0000-0002-3392-9444
 scholar_userid: 976BWb4AAAAJ
 
-rss_icon: false # no blog on this site, so no feed to advertise
-
-# Download button under the profile photo. The file is copied in from the academic record
-# by bin/sync-sot.ps1 — it is a build artefact, not something to edit or replace by hand.
+# --- Site-local, not part of the academic record --------------------------------------
+# github_username is where this site is hosted rather than a research identifier, and the
+# CV path is a location inside this repository. Neither belongs in the shared profile.
+github_username: kim5425
 cv_pdf: /assets/pdf/Haesung_Kim_CV.pdf
-
-# --- Pending owner confirmation --------------------------------------------
-# linkedin_username:
-# research_gate_profile:
+rss_icon: false # no blog on this site, so no feed to advertise

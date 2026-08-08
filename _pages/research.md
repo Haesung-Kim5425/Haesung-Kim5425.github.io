@@ -24,8 +24,7 @@ nav_order: 2
   paper in the bibliography, it does not belong on this page.
 {% endcomment %}
 
-The work is in **opto-electronic characterization of semiconductor devices**,
-physics-based modelling, and the development of analysis methods. The recurring problem
+{{ site.data.profile.research_focus }} The recurring problem
 across all of it: an ordinary I–V or C–V sweep returns a single lumped number where
 several physical mechanisms overlap. Until those mechanisms can be separated, a device's
 behaviour gets attributed to a fitting parameter rather than to a trap population, a

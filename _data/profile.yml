@@ -1,0 +1,128 @@
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Copied from the machine-readable profile in the academic record:
+#     achievements/profile.yml
+#
+# Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
+# ============================================================================
+# profile.yml — 기계가독 프로필 SoT
+#
+# 목적: 이름·소속·연락처·식별자·표기규약·bio·지표를 **한 곳에서** 소유한다.
+#       렌더(홈페이지·CV·biosketch)는 이 파일을 읽어 배선한다. 값을 복사해 두지 않는다.
+#       이직·소속변경 시 여기 한 줄만 고치면 모든 렌더가 따라온다.
+#
+# ★★★ 이 파일은 공개 저장소(kim5425.github.io)로 복사된다.
+#     ⇒ **공개 안전한 값만 담는다. 비공개 항목을 절대 넣지 말 것.**
+#     전화번호·오피스 상세주소·GPA·생년월일·성별·국적은 여기 없다(있어서도 안 된다).
+#     그 값들과 공개/비공개 정책은 `record.md`에만 있고, record.md는 공개 복사 대상이 아니다.
+#
+# 역할 분담
+#   profile.yml  = 값 (렌더가 읽는 기계가독 원본)
+#   record.md    = 서술·출처·이력·비공개 항목 (사람이 읽는 문서)
+#   publications.bib = 논문 (별도 SoT)
+#   metrics.md   = 지표의 출처·주의사항 서술. 값 자체는 아래 metrics 블록이 원본.
+
+meta:
+  updated: "2026-08-08"
+  public_safe: true          # 공개 저장소 복사 허용
+  owner_approved: "2026-08-08"
+
+name:
+  full: "Haesung Kim"
+  family: "Kim"
+  given: "Haesung"
+  # 게재 레코드상 실제로 쓰인 표기 변형. 이름 매칭·볼드 처리에 **둘 다** 필요하다.
+  # "Kim, Hae Sung"(띄어쓰기)은 10.1166/jnn.2021.19391 의 등록 표기다.
+  # ★ 성만으로 매칭하지 말 것 — 논문마다 Kim 성 공저자가 3~4명이다.
+  bibtex_variants:
+    - "Kim, Haesung"
+    - "Kim, Hae Sung"
+
+position:
+  title: "Postdoctoral Researcher"
+  advisor: "Prof. Thomas Beechem"
+  unit: "Birck Nanotechnology Center"
+  organization: "Purdue University"
+  city: "West Lafayette"
+  region: "IN"
+  country: "USA"
+  # 공개물에 쓸 확정 표기. 오피스 호수·번지는 오너 지시로 제외(2026-08-08).
+  display: "Birck Nanotechnology Center, Purdue University, West Lafayette, IN"
+  since: "2025-08"
+
+contact:
+  # ★ 사이트·CV·biosketch가 이메일을 각자 복사해 두지 말 것.
+  #   2026-08-08 실측에서 홈페이지 안에만 3곳에 복제돼 있었다(socials.yml / cv.yml / resume.json).
+  #   이직 시 여기만 고치면 되도록 유지한다.
+  email: "kim5425@purdue.edu"
+  email_note: "Purdue 재직 기반 주소. 이직 시 갱신 필요."
+
+ids:
+  orcid: "0000-0002-3392-9444"
+  orcid_url: "https://orcid.org/0000-0002-3392-9444"
+  google_scholar: "976BWb4AAAAJ"
+  google_scholar_url: "https://scholar.google.com/citations?user=976BWb4AAAAJ"
+
+# ── 표기 규약 (오너 확정 2026-08-08) — 모든 렌더가 지킬 것 ────────────────────
+style:
+  person: "third"                     # 3인칭 서술
+  pronouns: "none"                    # ★ 대명사를 쓰지 않는다. he/she/they 임의 삽입 금지.
+  publication_counts_in_prose: false  # ★ 산문에 논문 수를 적지 않는다. 목록 자체가 개수다.
+  notes: >-
+    한 사이트/문서 안에서 인칭이 섞이면 저자가 둘인 것처럼 읽힌다.
+    bio 밖(Research·Contact 문안, config의 설명문·contact_note, og:description,
+    alt 텍스트)에도 동일하게 적용한다.
+
+# ── Bio (오너 승인 2026-08-08) ────────────────────────────────────────────────
+# ★ 승인된 문안이다. 렌더는 **글자 그대로** 쓴다. 윤문·의역 금지.
+#   고칠 일이 생기면 허브를 거쳐 오너 승인을 다시 받는다.
+bio:
+  short: >-
+    Haesung Kim is a postdoctoral researcher at the Birck Nanotechnology Center,
+    Purdue University, working on opto-electronic characterization and physics-based
+    modeling of semiconductor devices. Haesung received a Ph.D. in Electrical
+    Engineering from Kookmin University, Seoul, Korea, in 2025.
+  long: >-
+    Haesung Kim is a postdoctoral researcher at the Birck Nanotechnology Center,
+    Purdue University, advised by Prof. Thomas Beechem. The work centers on developing
+    characterization techniques and physics-based models that extract device parameters
+    which are otherwise difficult to separate — parasitic resistances, interface and
+    subgap trap distributions, and the conduction band minimum — using opto-electronic
+    and transient measurements. This methodology has been applied across four device
+    families: silicon MOSFETs including gate-all-around and NAND flash structures,
+    amorphous IGZO thin-film transistors, ferroelectric FETs, and ferroelectric TFTs.
+    Haesung received the Ph.D., M.S., and B.S. degrees in Electrical Engineering from
+    Kookmin University, Seoul, Korea.
+
+research_focus: >-
+  Opto-electronics-based characterization of semiconductor devices, physics-based
+  device modeling, and the development of parameter-extraction methods.
+
+# ── 지표 ─────────────────────────────────────────────────────────────────────
+# ★ 헌장: 지표는 출처 URL + 확인 날짜 없이 쓰지 않는다.
+#   렌더는 아래 as_of 를 **반드시 값과 함께** 표시할 것. 날짜 없이 숫자만 쓰면 안 된다.
+metrics:
+  as_of: "2026-08-07"
+  source: "Google Scholar"
+  source_url: "https://scholar.google.com/citations?user=976BWb4AAAAJ"
+  citations: 63
+  h_index: 6
+  i10_index: 2
+  # ★ 논문 수는 여기 없다. Scholar는 동명이인·중복을 섞으므로 논문 수를 지표로 쓰지 않는다.
+  #   개수가 필요하면 publications.bib 엔트리를 세되, 산문에는 적지 않는다(style 참조).
+  caution: >-
+    Google Scholar에는 공식 API가 없다. 위 값은 프로필 페이지를 직접 조회해 읽은 것이며
+    Scholar 자체가 오귀속을 포함할 수 있다. 공개 배포 직전 재확인할 것.
+
+# ── 렌더에 노출 금지 ─────────────────────────────────────────────────────────
+exclude:
+  # 오너 확정(2026-08-08). 이 항목들은 이 파일에 값이 없고, 앞으로도 넣지 않는다.
+  # 렌더는 산출물에서 이것들이 없는지 확인하는 용도로 쓸 수 있다.
+  - "phone numbers (US, KR)"
+  - "office street address (1205 Mitch Daniels Blvd)"
+  - "GPA"
+  - "date of birth"
+  - "gender, nationality"
+  # 동명이인 의심 — 판정 전까지 어떤 렌더에도 넣지 않는다. candidates.md A절 참조.
+  - "DOI 10.1038/s41586-025-09793-3 (Nature 2025) — identity unconfirmed"

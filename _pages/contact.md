@@ -9,7 +9,7 @@ nav_order: 4
 
 Email is the best way to get in touch.
 
-**Email** — {% al_email_protect_link site.data.socials.email %}
+**Email** — {% al_email_protect_link site.data.profile.contact.email %}
 
 {% comment %}
   The tag above comes from the al_email_protect plugin (protect_email: true in
@@ -21,9 +21,9 @@ Email is the best way to get in touch.
   site, so there is exactly one line to change when the address changes.
 {% endcomment %}
 
-**Affiliation** — Birck Nanotechnology Center, Purdue University, West Lafayette, IN, USA
+**Affiliation** — {{ site.data.profile.position.display }}
 
-**ORCID** — [0000-0002-3392-9444](https://orcid.org/0000-0002-3392-9444)
+**ORCID** — [{{ site.data.profile.ids.orcid }}]({{ site.data.profile.ids.orcid_url }})
 
 Enquiries are welcome — from colleagues about collaborations, from students with
 questions about the measurement techniques in these papers, and from anyone who cannot

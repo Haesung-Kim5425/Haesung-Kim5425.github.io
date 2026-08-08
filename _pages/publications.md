@@ -29,22 +29,23 @@ nav_order: 1
 {% comment %}
   ★ CITATION METRICS — RULES, READ BEFORE EDITING
 
-  1. Never type a number here from memory. Every figure must come from the metrics record
-     the hub session maintains (achievements/metrics.md), which stores the source URL
-     alongside the value.
-  2. The retrieval date must stay next to the numbers. Citation counts change weekly; an
-     undated figure on a public page is a claim that cannot be checked.
-  3. Do NOT add a publication count taken from Google Scholar — it merges duplicates and
-     same-name authors. The list on this page is the count.
+  The figures come from `metrics` in the machine-readable profile (achievements/profile.yml,
+  copied here by bin/sync-sot.ps1). Never type one in by hand.
 
-  Values below: hub session, retrieved 2026-08-07 from the profile linked.
+  1. `as_of` must stay printed beside the numbers. Citation counts change weekly, and an
+     undated figure on a public page is a claim nobody can check. If the date is ever
+     dropped from this markup the numbers must come out with it.
+  2. Do NOT add a publication count. The profile deliberately holds none: Google Scholar
+     merges duplicates and same-name authors, and a number written into the page goes
+     stale on the next paper. The list on this page is the count.
 {% endcomment %}
 
+{% assign m = site.data.profile.metrics %}
 <p style="font-size: 0.9em;">
   <strong>Citation metrics</strong> —
-  63 citations, h-index 6, i10-index 2.
-  <em>As of 7 August 2026, from
-  <a href="https://scholar.google.com/citations?user=976BWb4AAAAJ&hl=en">Google Scholar</a>.</em>
+  {{ m.citations }} citations, h-index {{ m.h_index }}, i10-index {{ m.i10_index }}.
+  <em>As of {{ m.as_of | date: "%-d %B %Y" }}, from
+  <a href="{{ m.source_url }}">{{ m.source }}</a>.</em>
   These figures are not updated automatically; follow the link for the current values.
 </p>
 
