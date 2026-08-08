@@ -1,0 +1,211 @@
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Copied from the machine-readable record:
+#     achievements/record.yml
+#
+# Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
+# ============================================================================
+# record.yml — 논문 외 업적의 **기계가독 SoT**
+#
+# 목적: teaching·conferences·awards·grants·patents 를 렌더(홈페이지·CV·biosketch)가
+#       기계로 읽게 한다. `record.md` 는 같은 내용의 **서술·출처·이력 문서**이고,
+#       값의 원본은 이 파일이다. (profile.yml ↔ record.md 와 같은 역할 분담)
+#
+# ★★★ 이 파일은 공개 저장소로 복사된다. **공개 안전한 값만.**
+#   아래는 `record.md` 에 있지만 **여기 없고, 앞으로도 넣지 않는다**:
+#     - GPA 3건 · 생년월일 · 전화번호 2건 · 오피스 번지 · 성별 · 국적
+#     - ★ **특허 공보의 발명자 자택 주소** — 등록특허공보 원문에는 오너를 포함한
+#       발명자 전원의 집 주소가 인쇄돼 있다. 절대 옮기지 말 것. 여기엔 이름만 있다.
+#     - 연구과제 금액 — 전부 미확인이라 필드 자체를 두지 않는다(추정 금지)
+#
+# ★ 미확인은 필드를 **생략**한다. 빈 문자열이나 "미확인"을 값으로 넣지 않는다
+#   — 렌더가 그걸 그대로 출력하면 공개물에 "미확인"이 찍힌다.
+
+meta:
+  public_safe: true
+  updated: "2026-08-08"
+  source: "achievements/record.md (원본 근거·출처는 그쪽 참조)"
+
+# ── 강의·멘토링 ──────────────────────────────────────────────────────────────
+# 출처: CV(2025-11-10판) Teaching Experience 절
+teaching:
+  - role: "Lecturer"
+    course: "Intelligent Semiconductor Devices"
+    detail: "3 credits, junior level; chalkboard lecture. Reference: Neamen, Semiconductor Physics and Devices"
+    institution: "Kookmin University"
+    year: 2025
+  - role: "Session Instructor"
+    course: "Winter job training: Measurement of semiconductor devices and extraction of characteristic parameters"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2024
+  - role: "Session Instructor"
+    course: "Summer job training: Measurement of semiconductor devices and extraction of characteristic parameters"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2023
+  - role: "Teaching Assistant"
+    course: "Basic Electronic Experiment"
+    detail: "sophomore level"
+    institution: "Kookmin University"
+    year: 2023
+  - role: "Teaching Assistant"
+    course: "Electrical Engineering Capstone Design I"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2023
+  - role: "Teaching Assistant"
+    course: "Electrical Engineering Capstone Design II"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2022
+  - role: "Teaching Assistant"
+    course: "Electrical Engineering Capstone Design I"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2022
+  - role: "Teaching Assistant"
+    course: "Electrical Engineering Capstone Design II"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2021
+  - role: "Session Instructor"
+    course: "Summer job training: Semiconductor Device TCAD Simulation Training"
+    detail: "junior--senior level"
+    institution: "Kookmin University"
+    year: 2021
+  - role: "Teaching Assistant"
+    course: "Electrical Engineering Capstone Design II"
+    detail: "senior level"
+    institution: "Kookmin University"
+    year: 2020
+  - role: "Undergraduate Mentoring"
+    course: "Semiconductor Engineering"
+    detail: "junior level. Reference: D. M. Kim, Microelectronic Semiconductor Physics and Devices"
+    institution: "Kookmin University"
+    year: 2019
+  - role: "Undergraduate Mentoring"
+    course: "Electromagnetics"
+    detail: "sophomore level. Reference: W. Hayt, Engineering Electromagnetics"
+    institution: "Kookmin University"
+    year: 2019
+
+# ── 학회 참석·발표 ────────────────────────────────────────────────────────────
+# 출처: CV(2025-11-10판) Experience 절 + Selected Conference Presentations 절(개최지).
+# ★ 이건 **참석·발표 이력**이다. DOI가 있는 학회 '논문'은 publications.bib 에 별도로 있다
+#   (IEEE NANO 2022, SNW 2025). 같은 행사가 양쪽에 나올 수 있으나 성격이 다르다.
+# ★ presentation(oral/poster/invited) 은 **CV에 확인된 1건에만** 있다.
+#   나머지는 미확인이라 필드를 생략했다 — 추정해서 채우지 않는다.
+conferences:
+  - name: "International Conference on Electronics, Information, and Communication"
+    short: "ICEIC"
+    scope: international
+    location: "Osaka, Japan"
+    year: 2025
+  - name: "IEEE Silicon Nanoelectronics Workshop"
+    short: "SNW"
+    scope: international
+    location: "Honolulu, HI, USA"
+    year: 2024
+  - name: "The 31st Korean Conference on Semiconductors"
+    short: "KCS"
+    scope: domestic
+    location: "Korea"
+    year: 2024
+  - name: "The 30th Korean Conference on Semiconductors"
+    short: "KCS"
+    scope: domestic
+    location: "Korea"
+    year: 2023
+  - name: "IEEE International Conference on Nanotechnology (22nd)"
+    short: "IEEE NANO"
+    scope: international
+    location: "Palma de Mallorca, Spain"
+    year: 2022
+  - name: "Summer Annual Conference of the Institute of Electronics and Information Engineers"
+    short: "IEIE"
+    scope: domestic
+    location: "Korea"
+    year: 2022
+  - name: "The 29th Korean Conference on Semiconductors"
+    short: "KCS"
+    scope: domestic
+    location: "Korea"
+    year: 2022
+  - name: "The 28th Korean Conference on Semiconductors"
+    short: "KCS"
+    scope: domestic
+    location: "Korea"
+    year: 2021
+  - name: "The 27th Korean Conference on Semiconductors"
+    short: "KCS"
+    scope: domestic
+    location: "Korea"
+    year: 2020
+    presentation: oral        # ★ CV에 명시된 유일한 발표 형태
+
+# ── 수상 ─────────────────────────────────────────────────────────────────────
+awards:
+  - name: "Excellent Talent Award"
+    org: "Kookmin University"
+    detail: "Ph.D. conferral, Fall 2025"
+    year: 2025
+  - name: "Excellent Poster Award on Site"
+    org: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+  - name: "Excellent Talent Award"
+    org: "Kookmin University"
+    detail: "M.S. conferral, Spring 2022"
+    year: 2022
+
+# ── 연구과제 ─────────────────────────────────────────────────────────────────
+# ★ 금액 필드 없음 — CV에 금액이 없고 확인되지 않았다. 추정 금지.
+grants:
+  - title: "Maximizing Energy Efficiency and Speed: Modeling and Optimization of Transient Response Characteristics in AOS-based Ferroelectric Memory Devices"
+    funder: "National Research Foundation of Korea"
+    role: "Principal Investigator"
+    start: "2024-09"
+    end: "2025-08"
+  - title: "Development of Application-customized Computing Be-spoke Device for High-density and Efficient PIM"
+    funder: "National Research Foundation of Korea"
+    role: "Graduate Researcher"
+    start: "2024-03"
+    end: "2024-12"
+  - title: "Semiconductor device modeling using artificial neural networks"
+    funder: "Industry--University Cooperation Research, Alsemy Co."
+    role: "Graduate Researcher"
+    start: "2022-06"
+    end: "2023-05"
+  - title: "Four-Step Brain Korea 21 Project"
+    funder: "National Research Foundation of Korea"
+    role: "Graduate Researcher and Staff"
+    start: "2020"
+    end: "2024"
+  - title: "Hybrid Device-Based Circadian ICT Research Center"
+    funder: "National Research Foundation of Korea"
+    role: "Graduate Researcher"
+    start: "2020"
+    end: "2022"
+
+# ── 특허 ─────────────────────────────────────────────────────────────────────
+# 출처: 등록특허공보 원문(`김해성-증빙-등록특허.pdf`) 직접 확인 2026-08-08.
+# ★ 공보에 발명자 자택 주소가 인쇄돼 있으나 **여기 옮기지 않았다.** 이름만 싣는다.
+patents:
+  - title_ko: "비정질 산화물 반도체 박막 트랜지스터의 최소 전도 대역 추출 방법 및 장치"
+    # ★ 영문 제목은 공보에 없다. 아래는 허브가 옮긴 번역이며 공식 명칭이 아니다.
+    title_en: "Method and apparatus for extracting the conduction band minimum of amorphous oxide semiconductor thin-film transistors"
+    title_en_is_translation: true
+    country: "KR"
+    office: "Korean Intellectual Property Office"
+    number: "10-2914693"
+    status: registered
+    registered_on: "2026-01-14"
+    published_on: "2026-01-16"
+    application_number: "10-2023-0035106"
+    filed_on: "2023-03-17"
+    assignee: "Kookmin University Industry-Academic Cooperation Foundation"
+    claims: 11
+    inventors_count: 10
+    inventor_position: 5        # 발명자 10인 중 5번째 (김동명·김대환·최성진·배종호·김해성 …)
+    related_doi: "10.1109/TED.2023.3269735"   # 같은 CBM 추출 기법의 저널 논문

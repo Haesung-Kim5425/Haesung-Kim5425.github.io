@@ -50,6 +50,10 @@ param(
     [string]$ProfileSourcePath,
     [string]$ProfileDestPath,
 
+    # The machine-readable record: teaching, conferences, awards, grants, patents.
+    [string]$RecordSourcePath,
+    [string]$RecordDestPath,
+
     # Generated from the profile above; consumed by jekyll-socials.
     [string]$SocialsPath,
 
@@ -76,6 +80,8 @@ if (-not $FigSourceDir) { $FigSourceDir = Join-Path $here '..\..\achievements\fi
 if (-not $FigDestDir)   { $FigDestDir   = Join-Path $here '..\assets\img\publication_preview' }
 if (-not $ProfileSourcePath) { $ProfileSourcePath = Join-Path $here '..\..\achievements\profile.yml' }
 if (-not $ProfileDestPath)   { $ProfileDestPath   = Join-Path $here '..\_data\profile.yml' }
+if (-not $RecordSourcePath)  { $RecordSourcePath  = Join-Path $here '..\..\achievements\record.yml' }
+if (-not $RecordDestPath)    { $RecordDestPath    = Join-Path $here '..\_data\record.yml' }
 if (-not $SocialsPath)       { $SocialsPath       = Join-Path $here '..\_data\socials.yml' }
 
 if (-not (Test-Path -LiteralPath $SotPath)) {
@@ -409,6 +415,66 @@ else {
 # The site's _data/socials.yml is then GENERATED from it, so the email, ORCID and Scholar
 # id exist in exactly one place across the whole system.
 # --------------------------------------------------------------------------------------
+# Shared gate for every YAML the record hands over. Written once and used for both
+# profile.yml and record.yml: duplicated safety logic is the kind that drifts, and the
+# copy that stops being maintained is the one still guarding something.
+function Assert-PublicSafe {
+    param([string]$Text, [string]$Label, [string]$Path)
+
+    if ($Text -notmatch '(?m)^\s*public_safe\s*:\s*true\s*(#.*)?$') {
+        Write-Host ""
+        Write-Host "SYNC REFUSED - $Label is not marked public_safe." -ForegroundColor Red
+        Write-Host "  $Path"
+        Write-Host ""
+        Write-Host "  This file is copied into a public repository. It is only copied when its author"
+        Write-Host "  has declared it safe to publish, with 'public_safe: true' under meta."
+        Write-Host ""
+        exit 3
+    }
+
+    # Values that must never be published. Patterns are deliberately narrow: an earlier
+    # version matched an ORCID as a phone number, and the hub's equivalent matched a
+    # patent application number. Identifiers are all hyphenated digit groups, so a loose
+    # phone pattern catches them, and a gate that rejects a correct file gets switched off.
+    $forbidden = @(
+        @{ name = 'phone number';    pattern = '(?<!\d)\+\d{1,3}[-. ]\d{2,4}[-. ]\d{3,4}[-. ]\d{3,4}(?!\d)' },
+        @{ name = 'phone number';    pattern = '(?<!\d)0(?:1\d|2|[3-6]\d)[-. ]\d{3,4}[-. ]\d{4}(?!\d)' },
+        @{ name = 'phone number';    pattern = '(?<!\d)\d{3}[-. ]\d{3}[-. ]\d{4}(?!\d)' },
+        @{ name = 'street address';  pattern = '(?i)\d{3,5}\s+Mitch\s+Daniels' },
+        @{ name = 'date of birth';   pattern = '(?<!\d)19\d{2}-\d{2}-\d{2}(?!\d)' },
+        @{ name = 'GPA';             pattern = '(?<!\d)[0-4]\.\d{1,2}\s*/\s*4\.5(?!\d)' }
+    )
+    # Key-based detection as well. The patent gazette this record was built from prints
+    # every inventor's home address, so the risk is a field being carried over wholesale
+    # rather than a value happening to look wrong.
+    $forbiddenKeys = 'address|addr|home|residence|phone|mobile|cell|tel|birth|dob|gpa|ssn|passport|gender|nationality'
+
+    $inExclude = $false
+    $found = @()
+    foreach ($line in ($Text -split "`n")) {
+        if ($line -match '^[A-Za-z_]') { $inExclude = ($line -match '^exclude\s*:') }
+        if ($inExclude) { continue }
+        if ($line.TrimStart().StartsWith('#')) { continue }
+        $k = [regex]::Match($line, '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*:')
+        if ($k.Success -and $k.Groups[1].Value -match "(?i)^($forbiddenKeys)$") {
+            $found += "key '$($k.Groups[1].Value)': $($line.Trim())"
+        }
+        foreach ($f in $forbidden) { if ($line -match $f.pattern) { $found += "$($f.name): $($line.Trim())" } }
+    }
+
+    if ($found.Count -gt 0) {
+        Write-Host ""
+        Write-Host "SYNC REFUSED - $Label contains data the record marks as never-publish." -ForegroundColor Red
+        Write-Host ""
+        foreach ($f in $found) { Write-Host "    $f" -ForegroundColor Yellow }
+        Write-Host ""
+        Write-Host "  It is marked public_safe, but this check does not take that on trust."
+        Write-Host "  Remove the value; it belongs in the narrative record, which is never copied here."
+        Write-Host ""
+        exit 3
+    }
+}
+
 $profileChanged = $false
 $socialsChanged = $false
 $profileText    = $null
@@ -420,62 +486,7 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
 
     Write-Host "Profile: $ProfileSourcePath"
 
-    # Gate 1 -- explicit publication consent.
-    if ($profileText -notmatch '(?m)^\s*public_safe\s*:\s*true\s*(#.*)?$') {
-        Write-Host ""
-        Write-Host "SYNC REFUSED - profile.yml is not marked public_safe." -ForegroundColor Red
-        Write-Host ""
-        Write-Host "  This file is copied into a public repository. It is only copied when its"
-        Write-Host "  author has declared it safe to publish, with 'public_safe: true' under meta."
-        Write-Host "  Found no such line. Nothing was written."
-        Write-Host ""
-        exit 3
-    }
-
-    # Gate 2 -- look for the excluded items regardless of what gate 1 claimed.
-    $forbidden = @(
-        # International form (+1-765-..., +82-10-...). The leading '+' is required so this
-        # cannot fire on an ORCID iD, which is four groups of four digits and would
-        # otherwise look like a phone number to a looser pattern.
-        @{ name = 'phone number';          pattern = '(?<!\d)\+\d{1,3}[-. ]\d{2,4}[-. ]\d{3,4}[-. ]\d{3,4}(?!\d)' },
-        # Bare North American form. The lookarounds keep it off longer digit runs.
-        @{ name = 'phone number';          pattern = '(?<!\d)\d{3}[-. ]\d{3}[-. ]\d{4}(?!\d)' },
-        @{ name = 'office street address'; pattern = '(?i)\d{3,5}\s+Mitch\s+Daniels' },
-        @{ name = 'date of birth';         pattern = '(?<!\d)19\d{2}-\d{2}-\d{2}(?!\d)' },
-        @{ name = 'GPA';                   pattern = '(?<!\d)[0-4]\.\d{1,2}\s*/\s*4\.5(?!\d)' }
-    )
-
-    # Two kinds of line are not evidence of a leak and must not be scanned:
-    #   - comments, which is where the file explains what it must never contain;
-    #   - the `exclude:` block, which is a list of exactly those things, written as data.
-    # Scanning either would make the file fail for correctly documenting its own rules.
-    $scannable = New-Object System.Collections.Generic.List[string]
-    $inExclude = $false
-    foreach ($line in ($profileText -split "`n")) {
-        if ($line -match '^[A-Za-z_]') { $inExclude = ($line -match '^exclude\s*:') }
-        if ($inExclude) { continue }
-        if ($line.TrimStart().StartsWith('#')) { continue }
-        $scannable.Add($line)
-    }
-
-    $found = @()
-    foreach ($f in $forbidden) {
-        foreach ($line in $scannable) {
-            if ($line -match $f.pattern) { $found += "$($f.name): $($line.Trim())" }
-        }
-    }
-    if ($found.Count -gt 0) {
-        Write-Host ""
-        Write-Host "SYNC REFUSED - profile.yml contains data the record marks as never-publish." -ForegroundColor Red
-        Write-Host ""
-        foreach ($f in $found) { Write-Host "    $f" -ForegroundColor Yellow }
-        Write-Host ""
-        Write-Host "  It is marked public_safe, but this check does not take that on trust."
-        Write-Host "  Remove the value from profile.yml (it belongs in record.md, which is never"
-        Write-Host "  copied here), then sync again. Nothing was written."
-        Write-Host ""
-        exit 3
-    }
+    Assert-PublicSafe -Text $profileText -Label 'profile.yml' -Path $ProfileSourcePath
 
     # Cross-check site_url against _config.yml's `url`.
     #
@@ -633,6 +644,57 @@ Write-Host "Stats  : $($stat.total) papers -- primary $($stat.primary), co-autho
 if ($stat.role_unrecorded -gt 0) { Write-Host "  ($($stat.role_unrecorded) with no authorship field)" -ForegroundColor Yellow } else { Write-Host "" }
 
 # --------------------------------------------------------------------------------------
+# Record: teaching, conferences, awards, grants, patents
+#
+# Same gate as the profile, and it matters more here. This file was assembled partly from
+# a Korean patent gazette, which prints every inventor's home address -- so the risk is a
+# whole field being carried across, not a value that happens to look wrong. The gate
+# checks keys as well as values for that reason.
+# --------------------------------------------------------------------------------------
+$recordChanged = $false
+$recordText    = $null
+
+if (Test-Path -LiteralPath $RecordSourcePath) {
+    $RecordSourcePath = (Resolve-Path -LiteralPath $RecordSourcePath).Path
+    $recordText = (Get-Content -LiteralPath $RecordSourcePath -Raw -Encoding UTF8).TrimStart([char]0xFEFF) -replace "`r`n", "`n"
+
+    Assert-PublicSafe -Text $recordText -Label 'record.yml' -Path $RecordSourcePath
+
+    $recordHeader = @"
+# ============================================================================
+# GENERATED FILE - DO NOT EDIT.
+#
+# Copied from the machine-readable record:
+#     achievements/record.yml
+#
+# Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
+# ============================================================================
+
+"@
+    $recordNew = $recordHeader + $recordText
+
+    $recordOldBody = ''
+    if (Test-Path -LiteralPath $RecordDestPath) {
+        $raw = Get-Content -LiteralPath $RecordDestPath -Raw -Encoding UTF8
+        if ($null -ne $raw) { $recordOldBody = [regex]::Replace($raw, '(?s)^# =+.*?^# =+[ \t]*\r?\n', '', 'Multiline') }
+    }
+    $recordChanged = ($recordOldBody -ne $recordText)
+
+    $counts = @()
+    foreach ($sec in 'teaching', 'conferences', 'awards', 'grants', 'patents') {
+        $n = ([regex]::Matches($recordText, "(?ms)^$sec\s*:\s*\n(.*?)(?=^\S|\z)") | ForEach-Object {
+            ([regex]::Matches($_.Groups[1].Value, '(?m)^\s{2}-\s')).Count
+        }) | Select-Object -First 1
+        $counts += "$sec $n"
+    }
+    Write-Host "Record : $($counts -join ' | ')" -NoNewline
+    if ($recordChanged) { Write-Host "  [differs]" -ForegroundColor Yellow } else { Write-Host "  [current]" }
+}
+else {
+    Write-Host "Record : source not found at $RecordSourcePath -- the CV page sections will be empty."
+}
+
+# --------------------------------------------------------------------------------------
 # Publication figures
 #
 # Referenced by `preview` fields in the bibliography, so a missing file is a broken image
@@ -679,8 +741,9 @@ elseif ($previewNames.Count -gt 0) {
 }
 
 if ($Check) {
-    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged -or $statsChanged -or $figChanged.Count -gt 0) {
-        if ($figChanged.Count -gt 0) { Write-Host "CHECK: $($figChanged.Count) publication figure(s) out of date." -ForegroundColor Yellow }
+    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged -or $statsChanged -or $recordChanged -or $panelStale) {
+        if ($panelStale)     { Write-Host "CHECK: selected-work panel out of date." -ForegroundColor Yellow }
+        if ($recordChanged)  { Write-Host "CHECK: record out of date." -ForegroundColor Yellow }
         if ($changed)         { Write-Host "CHECK: bibliography out of date." -ForegroundColor Yellow }
         if ($cvChanged)       { Write-Host "CHECK: CV PDF out of date." -ForegroundColor Yellow }
         if ($profileChanged)  { Write-Host "CHECK: profile out of date." -ForegroundColor Yellow }
@@ -725,6 +788,12 @@ if ($socialsChanged) {
 if ($statsChanged) {
     [System.IO.File]::WriteAllText($statsPath, $statsYaml, (New-Object System.Text.UTF8Encoding($false)))
     Write-Host "pubstats.yml regenerated." -ForegroundColor Green
+    $wroteSomething = $true
+}
+
+if ($recordChanged -or ($recordText -and -not (Test-Path -LiteralPath $RecordDestPath))) {
+    [System.IO.File]::WriteAllText($RecordDestPath, $recordNew, (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "Record synced." -ForegroundColor Green
     $wroteSomething = $true
 }
 
