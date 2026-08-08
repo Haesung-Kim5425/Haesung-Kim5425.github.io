@@ -707,20 +707,15 @@ third_party_libraries:
 # Get external JSON data
 # -----------------------------------------------------------------------------
 
-jekyll_get_json:
-  - data: resume
-    json: assets/json/resume.json # it can also be an url
-
-jsonresume:
-  - basics
-  - work
-  - education
-  - publications
-  - projects
-  - volunteer
-  - awards
-  - certificates
-  - skills
-  - languages
-  - interests
-  - references
+# The JSON Resume feed is not used. /cv/ serves the PDF generated from the academic
+# record rather than assembling a CV from a JSON file kept in this repo, so
+# assets/json/resume.json was deleted — it existed only to hold a second copy of the
+# name, email and identifiers, which is exactly the duplication this site avoids.
+#
+# jekyll_get_json:
+#   - data: resume
+#     json: assets/json/resume.json
+#
+# jsonresume:
+#   - basics
+#   ...

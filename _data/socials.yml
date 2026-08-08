@@ -13,10 +13,10 @@
 email: kim5425@purdue.edu
 orcid_id: 0000-0002-3392-9444
 scholar_userid: 976BWb4AAAAJ
+github_username: kim5425
 
 # --- Site-local, not part of the academic record --------------------------------------
-# github_username is where this site is hosted rather than a research identifier, and the
-# CV path is a location inside this repository. Neither belongs in the shared profile.
-github_username: kim5425
+# A path inside this repository and a display toggle. Neither is an identity, so neither
+# belongs in the shared profile.
 cv_pdf: /assets/pdf/Haesung_Kim_CV.pdf
 rss_icon: false # no blog on this site, so no feed to advertise

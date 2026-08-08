@@ -55,5 +55,5 @@ nav_order: 1
   paper presented as a journal article. Shared first authorship is marked
   <em>Co-first author</em>; preprints are marked as such and are not peer-reviewed
   publications. The authoritative record is
-  <a href="https://orcid.org/0000-0002-3392-9444">ORCID 0000-0002-3392-9444</a>.
+  <a href="{{ site.data.profile.ids.orcid_url }}">ORCID {{ site.data.profile.ids.orcid }}</a>.
 </p>

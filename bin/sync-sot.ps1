@@ -364,6 +364,7 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
     $pEmail    = Get-One '(?m)^\s{2,}email\s*:\s*"([^"]+)"'          'contact.email'
     $pOrcid    = Get-One '(?m)^\s{2,}orcid\s*:\s*"([^"]+)"'          'ids.orcid'
     $pScholar  = Get-One '(?m)^\s{2,}google_scholar\s*:\s*"([^"]+)"' 'ids.google_scholar'
+    $pGithub   = Get-One '(?m)^\s{2,}github\s*:\s*"([^"]+)"'         'ids.github'
 
     if ($pEmail -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { Write-Host "SYNC REFUSED - '$pEmail' does not look like an email address." -ForegroundColor Red; exit 3 }
     if ($pOrcid -notmatch '^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$') { Write-Host "SYNC REFUSED - '$pOrcid' does not look like an ORCID iD." -ForegroundColor Red; exit 3 }
@@ -384,11 +385,11 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
 email: $pEmail
 orcid_id: $pOrcid
 scholar_userid: $pScholar
+github_username: $pGithub
 
 # --- Site-local, not part of the academic record --------------------------------------
-# github_username is where this site is hosted rather than a research identifier, and the
-# CV path is a location inside this repository. Neither belongs in the shared profile.
-github_username: kim5425
+# A path inside this repository and a display toggle. Neither is an identity, so neither
+# belongs in the shared profile.
 cv_pdf: /assets/pdf/Haesung_Kim_CV.pdf
 rss_icon: false # no blog on this site, so no feed to advertise
 "@
