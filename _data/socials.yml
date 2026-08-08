@@ -5,7 +5,14 @@
 #   personal phone number. Never add an ID that has not been confirmed by the owner:
 #   a wrong ORCID / Scholar link points visitors at somebody else's record.
 
-email: kim5425@purdue.edu # Purdue work address
+# ★ SINGLE COPY. This is the only place in the site that holds the email address.
+#   Every page renders it from here (the contact page via
+#   {% al_email_protect_link site.data.socials.email %}, the footer icons via
+#   jekyll-socials). _data/cv.yml and assets/json/resume.json deliberately leave it out.
+#   The address is tied to the current Purdue post and will stop working on a move, so
+#   there must be exactly one line to change. Do not paste it anywhere else.
+#   Owner approved publishing it on 2026-08-08.
+email: kim5425@purdue.edu
 orcid_id: 0000-0002-3392-9444 # verified against pub.orcid.org (name: Haesung Kim), 2026-08-07
 github_username: kim5425
 

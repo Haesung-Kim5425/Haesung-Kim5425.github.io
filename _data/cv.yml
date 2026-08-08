@@ -10,7 +10,11 @@
 
 cv:
   name: Haesung Kim # verified: ORCID 0000-0002-3392-9444 person record
-  email: kim5425@purdue.edu # verified: Purdue work address
+  # ★ email deliberately absent. _data/socials.yml is the one place in this site that
+  #   holds the address; every page renders it from there. The address is tied to the
+  #   current Purdue post, so it will change on a move — one copy means one edit. When
+  #   this page is switched on, render it from site.data.socials.email rather than
+  #   pasting the address back in here.
   location: West Lafayette, IN, USA
   image: ""
 
