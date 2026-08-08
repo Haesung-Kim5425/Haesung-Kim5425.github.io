@@ -1,0 +1,46 @@
+{%- comment -%}
+  Extension point provided by al_folio_core's _layouts/bib.liquid:
+
+      {% capture hook_exists %}{% file_exists _includes/hook/bib.liquid %}{% endcapture %}
+      {% if hook_exists == 'true' %}{% include hook/bib.liquid %}{% endif %}
+
+  It runs once per bibliography entry, with `entry` in scope, and whatever it outputs is
+  placed just above the journal/date line. Using the hook rather than overriding the
+  411-line theme layout means theme upgrades keep working.
+
+  Why this exists: two facts in the bibliography carry real academic weight and were
+  rendering as ordinary grey text, indistinguishable from a journal name —
+
+    * co-first authorship (`note = {Co-first author}`, 5 entries) — this feeds directly
+      into how a publication record is assessed; burying it costs the author.
+    * preprint status (`keywords = {preprint}`, 1 entry) — the opposite problem: a
+      non-peer-reviewed item must never read as a journal publication on a public page.
+
+  Both fields are set in the bibliography source of truth, not here. This file only
+  decides how they look. Colours come from al-folio's theme custom properties, so the
+  badges follow light/dark mode without any extra stylesheet.
+
+  Note: the theme also prints `entry.note` verbatim on the line below. For the preprint
+  that is useful (the note spells out what "preprint" means); for the five co-first
+  entries it now repeats this badge. The fix belongs in the source of truth — the hub
+  session has been asked to drop `note = {Co-first author}` now that the flag is
+  rendered from it. Until then the duplication is cosmetic, not wrong.
+{%- endcomment -%}
+
+{%- assign flag_style = "display:inline-block;margin:0 0 0.25rem 0;padding:0.1rem 0.5rem;border-radius:0.2rem;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;line-height:1.5;" -%}
+
+{%- if entry.keywords contains "preprint" -%}
+  <span
+    style="{{ flag_style }}color:var(--global-warning-block-title);border:1px solid var(--global-warning-block);background:var(--global-warning-block-bg);"
+    title="Not peer reviewed. This is a preprint, not a journal publication."
+    >Preprint &middot; not peer reviewed</span
+  >
+{%- endif -%}
+
+{%- if entry.note contains "Co-first author" -%}
+  <span
+    style="{{ flag_style }}color:var(--global-theme-color);border:1px solid var(--global-theme-color);background:transparent;"
+    title="Shared first authorship on this paper."
+    >Co-first author</span
+  >
+{%- endif -%}

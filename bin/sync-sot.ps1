@@ -22,16 +22,24 @@
 [CmdletBinding()]
 param(
     # Path to the SoT .bib. Defaults to the hub's achievements/ directory, two levels up.
-    [string]$SotPath = (Join-Path $PSScriptRoot '..\..\achievements\publications.bib'),
+    [string]$SotPath,
 
     # Where jekyll-scholar reads from (see `scholar.bibliography` in _config.yml).
-    [string]$DestPath = (Join-Path $PSScriptRoot '..\_bibliography\papers.bib'),
+    [string]$DestPath,
 
     # Report what would change without writing anything.
     [switch]$Check
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Resolve the script's own directory in the body, not in a param() default.
+# $PSScriptRoot is not populated during parameter binding when the script is launched as
+# `powershell -File bin/sync-sot.ps1` (which is how the git pre-commit hook calls it), so
+# a Join-Path default there fails with "Cannot bind argument to parameter 'Path'".
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+if (-not $SotPath)  { $SotPath  = Join-Path $here '..\..\achievements\publications.bib' }
+if (-not $DestPath) { $DestPath = Join-Path $here '..\_bibliography\papers.bib' }
 
 if (-not (Test-Path -LiteralPath $SotPath)) {
     Write-Error "SoT not found: $SotPath`nThe hub session owns this file. Ask it to create the file before syncing."
@@ -105,7 +113,13 @@ if (Test-Path -LiteralPath $DestPath) {
     $oldRaw = Get-Content -LiteralPath $DestPath -Raw -Encoding UTF8
     if ($null -ne $oldRaw) {
         # Strip a previously generated header so an unchanged SoT does not look like a diff.
-        $oldBody = [regex]::Replace($oldRaw, '(?s)^% =+.*?^% =+\r?\n\r?\n', '', 'Multiline')
+        #
+        # Match through the closing banner line and its single line break. Do not require a
+        # blank line after it: PowerShell here-strings drop the newline before the closing
+        # "@, so the header ends with exactly one newline. Requiring two made this never
+        # match, which reported every file as changed and would have made the pre-commit
+        # freshness check block every commit.
+        $oldBody = [regex]::Replace($oldRaw, '(?s)^% =+.*?^% =+[ \t]*\r?\n', '', 'Multiline')
     }
 }
 

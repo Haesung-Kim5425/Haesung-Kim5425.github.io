@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 00:02:35   |   entries: 25
+% Synced: 2026-08-08 00:24:03   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -36,11 +36,18 @@
 % 미포함(공개 노출 금지) → candidates.md 참조
 %   - 10.1038/s41586-025-09793-3 (Nature, 2025) "Haesung Kim" 동명이인 의심(삼성 소속 저자군)
 %
-% 총 25건 = [at]article 22 + [at]inproceedings 2 + [at]misc(프리프린트) 1
+% 총 25건 = journal article 22 + conference paper 2 + preprint 1
+%
+% ★★ 이 파일을 편집하는 세션에게: 주석에 '＠' 문자를 절대 쓰지 말 것.
+%   BibTeX에는 줄 주석 문법이 없다. 파서는 '％' 줄을 "다음 ＠까지 건너뛰기"로 처리하므로,
+%   주석 안의 ＠가 엔트리 시작으로 오인돼 파일 전체 파싱이 죽는다.
+%   (2026-08-07 실제로 이 사고가 났다 — Homepage 세션 al-folio 빌드가 통째로 실패.
+%    엔트리 타입을 주석에 쓸 때는 '＠article' 대신 'journal article' 처럼 풀어 쓴다.)
 %
 % note 필드 규약 (렌더가 읽어야 함)
-%   note = {Co-first author}  → 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
-%   keywords = {preprint}     → 프리프린트. verified 논문과 섞어 표시하지 말 것. 1건.
+%   note = {Co-first author}  -> 공동 제1저자. 출처: CV(2025-11-10판) 표기. 5건.
+%   keywords = {preprint}     -> 프리프린트. verified 논문과 섞어 표시하지 말 것. 1건.
+%   selected = {true}         -> 홈페이지 About 상단 대표논문. 5건. 오너가 조정 가능.
 
 @article{kim2020alternating,
   title        = {Alternating Current-Based Technique for Separate Extraction of Parasitic Resistances in MISFETs With or Without the Body Contact},
@@ -52,7 +59,8 @@
   pages        = {1528-1531},
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/LED.2020.3020405},
-  url          = {https://doi.org/10.1109/LED.2020.3020405}
+  url          = {https://doi.org/10.1109/LED.2020.3020405},
+  selected     = {true}
 }
 
 @article{yoo2020deep,
@@ -139,7 +147,8 @@
   pages        = {3126-3130},
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2023.3269735},
-  url          = {https://doi.org/10.1109/TED.2023.3269735}
+  url          = {https://doi.org/10.1109/TED.2023.3269735},
+  selected     = {true}
 }
 
 @article{park2023simultaneous,
@@ -179,7 +188,8 @@
   number       = {3},
   publisher    = {AIP Publishing},
   doi          = {10.1063/5.0172204},
-  url          = {https://doi.org/10.1063/5.0172204}
+  url          = {https://doi.org/10.1063/5.0172204},
+  selected     = {true}
 }
 
 @article{lee2024analysis,
@@ -219,7 +229,8 @@
   pages        = {2751-2755},
   publisher    = {Institute of Electrical and Electronics Engineers (IEEE)},
   doi          = {10.1109/TED.2025.3547707},
-  url          = {https://doi.org/10.1109/TED.2025.3547707}
+  url          = {https://doi.org/10.1109/TED.2025.3547707},
+  selected     = {true}
 }
 
 @article{park2025analysis,
@@ -304,7 +315,8 @@
   number       = {1},
   publisher    = {Springer Science and Business Media LLC},
   doi          = {10.1038/s41467-026-70727-2},
-  url          = {https://doi.org/10.1038/s41467-026-70727-2}
+  url          = {https://doi.org/10.1038/s41467-026-70727-2},
+  selected     = {true}
 }
 
 @article{kim2026unveiling,
@@ -355,5 +367,6 @@
   doi          = {10.1016/j.mssp.2025.110268},
   url          = {https://doi.org/10.1016/j.mssp.2025.110268}
 }
+
 
 

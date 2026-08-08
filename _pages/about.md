@@ -2,17 +2,16 @@
 layout: about
 title: about
 permalink: /
-subtitle: Semiconductor device physics, characterization, and reliability · <a href="https://www.purdue.edu">Purdue University</a>
+subtitle: Post-doctoral Researcher, <a href="https://www.purdue.edu/discoverypark/birck/">Birck Nanotechnology Center</a>, Purdue University
 
 profile:
   align: right
   image: # add prof_pic.jpg to assets/img/ and put the filename here
   image_circular: false # crops the image to make it circular
   more_info: >
+    <p>Birck Nanotechnology Center</p>
     <p>Purdue University</p>
     <p>West Lafayette, IN, USA</p>
-    <!-- TODO(owner): confirm department/school and title before publishing. Only the
-         purdue.edu work address is verified; no home address or personal phone here. -->
 
 selected_papers: false # ★ no entry in the SoT carries selected={true} yet, so this section
 # would render empty. Ask the hub session to mark 4-5 highlight papers with
@@ -31,30 +30,33 @@ latest_posts:
   limit: 3
 ---
 
-<!-- DRAFT BIO — awaiting the owner's own text.
-     Every claim below is derived only from the titles/venues of the 21 works on
-     ORCID 0000-0002-3392-9444 (retrieved 2026-08-07). Nothing about position,
-     degrees, employment history, or awards is asserted, because none of that is
-     verified yet. The hub session is sourcing the real bio from the 교수임용 group;
-     replace this text wholesale when it arrives. -->
+<!-- ★ SOURCING RULE FOR THIS PAGE
+     Position, advisor, education and research areas below come from the academic
+     record maintained by the hub session (achievements/record.md), which was compiled
+     from the owner's CV. The description of the work is derived from the verified
+     bibliography.
 
-I am a researcher in **semiconductor device physics**, working on the electrical
-characterization and reliability of emerging memory and thin-film transistor
-technologies.
+     A personal biography does not exist in any source document yet. The hub session is
+     drafting one for the owner's approval. Until it arrives, DO NOT write one here —
+     an invented bio on a public academic page is exactly the failure this whole setup
+     is built to prevent. Leave the facts to speak. -->
 
-My work centres on two device families. In **ferroelectric HfZrO<sub>2</sub> devices**
-(FeFETs and ferroelectric TFTs), I study what actually limits their use as memory
-cells — charge trapping at the ferroelectric/interfacial-layer interface, read-after-write
-latency, endurance-dependent degradation, and switching-speed limits. In **amorphous
-oxide semiconductors** (a-IGZO TFTs), I develop characterization techniques that extract
-quantities other methods cannot reach: subgap density of states, conduction-band-minimum
-energy, intrinsic mobility separated from parasitic resistance, and trap dynamics from
-transient response.
+I am a post-doctoral researcher at the **Birck Nanotechnology Center, Purdue University**,
+working with Prof. Thomas Beechem. I completed my Ph.D., M.S. and B.S. in Electrical
+Engineering at **Kookmin University**.
 
-The common thread is measurement technique. Most of these papers introduce a way to
-*separate* effects that ordinary I–V or C–V measurements report as a single lumped
-number — so that a device's behaviour can be attributed to a specific physical mechanism
-rather than to a fitting parameter.
+My work is in **semiconductor device characterization** — opto-electronic measurement
+techniques, physics-based modelling, and the development of analysis methods for
+extracting device parameters that conventional measurements cannot separate.
 
-A full list of publications is on the [publications](/publications/) page, and the
-research themes are described in more detail under [research](/research/).
+Four device families run through the publication record: **silicon MOSFETs**
+(parasitic-resistance and trap extraction), **amorphous oxide semiconductor TFTs**
+(subgap density of states, conduction-band-minimum energy, intrinsic mobility),
+**ferroelectric FETs** (charge trapping at the HfZrO<sub>2</sub>/SiO<sub>2</sub>
+interface, read-after-write latency, endurance), and **ferroelectric TFTs** (switching
+characteristics and speed limits). What connects them is the same problem: an ordinary
+I–V or C–V sweep reports one lumped number where several mechanisms overlap, and the
+technique has to separate them before any of it means anything.
+
+The full list of papers is on the [publications](/publications/) page; the research
+themes are described in more detail under [research](/research/).

@@ -27,9 +27,29 @@ nav_order: 1
 
 <hr>
 
+<!-- ★ CITATION METRICS — RULES, READ BEFORE EDITING
+     1. Never type a number here from memory. Every figure must come from the metrics
+        record the hub session maintains (achievements/metrics.md), which stores the
+        source URL alongside the value.
+     2. The retrieval date must stay next to the numbers. Citation counts change weekly;
+        an undated figure on a public page is a claim that cannot be checked.
+     3. Do NOT add a publication count taken from Google Scholar — it merges duplicates
+        and same-name authors. The list on this page is the count.
+     Values below: hub session, retrieved 2026-08-07 from the profile linked. -->
+
 <p style="font-size: 0.9em;">
-  This list is generated from a BibTeX record in which every entry has been checked
-  against its DOI. Preprints and accepted-but-not-yet-published work, where present, are
-  labelled as such and are not presented as journal publications. The authoritative
-  record is <a href="https://orcid.org/0000-0002-3392-9444">ORCID 0000-0002-3392-9444</a>.
+  <strong>Citation metrics</strong> —
+  63 citations, h-index 6, i10-index 2.
+  <em>As of 7 August 2026, from
+  <a href="https://scholar.google.com/citations?user=976BWb4AAAAJ&hl=en">Google Scholar</a>.</em>
+  These figures are not updated automatically; follow the link for the current values.
+</p>
+
+<p style="font-size: 0.9em;">
+  Every entry in this list has been checked against its DOI: the title claimed here was
+  compared with the title registered for that DOI, and none is a preprint or a retracted
+  paper presented as a journal article. Shared first authorship is marked
+  <em>Co-first author</em>; the one preprint is marked as such and is not a peer-reviewed
+  publication. The authoritative record is
+  <a href="https://orcid.org/0000-0002-3392-9444">ORCID 0000-0002-3392-9444</a>.
 </p>

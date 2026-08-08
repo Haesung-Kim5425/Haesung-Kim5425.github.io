@@ -5,15 +5,19 @@
 #   personal phone number. Never add an ID that has not been confirmed by the owner:
 #   a wrong ORCID / Scholar link points visitors at somebody else's record.
 
-email: kim5425@purdue.edu # Purdue work address (site-wide protect_email: true keeps it out of the raw HTML)
+email: kim5425@purdue.edu # Purdue work address
 orcid_id: 0000-0002-3392-9444 # verified against pub.orcid.org (name: Haesung Kim), 2026-08-07
 github_username: kim5425
+
+# Google Scholar profile. Attribution confirmed by the hub session on 2026-08-07: the
+# profile lists "Post-doctoral Researcher, Purdue University" with a verified purdue.edu
+# address. The aggregate metrics from it are shown on the publications page, always with
+# their retrieval date.
+scholar_userid: 976BWb4AAAAJ
 
 rss_icon: false # no blog on this site, so no feed to advertise
 
 # --- Pending owner confirmation --------------------------------------------
-# Left commented out on purpose. Uncomment only once the owner confirms the ID.
-# scholar_userid: # Google Scholar profile ID — needed before publication badges can be turned back on
 # linkedin_username:
 # research_gate_profile:
 # cv_pdf: /assets/pdf/cv.pdf # enable after the hub session renders the CV PDF into assets/pdf/

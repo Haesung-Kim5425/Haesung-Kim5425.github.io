@@ -19,7 +19,15 @@ carries a "GENERATED FILE" header: any edit made to it directly is destroyed on 
 sync. To change what the site shows, change the source and re-run the script.
 
 Run `bin/sync-sot.ps1 -Check` to see whether the committed copy is stale without writing
-anything.
+anything (exit 2 means stale).
+
+A `pre-commit` hook enforces this, because nothing downstream can: the GitHub Actions
+build only checks out this repository and never sees the source, so a stale copy would
+publish silently. Git does not track hooks, so run this once per clone:
+
+```
+pwsh -File bin/install-hooks.ps1
+```
 
 ## Local preview
 
@@ -50,7 +58,23 @@ there is committed.
 | `_pages/news.md` | News page — currently hidden from the nav, `_news/` is empty |
 | `_data/socials.yml` | Profile links (email, ORCID, GitHub) |
 | `_data/cv.yml` | CV data for the CV page |
+| `_includes/hook/bib.liquid` | Renders the preprint / co-first-author badges on each reference |
 | `bin/sync-sot.ps1` | The one-way bibliography sync described above |
+| `bin/serve.ps1` | Sync + local preview in one command |
+| `bin/install-hooks.ps1` | Installs the pre-commit freshness check |
+
+## Two things not to get wrong
+
+**Citation metrics.** Any figure on the publications page must carry the date it was
+retrieved and must come from the maintained metrics record, never from memory. An
+undated citation count on a public page is a claim nobody can check. Do not add a
+publication count from Google Scholar — it merges duplicates and same-name authors; the
+list on the page is the count.
+
+**Author name matching.** `scholar.first_name` in `_config.yml` lists both `Haesung` and
+`Hae Sung`, because one published record uses the spaced spelling. Match on the full
+given name only: most papers here have three or four coauthors surnamed Kim, so a
+surname-only rule would bold all of them.
 
 ## Licence
 

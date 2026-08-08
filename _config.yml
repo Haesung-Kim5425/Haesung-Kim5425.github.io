@@ -342,8 +342,17 @@ display_categories: [] # these categories will be displayed on the front page of
 
 scholar:
   # Used by al-folio to bold the site owner's name in every rendered reference.
+  #
+  # ★ Both spellings are required. The published record for the 2021 J. Nanoscience and
+  #   Nanotechnology paper (10.1166/jnn.2021.19391) carries "Hae Sung Kim" with a space;
+  #   without the second entry that paper renders with the author's own name unbolded.
+  #
+  # ★ Match on the full given name only — never on the surname alone. Nearly every paper
+  #   in this bibliography has three or four coauthors surnamed Kim (Dae Hwan, Dong Myong,
+  #   Hwan Jin, Youngmin, Sujong, ...), and a surname-only rule would bold all of them.
+  #   Initials such as "H." are deliberately omitted for the same reason.
   last_name: [Kim]
-  first_name: [Haesung, H.]
+  first_name: [Haesung, Hae Sung]
 
   style: apa
   locale: en
