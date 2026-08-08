@@ -63,6 +63,10 @@ ids:
   orcid_url: "https://orcid.org/0000-0002-3392-9444"
   google_scholar: "976BWb4AAAAJ"
   google_scholar_url: "https://scholar.google.com/citations?user=976BWb4AAAAJ"
+  # 공개 식별자다. 사이트가 어디에 호스팅되는지(kim5425.github.io)와는 별개로,
+  # 프로필 링크·소셜 아이콘에 쓰이므로 여기가 원본이다.
+  github: "kim5425"
+  github_url: "https://github.com/kim5425"
 
 # ── 표기 규약 (오너 확정 2026-08-08) — 모든 렌더가 지킬 것 ────────────────────
 style:
