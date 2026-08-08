@@ -436,11 +436,27 @@ filtered_bibtex_keywords:
   ]
 
 # Maximum number of authors to be shown for each publication (more authors are visible on click)
-max_author_limit: 3 # leave blank to always show all authors
+#
+# ★ Blank on purpose: show every author, always.
+#   With a limit of 3, the site owner's own name was hidden behind "and N more authors"
+#   on 5 of 25 papers — including the Nature Communications one, which is 10th-author and
+#   is featured on the front page. A publication list whose own author is invisible on its
+#   most prominent entry defeats the point, and a visitor scanning the page does not click.
+#   Author lists here run to 17 names, so entries are longer; that is the correct trade,
+#   and it matches how the CV prints them.
+max_author_limit: # leave blank to always show all authors
 more_authors_animation_delay: 10 # more authors are revealed on click using animation; smaller delay means faster animation
 
 # Enables publication thumbnails. If disabled, none of the publications will display thumbnails, even if specified in the bib entry.
-enable_publication_thumbnails: true
+#
+# ★ Off because nothing fills that column. When on, the layout reserves col-sm-2 for it
+#   unconditionally (see _layouts/bib.liquid), so with no `preview` image and no `abbr`
+#   venue badge in any entry, every publication rendered with roughly a sixth of the width
+#   blank — reading as a failed image rather than as a design choice.
+#   Turn it back on only together with content for it: either per-paper preview images in
+#   assets/img/publication_preview/, or `abbr` fields in the bibliography, which render as
+#   coloured venue badges styled from _data/venues.yml.
+enable_publication_thumbnails: false
 
 # -----------------------------------------------------------------------------
 # Jekyll Link Attributes

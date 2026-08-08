@@ -2,14 +2,14 @@
 layout: about
 title: about
 permalink: /
-subtitle: Opto-electronic characterization and physics-based modeling of semiconductor devices · <a href="https://www.purdue.edu/discoverypark/birck/">Birck Nanotechnology Center</a>, Purdue University
+subtitle: Opto-electronic characterization and physics-based modeling of semiconductor devices · <a href="https://specere.org">Specere Lab</a>, Purdue University
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>Birck Nanotechnology Center</p>
+    <p><a href="https://specere.org">Specere Lab</a></p>
     <p>Purdue University</p>
     <p>West Lafayette, IN, USA</p>
 

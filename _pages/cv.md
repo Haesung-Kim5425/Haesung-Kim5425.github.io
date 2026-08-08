@@ -21,27 +21,34 @@ description: Full curriculum vitae, generated from the same record as the public
 
   The PDF is a build artefact: do not edit assets/pdf/Haesung_Kim_CV.pdf, and do not
   hand-maintain a CV in markdown here. Ask the hub session to regenerate, then re-sync.
+
+  ── Two things that were wrong here and should not come back ──
+
+  1. NO INLINE <object>/<iframe> PDF EMBED. There was one; it rendered as a blank dark
+     rectangle. Inline PDF embedding is unreliable — mobile Safari and Chrome commonly
+     show nothing at all — and a large empty box reads as a broken page. A download link
+     works in every browser. If an inline preview is ever wanted, render page 1 to an
+     image and sync it alongside the PDF, so it cannot go stale against the file.
+
+  2. NO BOOTSTRAP CLASSES. `btn btn-sm z-depth-0` did nothing here: al-folio 1.x is
+     Tailwind-based with bootstrap compat disabled, and `a.btn` is styled only inside
+     `.publications .links`. The button below is styled inline from the theme's own CSS
+     custom properties, so it follows light/dark mode without a stylesheet.
 {% endcomment %}
 
-<p>
-  <a href="{{ '/assets/pdf/Haesung_Kim_CV.pdf' | relative_url }}" class="btn btn-sm z-depth-0" role="button" download>
-    Download CV (PDF)
-  </a>
+<p style="margin: 1.5rem 0;">
+  <a
+    href="{{ '/assets/pdf/Haesung_Kim_CV.pdf' | relative_url }}"
+    target="_blank"
+    rel="noopener"
+    style="display:inline-block;padding:0.55rem 1.1rem;border:1px solid var(--global-theme-color);border-radius:0.3rem;color:var(--global-theme-color);text-decoration:none;font-weight:600;line-height:1.4;"
+    >Download CV (PDF)</a
+  >
 </p>
 
-<p style="font-size: 0.9em;">
-  The publication list in this CV is generated from the same DOI-checked bibliography that
-  produces the <a href="{{ '/publications/' | relative_url }}">publications</a> page, so the
-  two cannot disagree. Shared first authorship is marked with a dagger (†).
-</p>
+The CV covers education, appointments, publications, research grants, awards, teaching and
+technical skills.
 
-<object
-  data="{{ '/assets/pdf/Haesung_Kim_CV.pdf' | relative_url }}"
-  type="application/pdf"
-  style="width: 100%; height: 80vh; min-height: 500px; border: 1px solid var(--global-divider-color); border-radius: 4px;"
->
-  <p>
-    This browser cannot display PDFs inline.
-    <a href="{{ '/assets/pdf/Haesung_Kim_CV.pdf' | relative_url }}">Download the CV instead</a>.
-  </p>
-</object>
+Its publication list is generated from the same DOI-checked bibliography that produces the
+[publications]({{ '/publications/' | relative_url }}) page, so the two cannot disagree.
+Shared first authorship is marked there with a dagger (†).
