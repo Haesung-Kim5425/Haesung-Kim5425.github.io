@@ -16,16 +16,16 @@
 # character, taking the whole site build down with it.
 # ============================================================================
 
-total: 25
-article: 22
+total: 26
+article: 23
 inproceedings: 2
 misc: 1
-peer_reviewed: 24
+peer_reviewed: 25
 preprint: 1
 primary: 14
-co_author: 11
+co_author: 12
 role_first: 8
 role_co_first: 8
 role_corresponding: 1
-role_co_author: 11
+role_co_author: 12
 role_unrecorded: 0
