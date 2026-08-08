@@ -16,3 +16,7 @@ bin/*.ps1 text eol=lf
 # The CV is a generated PDF copied in by the same script. Mark it binary explicitly so no
 # line-ending or diff heuristic can ever touch it.
 *.pdf binary
+
+# _data/profile.yml and _data/socials.yml are generated the same way and must match what a
+# checkout produces, or every clone would show them as modified straight away.
+_data/*.yml text eol=lf

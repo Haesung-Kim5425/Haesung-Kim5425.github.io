@@ -88,6 +88,18 @@ if ($null -eq $sotText) { $sotText = '' }
 #  Windows PowerShell 5.1 reads a BOM-less .ps1 as ANSI and would corrupt a literal.)
 $sotText = $sotText.TrimStart([char]0xFEFF)
 
+# Normalise line endings to LF.
+#
+# .gitattributes pins *.bib to LF in the working tree, so that is what a checkout or a
+# fresh clone produces. If the copy were written with whatever the source happens to use,
+# a source containing even one CRLF would make every clone differ from its own sync
+# output: sync rewrites it with CRLF, git checks it back out as LF, sync rewrites it
+# again -- the permanently-modified file this script was already fixed once to avoid.
+# The source does currently contain a stray CRLF, so this is not hypothetical.
+#
+# Line endings are not content for BibTeX or YAML, so normalising loses nothing.
+$sotText = $sotText -replace "`r`n", "`n"
+
 # Refuse to sync a source that is not valid BibTeX. Fail loudly; do not paper over it.
 #
 # BibTeX has no line-comment syntax: '%' lines are simply text outside any entry, and
@@ -247,7 +259,8 @@ $profileText    = $null
 
 if (Test-Path -LiteralPath $ProfileSourcePath) {
     $ProfileSourcePath = (Resolve-Path -LiteralPath $ProfileSourcePath).Path
-    $profileText = (Get-Content -LiteralPath $ProfileSourcePath -Raw -Encoding UTF8).TrimStart([char]0xFEFF)
+    # Same LF normalisation as the bibliography above, for the same reason.
+    $profileText = (Get-Content -LiteralPath $ProfileSourcePath -Raw -Encoding UTF8).TrimStart([char]0xFEFF) -replace "`r`n", "`n"
 
     Write-Host "Profile: $ProfileSourcePath"
 
