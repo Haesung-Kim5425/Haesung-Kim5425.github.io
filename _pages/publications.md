@@ -83,3 +83,24 @@ nav_order: 1
   publications. The authoritative record is
   <a href="{{ site.data.profile.ids.orcid_url }}">ORCID {{ site.data.profile.ids.orcid }}</a>.
 </p>
+
+{% comment %}
+  ★ Required notice, not decoration. IEEE asks that this exact wording accompany personal
+  posting of material from its publications. Three of the papers with figures above are
+  IEEE, so it appears once for the page rather than per entry.
+
+  The figures are the authors' own, posted as accepted-version material. The owner decided
+  this on 2026-08-08 after the hub checked each publisher's policy; the reasoning and the
+  per-publisher findings are recorded in the bibliography header. If a publisher objects
+  or a policy changes, the figures come down — do not leave them up pending a discussion.
+{% endcomment %}
+
+<p style="font-size: 0.8em; color: var(--global-text-color-light); margin-top: 2rem;">
+  Figures shown above are the authors' own, reproduced from accepted versions of the
+  corresponding papers.
+  © IEEE. Personal use of this material is permitted. Permission from IEEE must be
+  obtained for all other uses, in any current or future media, including
+  reprinting/republishing this material for advertising or promotional purposes, creating
+  new collective works, for resale or redistribution to servers or lists, or reuse of any
+  copyrighted component of this work in other works.
+</p>

@@ -42,6 +42,10 @@ param(
     [string]$CvSourcePath,
     [string]$CvDestPath,
 
+    # Publication figures, referenced by `preview` fields in the bibliography.
+    [string]$FigSourceDir,
+    [string]$FigDestDir,
+
     # The machine-readable profile: name, position, contact, ids, style rules, bio, metrics.
     [string]$ProfileSourcePath,
     [string]$ProfileDestPath,
@@ -68,6 +72,8 @@ if (-not $SotPath)      { $SotPath      = Join-Path $here '..\..\achievements\pu
 if (-not $DestPath)     { $DestPath     = Join-Path $here '..\_bibliography\papers.bib' }
 if (-not $CvSourcePath) { $CvSourcePath = Join-Path $here '..\..\cv\Haesung_Kim_CV.pdf' }
 if (-not $CvDestPath)   { $CvDestPath   = Join-Path $here '..\assets\pdf\Haesung_Kim_CV.pdf' }
+if (-not $FigSourceDir) { $FigSourceDir = Join-Path $here '..\..\achievements\figures' }
+if (-not $FigDestDir)   { $FigDestDir   = Join-Path $here '..\assets\img\publication_preview' }
 if (-not $ProfileSourcePath) { $ProfileSourcePath = Join-Path $here '..\..\achievements\profile.yml' }
 if (-not $ProfileDestPath)   { $ProfileDestPath   = Join-Path $here '..\_data\profile.yml' }
 if (-not $SocialsPath)       { $SocialsPath       = Join-Path $here '..\_data\socials.yml' }
@@ -587,8 +593,54 @@ else {
 Write-Host "Stats  : $($stat.total) papers -- primary $($stat.primary), co-author $($stat.co_author)" -NoNewline
 if ($stat.role_unrecorded -gt 0) { Write-Host "  ($($stat.role_unrecorded) with no authorship field)" -ForegroundColor Yellow } else { Write-Host "" }
 
+# --------------------------------------------------------------------------------------
+# Publication figures
+#
+# Referenced by `preview` fields in the bibliography, so a missing file is a broken image
+# on a public page. Compared by hash like the CV. Also reports figures the bibliography
+# does not reference and `preview` values with no file behind them — a mismatch either way
+# is a fault worth seeing, not something to discover in a browser.
+# --------------------------------------------------------------------------------------
+$figChanged = @()
+$figOrphan  = @()
+$figMissing = @()
+
+# Skip '%' comment lines. The bibliography header documents the convention with a sample
+# line (preview = {filename.png}), and counting that as a reference made the check report
+# a missing figure on a perfectly correct file — the same false positive the public-safety
+# gate hit on the `exclude:` block. A check that fails on a file for documenting its own
+# rules is a check that gets ignored.
+$previewNames = @()
+foreach ($line in ($sotText -split "`n")) {
+    if ($line.TrimStart().StartsWith('%')) { continue }
+    $pm = [regex]::Match($line, 'preview\s*=\s*\{([^}]+)\}')
+    if ($pm.Success) { $previewNames += $pm.Groups[1].Value.Trim() }
+}
+
+if (Test-Path -LiteralPath $FigSourceDir) {
+    $srcFigs = Get-ChildItem -LiteralPath $FigSourceDir -File
+    foreach ($f in $srcFigs) {
+        $dst = Join-Path $FigDestDir $f.Name
+        $srcH = (Get-FileHash -LiteralPath $f.FullName -Algorithm SHA256).Hash
+        $dstH = if (Test-Path -LiteralPath $dst) { (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash } else { $null }
+        if ($srcH -ne $dstH) { $figChanged += $f }
+        if ($previewNames -notcontains $f.Name) { $figOrphan += $f.Name }
+    }
+    foreach ($n in $previewNames) {
+        if (-not (Test-Path -LiteralPath (Join-Path $FigSourceDir $n))) { $figMissing += $n }
+    }
+    Write-Host "Figures: $($srcFigs.Count) in source, $($previewNames.Count) referenced by the bibliography" -NoNewline
+    if ($figChanged.Count -gt 0) { Write-Host "  [$($figChanged.Count) differ]" -ForegroundColor Yellow } else { Write-Host "  [current]" }
+    if ($figOrphan.Count -gt 0)  { Write-Warning "Figure file(s) no entry references: $($figOrphan -join ', ')" }
+    if ($figMissing.Count -gt 0) { Write-Warning "preview field(s) with no figure file: $($figMissing -join ', '). These render as broken images." }
+}
+elseif ($previewNames.Count -gt 0) {
+    Write-Warning "The bibliography references $($previewNames.Count) preview image(s) but $FigSourceDir does not exist."
+}
+
 if ($Check) {
-    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged -or $statsChanged) {
+    if ($changed -or $cvChanged -or $profileChanged -or $socialsChanged -or $statsChanged -or $figChanged.Count -gt 0) {
+        if ($figChanged.Count -gt 0) { Write-Host "CHECK: $($figChanged.Count) publication figure(s) out of date." -ForegroundColor Yellow }
         if ($changed)         { Write-Host "CHECK: bibliography out of date." -ForegroundColor Yellow }
         if ($cvChanged)       { Write-Host "CHECK: CV PDF out of date." -ForegroundColor Yellow }
         if ($profileChanged)  { Write-Host "CHECK: profile out of date." -ForegroundColor Yellow }
@@ -633,6 +685,13 @@ if ($socialsChanged) {
 if ($statsChanged) {
     [System.IO.File]::WriteAllText($statsPath, $statsYaml, (New-Object System.Text.UTF8Encoding($false)))
     Write-Host "pubstats.yml regenerated." -ForegroundColor Green
+    $wroteSomething = $true
+}
+
+if ($figChanged.Count -gt 0) {
+    if (-not (Test-Path -LiteralPath $FigDestDir)) { New-Item -ItemType Directory -Path $FigDestDir | Out-Null }
+    foreach ($f in $figChanged) { Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $FigDestDir $f.Name) -Force }
+    Write-Host "$($figChanged.Count) publication figure(s) synced." -ForegroundColor Green
     $wroteSomething = $true
 }
 

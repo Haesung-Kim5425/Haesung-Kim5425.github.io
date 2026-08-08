@@ -88,6 +88,41 @@
   }
 }
 
+// --- Publication figures ---------------------------------------------------
+// Rendered inside the entry by _includes/hook/bib.liquid, not in the theme's
+// thumbnail column — see the note there. The container needs flow-root so the
+// float is contained: without it a tall figure escapes its entry and lands on
+// top of the next paper in the list.
+.publications .row > [class*="col-sm-"] {
+  display: flow-root;
+}
+
+.pub-figure {
+  float: right;
+  max-width: 210px;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  margin: 0.1rem 0 0.6rem 1.1rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 4px;
+  background: #fff; // figures are line art on white; keeps them legible in dark mode
+  padding: 3px;
+  object-fit: contain;
+}
+
+// Below the text on narrow screens: at phone width a floated 210px figure leaves
+// the title wrapping in a column too narrow to read.
+@media (max-width: 575px) {
+  .pub-figure {
+    float: none;
+    display: block;
+    max-width: 100%;
+    max-height: none;
+    margin: 0.5rem 0 0.75rem;
+  }
+}
+
 // --- Sentence case on the theme's own headings -----------------------------
 // Owner's preference: a capital first letter. The section headings on the
 // front page ("news", "selected publications") are written lower-case inside

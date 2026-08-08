@@ -39,6 +39,28 @@
 {%- assign flag_style = "display:inline-block;margin:0 0.35rem 0.25rem 0;padding:0.1rem 0.5rem;border-radius:0.2rem;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;line-height:1.5;" -%}
 {%- assign roles = entry.authorship | replace: " ", "" | split: "," -%}
 
+{%- comment -%}
+  Figure, for the entries that have one (`preview` in the bibliography).
+
+  Rendered here rather than through the theme's own thumbnail column. That column is
+  reserved for every entry as soon as thumbnails are enabled, so with five figures among
+  twenty-five papers the other twenty would carry an empty gutter — which reads as an
+  image that failed to load. Putting the figure inside the entry instead keeps all
+  twenty-five titles on the same left margin and shows a figure only where one exists.
+
+  Floated right so the text still fills the line; the float is contained by a
+  `display: flow-root` rule in assets/css/main.scss, and drops below the text on narrow
+  screens where there is no room beside it.
+{%- endcomment -%}
+{%- if entry.preview -%}
+  <img
+    class="pub-figure"
+    src="{{ '/assets/img/publication_preview/' | append: entry.preview | relative_url }}"
+    alt="Figure from: {{ entry.title | strip_html | escape }}"
+    loading="lazy"
+  />
+{%- endif -%}
+
 {%- if entry.keywords contains "preprint" -%}
   <span
     style="{{ flag_style }}color:var(--global-warning-block-title);border:1px solid var(--global-warning-block);background:var(--global-warning-block-bg);"

@@ -9,7 +9,7 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 14:33:13   |   entries: 25
+% Synced: 2026-08-08 15:35:11   |   entries: 25
 % ============================================================================
 % publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
 % 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
@@ -95,6 +95,28 @@
 %          공저 참여만 한 논문은 저널 가시성이 아무리 높아도 대표논문이 아니다.
 %          (2026-08-08 Nature Communications 논문(17인 중 10번째)을 이 규칙으로 제외했다)
 %       → selected 를 붙이기 전에 저자 위치를 반드시 확인할 것.
+%   preview = {파일명.png}    -> 대표논문 썸네일. 5건(selected 와 동일 집합).
+%       파일 위치: achievements/figures/ (SoT 옆). 홈페이지는 assets/img/publication_preview/ 로 복사.
+%       출처: 각 논문의 Figure를 PDF에서 추출. 어느 Figure인지는 아래.
+%         kim2020alternating   Fig. 1  (측정 구성 · 등가회로 도식)
+%         kim2023extraction    Fig. 1  (에너지 밴드 다이어그램 · 추출 원리)
+%         kim2024comprehensive Fig. 7  (RWL 메커니즘 요약 도식)
+%         kim2025photonic      Fig. 1  (dark/photonic state 밴드 다이어그램)
+%         kim2026impact        Fig. 10 (proton dose 별 Dit 분포 — 핵심 결과)
+%
+%       ★★ 저작권 — 게재 전 반드시 읽을 것 (2026-08-08 발행사 정책 실제 확인)
+%         IEEE  : 표준 Copyright Form 하에서 **최종 게재본(VOR)의 온라인 게시는 금지**.
+%                 accepted version 은 개인 홈페이지 게시 허용. 게시 시 아래 고지문 필수:
+%                 "© 20XX IEEE. Personal use of this material is permitted. Permission from
+%                  IEEE must be obtained for all other uses..."
+%         AIP   : 개인 홈페이지 게재가 명시적 허용 목록에 없음(학위논문 재사용만 명시).
+%                 엄밀히는 RightsLink 허가 대상.
+%         Elsevier(NET 2026): **CC BY-NC-ND 오픈액세스** — 출처 표시 + 비상업이면 재배포 가능.
+%       → **오너 판단(2026-08-08): "figure는 accepted version과 동일하므로 그대로 사용"**.
+%         즉 본인 저작물인 accepted-version figure 로서 게시하는 것이다. 허브가 위 사실을
+%         보고했고 오너가 확인 후 진행을 지시했다. 정책이 바뀌거나 이의가 오면 즉시 내린다.
+%       → 홈페이지는 Publications 페이지에 **IEEE 고지문을 1회 표기**할 것.
+%
 %   ※ 교신저자(corresponding) 0건인 이유: **확인 결과 없음**이다(정보 부재 아님).
 %     2026-08-08 제1저자 논문 7건의 원문 PDF 1쪽을 직접 읽어 확인했고, 교신저자는 전부
 %     지도교수급(D. M. Kim / J.-H. Bae / D. Kwon / Y. J. Yoon / S. Y. Woo)이었다.
@@ -112,7 +134,8 @@
   doi          = {10.1109/LED.2020.3020405},
   url          = {https://doi.org/10.1109/LED.2020.3020405},
   selected     = {true},
-  authorship   = {first,co-first}
+  authorship   = {first,co-first},
+  preview      = {kim2020alternating.png}
 }
 
 @article{yoo2020deep,
@@ -206,7 +229,8 @@
   doi          = {10.1109/TED.2023.3269735},
   url          = {https://doi.org/10.1109/TED.2023.3269735},
   selected     = {true},
-  authorship   = {first,co-first}
+  authorship   = {first,co-first},
+  preview      = {kim2023extraction.png}
 }
 
 @article{park2023simultaneous,
@@ -248,7 +272,8 @@
   doi          = {10.1063/5.0172204},
   url          = {https://doi.org/10.1063/5.0172204},
   selected     = {true},
-  authorship   = {first}
+  authorship   = {first},
+  preview      = {kim2024comprehensive.png}
 }
 
 @article{lee2024analysis,
@@ -291,7 +316,8 @@
   doi          = {10.1109/TED.2025.3547707},
   url          = {https://doi.org/10.1109/TED.2025.3547707},
   selected     = {true},
-  authorship   = {first}
+  authorship   = {first},
+  preview      = {kim2025photonic.png}
 }
 
 @article{park2025analysis,
@@ -371,7 +397,8 @@
   doi          = {10.1016/j.net.2026.104433},
   url          = {https://doi.org/10.1016/j.net.2026.104433},
   selected     = {true},
-  authorship   = {first}
+  authorship   = {first},
+  preview      = {kim2026impact.png}
 }
 
 @article{kim2026programmable,
