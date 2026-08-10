@@ -229,7 +229,17 @@ foreach ($m in $statEntries) {
     $primaryByPosition = ($pos -eq 1)
     $primaryByField    = $hasRole -and ($roleField -match 'co-first' -or $roleField -match '(^|,)\s*first' -or $roleField -match 'corresponding')
     $isPrimary = if ($hasRole) { $primaryByField -or $primaryByPosition } else { $primaryByPosition }
-    if ($isPrimary) { $stat.primary++ } else { $stat.co_author++ }
+    # Count roles over peer-reviewed papers only, so primary + co_author == peer_reviewed.
+    #
+    # These two numbers are rendered in one sentence beside the peer-reviewed total. When
+    # roles were counted over every entry and the total excluded the preprint, the sentence
+    # read "25 peer-reviewed papers - 14 as primary author, 12 as co-author": the preprint
+    # is co-authored, so it landed on one side of a sum whose total had already dropped it.
+    # 14 + 12 = 26, and any reader who added them up saw it. A generated number is only
+    # right if it is also counted over the same population as the number beside it.
+    if (-not $isPreprint) {
+        if ($isPrimary) { $stat.primary++ } else { $stat.co_author++ }
+    }
 
     # Only flag a disagreement that would actually mean an error. Shared first authorship
     # and corresponding authorship are both routinely held by someone who is not listed
@@ -274,6 +284,35 @@ if ($selectedViolations.Count -gt 0) {
     Write-Host "  qualify, and journal prestige is not a reason. Fix the source, not this check."
     Write-Host ""
     exit 3
+}
+
+# Arithmetic self-check on the numbers that end up in one sentence together.
+#
+# "Do not hardcode the count" is not enough on its own. The figures here were always
+# freshly computed and still wrong, because two of them were counted over different
+# populations. Three things have to hold, and only the first was ever being enforced:
+# the value is current, it is counted over the same population as the value beside it,
+# and the parts add up. This is the third.
+#
+# Refuses rather than warns: the failure is a public page stating a sum that does not
+# add, which any reader can check in their head.
+$sumParts = $stat.primary + $stat.co_author
+if ($sumParts -ne $stat.peer_reviewed) {
+    Write-Host ""
+    Write-Host "SYNC REFUSED - publication statistics do not add up." -ForegroundColor Red
+    Write-Host ""
+    Write-Host "    primary ($($stat.primary)) + co_author ($($stat.co_author)) = $sumParts"
+    Write-Host "    peer_reviewed = $($stat.peer_reviewed)"
+    Write-Host ""
+    Write-Host "  These three are rendered in one sentence on the publications page, so the"
+    Write-Host "  mismatch is visible to anyone who adds them. Usually it means a category was"
+    Write-Host "  counted over a different population - a preprint included on one side and"
+    Write-Host "  excluded from the other, for instance."
+    Write-Host ""
+    exit 3
+}
+if (($stat.article + $stat.inproceedings) -ne $stat.peer_reviewed) {
+    Write-Warning "article ($($stat.article)) + inproceedings ($($stat.inproceedings)) != peer_reviewed ($($stat.peer_reviewed)). The page prints both breakdowns; they should agree."
 }
 
 if ($roleMismatch.Count -gt 0) {
