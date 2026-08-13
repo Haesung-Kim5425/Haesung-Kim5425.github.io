@@ -72,7 +72,7 @@ teaching:
     year: 2021
   - role: "Session Instructor"
     course: "Summer job training: Semiconductor Device TCAD Simulation Training"
-    detail: "junior--senior level"
+    detail: "junior–senior level"
     institution: "Kookmin University"
     year: 2021
   - role: "Teaching Assistant"
@@ -145,25 +145,120 @@ conferences:
     year: 2020
     presentation: oral        # ★ CV에 명시된 유일한 발표 형태
 
-# ── 대표 학회 발표 (DOI 없는 것) ──────────────────────────────────────────────
-# ★ DOI가 있는 학회 논문은 publications.bib 에 있다(IEEE NANO 2022 · SNW 2025).
-#   여기는 DOI가 없어 서지 검증이 불가능한 발표들 중 CV에 싣는 대표 4건이다.
-#   출처: CV(2025-11-10판) Conference 절 원문. **Crossref 대조 불가 — 검증 등급이 다르다.**
+# ── 학회 논문 (DOI 없는 것) ──────────────────────────────────────────────────
+# ★ 오너 원본 CV(2025-11-10판) `Conference` 절 **전 21건**을 옮겼다 (오너 지시 2026-08-13).
+#   DOI가 있는 2건(IEEE NANO 2022 · SNW 2025)은 `publications.bib` 에 있고 여기 없다 —
+#   CV 렌더가 국제 학회 논문 목록에서 **양쪽을 합쳐** 출력한다.
+# ★ 검증 등급이 다르다: 여기 21건은 **DOI가 없어 Crossref 대조가 불가능**하다.
+#   CV 원문 표기를 그대로 옮긴 것이고, publications.bib 의 검증분과 동급이 아니다.
+# ★ scope: 개최지·주최 기준. ICEIC/SNW = 국제, KCS(한국반도체학술대회)·IEIE = 국내.
 conference_papers:
   - authors: "H. Kim, S. H. Han, H. Jeong, H. Yang, S.-J. Choi, D. H. Kim, J.-H. Bae, D. M. Kim"
-    title: "Photonic I--V-based technique for subgap density of states extraction in AOS TFTs"
+    title: "Photonic I–V-based technique for subgap density of states extraction in AOS TFTs"
     venue: "International Conference on Electronics, Information, and Communication (ICEIC)"
     location: "Osaka, Japan"
     year: 2025
     month: "Jan."
     scope: international
   - authors: "H. Kim, J. Park, J. Im, H. Kim, Y. J. Yoon, Y.-M. Kim, K. Park, S. Y. Woo, J.-H. Bae"
-    title: "Impact of Proton Irradiation on SiNx and Si--SiO$_2$ Interfaces in FLASH Memory"
+    title: "Impact of Proton Irradiation on SiNx and Si–SiO2 Interfaces in FLASH Memory"
     venue: "IEEE Silicon Nanoelectronics Workshop (SNW)"
     location: "Honolulu, HI, USA"
     year: 2024
-    pages: "1--2"
+    pages: "1–2"
     scope: international
+    # ★ 축약 표기에 "H. Kim" 이 두 명이다(1번째·4번째). 렌더가 추측하면 남의 이름이
+    #   오너로 굵어지므로 위치를 명시한다. 근거: 같은 연구의 저널판
+    #   10.1016/j.net.2026.104433 의 Crossref 저자 목록이 Kim, Haesung(1) … Kim, Hansol(4).
+    owner_position: 1
+
+  - authors: "J. Park, S. Lee, H. Kim, H. Jeong, Y. Choi, S.-J. Choi, D. M. Kim, D. H. Kim, J.-H. Bae"
+    title: "Comparative Analysis of the Low-Frequency Noise Behavior of a-IGZO TFT with Different Source/Drain Metal"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+  - authors: "Y. Choi, H. Kim, H. Yang, S. Park, J. Park, S.-J. Choi, D. H. Kim, D. M. Kim, J.-H. Bae"
+    title: "Analysis on Drain Current Transient Response in Amorphous InGaZnOx Thin-Film Transistors"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+  - authors: "S. H. Han, H. Kim, J. Y. Park, J.-H. Bae, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Extraction of Subgap Density-of-States in AOS TFTs through Capacitance-Voltage Characteristics Considering Photovoltaic Effect"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+  - authors: "H.-N. Lee, H. Yang, S. Park, H. Kim, S. Yun, S.-J. Choi, D. H. Kim, D. M. Kim, J.-H. Bae"
+    title: "Analysis and Modeling of Ferroelectric Amorphous InGaZnOx Thin-Film Transistor at Initial State and During Memory Operation"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+  - authors: "S. Park, H. Yang, H. Kim, S. Yun, H.-N. Lee, D. M. Kim, D. H. Kim, S.-J. Choi, J.-H. Bae"
+    title: "Comparative Analysis of Polarization Switching Characteristics in Channel and Contact Regions of Ferroelectric InGaZnOx Thin Film Transistor"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+  - authors: "S. J. Kim, H.-N. Lee, H. J. Yang, H. Kim, S. J. Park, S.-J. Choi, D. M. Kim, D. H. Kim, J.-H. Bae"
+    title: "Analysis of interface state according to the polarization switching of ferroelectric field-effect transistor"
+    venue: "The 31st Korean Conference on Semiconductors"
+    year: 2024
+    month: "Jan."
+    scope: domestic
+
+  - authors: "H. B. Yoo, H. Kim, J. Ryu, J. Y. Park, S. H. Han, H.-I. Yang, J.-H. Bae, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Characterization of Lateral Trap Distribution in a-InGaZnO TFTs through Capacitance-Voltage Technique Combined with Extended Channel Conduction Factor"
+    venue: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+    month: "Feb."
+    scope: domestic
+  - authors: "J. Park, S. Lee, H. Kim, S.-J. Choi, D. M. Kim, D. H. Kim, J.-H. Bae"
+    title: "Optimization of Memory Properties of 2T-DRAM Cell by a-IGZO TFT Engineering"
+    venue: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+    month: "Feb."
+    scope: domestic
+  - authors: "J. Y. Park, H. B. Yoo, H. Kim, J. H. Ryu, S. H. Han, J.-H. Bae, S. Choi, D. H. Kim, D. M. Kim"
+    title: "Extraction Technique for Characteristic Parameters in Si MOSFETs through the Dual Sweep Current-to-Transconductance Ratio"
+    venue: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+    month: "Feb."
+    scope: domestic
+  - authors: "S. Park, H. Yang, H. Kim, S. Yun, D. M. Kim, D. H. Kim, S.-J. Choi, J.-H. Bae"
+    title: "Effect of IGZO/HfO2 Ferroelectric Capacitor Structure on Polarization Switching"
+    venue: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+    month: "Feb."
+    scope: domestic
+  - authors: "S. H. Han, H. B. Yoo, H. Kim, J. Ryu, J. Y. Park, J.-H. Bae, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Characterization of Photovoltaic and Photoconductive Responses in Amorphous Oxide Semiconductor Thin-Film Transistors"
+    venue: "The 30th Korean Conference on Semiconductors"
+    year: 2023
+    month: "Feb."
+    scope: domestic
+
+  - authors: "S. Lee, H. Kim, H. Yang, S. Yun, S.-J. Choi, D. H. Kim, D. M. Kim, J.-H. Bae"
+    title: "Analysis of Memory Window Degradation Mechanism by Unipolar and Bipolar Stress in HfO2-based FeFETs"
+    venue: "Summer Annual Conference of the Institute of Electronics and Information Engineers"
+    year: 2022
+    month: "Jun."
+    scope: domestic
+  - authors: "S.-H. Yun, H. Kim, H. Yang, S. Lee, S.-J. Choi, D. H. Kim, D. M. Kim, J.-H. Bae"
+    title: "Analysis on Leakage Current of Gated Diode Memory Device and Suggestion of Improved Device Structure"
+    venue: "Summer Annual Conference of the Institute of Electronics and Information Engineers"
+    year: 2022
+    month: "Jun."
+    scope: domestic
+  - authors: "H. Yang, H. Kim, S. Yun, S. Lee, D. M. Kim, D. H. Kim, S.-J. Choi, J.-H. Bae"
+    title: "Effect of Annealing Sequence on the a-IGZO FeTFT Ferroelectric Switching Characteristics"
+    venue: "Summer Annual Conference of the Institute of Electronics and Information Engineers"
+    year: 2022
+    month: "Jun."
+    scope: domestic
+
   - authors: "J. Y. Park, H. Kim, H. B. Yoo, J. H. Ryu, J.-H. Bae, S.-J. Choi, D. H. Kim, D. M. Kim"
     title: "Comprehensive DC Technique for Extraction of Threshold Voltage, Parasitic Resistances, and Mobility Enhancement Parameter in AOS TFTs"
     venue: "The 28th Korean Conference on Semiconductors"
@@ -171,6 +266,13 @@ conference_papers:
     month: "Jan."
     scope: domestic
     role: co-first
+  - authors: "J. H. Ryu, H. B. Yoo, J. Yu, H. Kim, J.-H. Bae, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Extraction of Interface Traps over the Bandgap through Photovoltaic and Photoconductive Effects in Si MOSFETs under Optical Excitation"
+    venue: "The 28th Korean Conference on Semiconductors"
+    year: 2021
+    month: "Jan."
+    scope: domestic
+
   - authors: "H. B. Yoo, H. Kim, J. Yu, Y. J. Park, S.-J. Choi, D. H. Kim, D. M. Kim"
     title: "Alternating Current-based Open Drain Method for Separate Extraction of Source and Drain Resistances in MOSFETs"
     venue: "The 27th Korean Conference on Semiconductors"
@@ -179,6 +281,18 @@ conference_papers:
     scope: domestic
     role: co-first
     presenter: true
+  - authors: "J. Yu, H. B. Yoo, H. Kim, Y. J. Park, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Characterization of Spatial Distribution of Traps across the Substrate in Metal-Insulator-Semiconductor Structures with Band Bending Effect"
+    venue: "The 27th Korean Conference on Semiconductors"
+    year: 2020
+    month: "Feb."
+    scope: domestic
+  - authors: "H. B. Yoo, Y. J. Park, J. Yu, H. Kim, S.-J. Choi, D. H. Kim, D. M. Kim"
+    title: "Modeling and Characterization of the Photovoltaic and Photoconductive Effects in Field Effect Transistors under Optical Illumination"
+    venue: "The 27th Korean Conference on Semiconductors"
+    year: 2020
+    month: "Feb."
+    scope: domestic
 
 # ── 수상 ─────────────────────────────────────────────────────────────────────
 awards:
@@ -208,7 +322,7 @@ grants:
     start: "2024-03"
     end: "2024-12"
   - title: "Semiconductor device modeling using artificial neural networks"
-    funder: "Industry--University Cooperation Research, Alsemy Co."
+    funder: "Industry–University Cooperation Research, Alsemy Co."
     role: "Graduate Researcher"
     start: "2022-06"
     end: "2023-05"
@@ -222,6 +336,40 @@ grants:
     role: "Graduate Researcher"
     start: "2020"
     end: "2022"
+
+# ── 장비 / 소프트웨어 ────────────────────────────────────────────────────────
+# ★ 오너 **원본 CV(2025-11-10판)의 표 형식**을 그대로 따른다 (오너 지시 2026-08-13).
+#   원본은 `Equipment Experience` (No. / Name / Function) 16종,
+#          `Tool Experience`      (No. / Name / Purpose)  7종의 **두 표**다.
+#   이름만 나열하면 "무엇을 다룰 줄 아는가"가 안 보인다 — 기능이 핵심 정보다.
+#   기능 문구는 원본 표기를 그대로 옮겼다(허브가 새로 쓰지 않음).
+#   ※ 원본 Tool 표는 번호가 01,02,04…로 03이 비어 있다. 번호는 의미가 없어 옮기지 않았다.
+equipment:
+  - { name: "Agilent 4156C",         function: "Semiconductor parameter analyzer" }
+  - { name: "Agilent B1500A",        function: "Semiconductor device analyzer" }
+  - { name: "Keithley 4200-SCS",     function: "Semiconductor parameter analyzer" }
+  - { name: "HP 4284A",              function: "LCR meter (20 Hz–1 MHz)" }
+  - { name: "HP 4294A",              function: "LCR meter (40 Hz–100 MHz)" }
+  - { name: "Keysight 35670A",       function: "Dynamic signal analyzer" }
+  - { name: "SR570",                 function: "Low-noise current preamplifier" }
+  - { name: "CX3322A",               function: "Device current waveform analyzer" }
+  - { name: "RIGOL DG5102",          function: "100 MHz 2-channel arbitrary function generator" }
+  - { name: "DPO3014",               function: "4-channel 100 MHz digital oscilloscope" }
+  - { name: "Agilent E5250A",        function: "Switching matrix" }
+  - { name: "SUMMIT-9200",           function: "Probe station" }
+  - { name: "MS TECH MST-1000B",     function: "Hot chuck controller" }
+  - { name: "OZ-Series",             function: "Laser diode sources" }
+  - { name: "PM100D",                function: "Digital optical power and energy meter console" }
+  - { name: "WITec alpha",           function: "Raman and PL spectroscopy" }
+
+tools:
+  - { name: "Synopsys ISE TCAD",     purpose: "Device simulation" }
+  - { name: "Silvaco TCAD",          purpose: "Process and device simulation" }
+  - { name: "OrCAD PSpice Designer", purpose: "SPICE simulator for analog and mixed-signal design and verification" }
+  - { name: "PSIM",                  purpose: "Power electronics simulation" }
+  - { name: "P–CAD",                purpose: "EDA software for PCB design" }
+  - { name: "MATLAB",                purpose: "Data processing and analysis" }
+  - { name: "Python",                purpose: "Data analysis and automation scripting" }
 
 # ── 특허 ─────────────────────────────────────────────────────────────────────
 # 출처: 등록특허공보 원문(`김해성-증빙-등록특허.pdf`) 직접 확인 2026-08-08.

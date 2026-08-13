@@ -145,9 +145,34 @@ bio:
     Haesung received the Ph.D., M.S., and B.S. degrees in Electrical Engineering from
     Kookmin University, Seoul, Korea.
 
+# ── 연구 요약 ────────────────────────────────────────────────────────────────
+# ★ 상태: ✅ **오너 승인 완료 (2026-08-13).** 공개 렌더 가능.
+#   bio 와 같은 취급 — 렌더는 **글자 그대로** 쓴다. 윤문·의역 금지.
+#   고칠 일이 생기면 허브를 거쳐 오너 승인을 다시 받는다.
+# ★ 2026-08-13 갱신 — **주저자 논문 14편의 내용**을 근거로 다시 썼다(오너 지시).
+#   이전 문안은 CV(2025-11-10판)의 Research History 를 옮긴 것이라 소자계 나열에 가까웠다.
+#   지금 문안은 "무엇을 규명하는 연구인가"를 앞에 두고, 그 근거를 주저자 논문에서 가져왔다.
+#   ★ 논문 수를 문장에 넣지 않는다(style 규약). 목록이 개수를 보여준다.
+#   ⚠ **Purdue 이후 진행 중인 연구는 아직 안 들어가 있다** — Analysis Manager 세션
+#     (cwd D:\Claude\research)에 조회 중이며, 회신 오면 갱신한다.
 research_focus: >-
-  Opto-electronics-based characterization of semiconductor devices, physics-based
-  device modeling, and the development of parameter-extraction methods.
+  Characterization techniques and physics-based models that separate device parameters
+  which conventional measurements leave entangled.
+
+research_focus_long: >-
+  The work develops characterization techniques and physics-based models that separate
+  device parameters which conventional measurements leave entangled. Methods established
+  in this line extract parasitic source and drain resistances independently of the
+  threshold voltage, the mobility enhancement factor, interface-trap and subgap
+  density-of-states distributions, and the conduction band minimum as a robust energy
+  reference for amorphous oxide semiconductors. The approach rests on opto-electronic
+  measurement — photonic I–V and C–V with the photovoltaic and photoconductive
+  contributions de-embedded — together with transient and pulsed characterization.
+  Recent work applies these methods to emerging memory devices: charge-trapping dynamics
+  and read-after-write latency in HfZrO_x ferroelectric FETs, trap dynamics resolved from
+  the transient response of a-IGZO thin-film transistors, low-frequency noise as a
+  function of contact metal, intrinsic field-effect mobility at cryogenic temperature,
+  and proton-irradiation damage at SiN_x and Si–SiO_2 interfaces in flash memory.
 
 # ── 지표 ─────────────────────────────────────────────────────────────────────
 # ★ 헌장: 지표는 출처 URL + 확인 날짜 없이 쓰지 않는다.

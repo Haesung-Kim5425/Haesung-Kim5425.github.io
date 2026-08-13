@@ -24,11 +24,20 @@ nav_order: 2
   paper in the bibliography, it does not belong on this page.
 {% endcomment %}
 
-{{ site.data.profile.research_focus }} The recurring problem
-across all of it: an ordinary I–V or C–V sweep returns a single lumped number where
-several physical mechanisms overlap. Until those mechanisms can be separated, a device's
-behaviour gets attributed to a fitting parameter rather than to a trap population, a
-resistance, or an interface.
+{% comment %}
+  The paragraph below is APPROVED TEXT — research_focus_long in the record, signed off by
+  the owner on 2026-08-13 and rewritten from the content of the first-authored papers.
+  Same handling as the biography: rendered from the record, never restated here, never
+  reworded. Changes go through the hub.
+
+  It replaced a sentence of mine that had begun to say the same thing twice. The approved
+  short form now reads "...separate device parameters which conventional measurements
+  leave entangled", and the line that used to follow it explained that an ordinary I–V or
+  C–V sweep returns one lumped number where several mechanisms overlap — the same point,
+  worded differently, immediately afterwards. The approved text says it once.
+{% endcomment %}
+
+{{ site.data.profile.research_focus_long }}
 
 Four device families run through it.
 

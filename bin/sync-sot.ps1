@@ -699,6 +699,24 @@ if (Test-Path -LiteralPath $RecordSourcePath) {
 
     Assert-PublicSafe -Text $recordText -Label 'record.yml' -Path $RecordSourcePath
 
+    # Translate LaTeX's en-dash convention for the web.
+    #
+    # The record holds "--" because the CV renders from these same fields into .tex, where
+    # that is how an en dash is written. On a web page it arrives literally: "Photonic
+    # I--V", "Industry--University", "20 Hz--1 MHz".
+    #
+    # Converted here, at the boundary between the record and this site, rather than with a
+    # filter on each field in the page. Eight fields across four sections carry it today,
+    # and per-field filters only cover the fields someone remembered — a new one leaks
+    # silently. Same reasoning as the line-ending normalisation above.
+    #
+    # Checked before enabling: all eight occurrences are values meaning an en dash, and no
+    # key or URL in the file contains "--", so this cannot corrupt an identifier.
+    #
+    # The real fix is for the record to hold renderer-neutral text and let the CV generator
+    # add its own markup. The hub has been asked; this stays until then.
+    $recordText = $recordText -replace '--', [char]0x2013
+
     $recordHeader = @"
 # ============================================================================
 # GENERATED FILE - DO NOT EDIT.

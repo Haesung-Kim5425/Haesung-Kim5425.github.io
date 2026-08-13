@@ -108,35 +108,57 @@ publications are on the [publications]({{ '/publications/' | relative_url }}) pa
 {% endfor %}
 </ul>
 
-## Selected conference presentations
+## Conference papers
 
 {% comment %}
-  These carry titles and author lists; the list further down is attendance only.
+  Titles and author lists; the section after this one is attendance.
 
-  They have no DOI, so unlike the publications page nothing here could be checked against
-  a registry — the source is the owner's CV. That is a weaker standard of evidence than
-  everything on the publications page, and the note below says so rather than letting the
-  two read as equivalent.
+  Not "selected" any more — this is the CV's complete Conference section, all 21. It was
+  four entries when this section was first written, and calling a full list "selected"
+  understates it.
+
+  None has a DOI, so unlike the publications page nothing here could be checked against a
+  registry: the source is the owner's CV alone. The note below says so rather than letting
+  the two lists read as equally evidenced.
+
+  ★ Author names are printed exactly as the record has them, and are never matched or
+  emphasised. One entry's abbreviated list contains "H. Kim" twice — two different people
+  — so a renderer that bolded by name would put someone else's name in the site owner's
+  place. The record carries owner_position for renderers that must resolve it; this page
+  has no reason to, so it does not try.
 {% endcomment %}
+
+{% assign cp_intl = r.conference_papers | where: "scope", "international" %}
+{% assign cp_dom = r.conference_papers | where: "scope", "domestic" %}
 
 {% comment %}
-  The record stores these strings with LaTeX conventions, because the CV renders from the
-  same fields into .tex: "--" for an en dash and "$_2$" for a subscript. Left alone they
-  reach the page literally, as "Photonic I--V" and "Si--SiO$_2$".
-
-  Converted here as a stopgap. The proper fix is for the record to hold renderer-neutral
-  text and let the CV generator add its own markup — one source should not carry another
-  renderer's syntax — and the hub has been asked for that. When it lands, these filters
-  become harmless no-ops and can go.
+  No LaTeX cleanup here. The record writes an en dash as "--" because the CV renders the
+  same fields into .tex, and bin/sync-sot.ps1 converts it once while copying — eight
+  fields across four sections carry it, and per-field filters only ever cover the fields
+  someone remembered.
 {% endcomment %}
+**International**
+
 <ul>
-{% for c in r.conference_papers %}
-  {%- assign t = c.title | replace: '$_2$', '₂' | replace: '$_x$', 'ₓ' | replace: '--', '–' -%}
-  {%- assign v = c.venue | replace: '--', '–' -%}
+{% for c in cp_intl %}
   <li>
     {{ c.authors }},
-    “{{ t }},”
-    <em>{{ v }}</em>{% if c.location %}, {{ c.location }}{% endif %}{% if c.month %}, {{ c.month }}{% endif %} {{ c.year }}{% if c.pages %}, pp. {{ c.pages | replace: '--', '–' }}{% endif %}.
+    “{{ c.title }},”
+    <em>{{ c.venue }}</em>{% if c.location %}, {{ c.location }}{% endif %}{% if c.month %}, {{ c.month }}{% endif %} {{ c.year }}{% if c.pages %}, pp. {{ c.pages }}{% endif %}.
+    {%- if c.role == 'co-first' %} <span style="color: var(--global-text-color-light);">· co-first author</span>{% endif %}
+    {%- if c.presenter %} <span style="color: var(--global-text-color-light);">· presenter</span>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+
+**Domestic**
+
+<ul>
+{% for c in cp_dom %}
+  <li>
+    {{ c.authors }},
+    “{{ c.title }},”
+    <em>{{ c.venue }}</em>{% if c.month %}, {{ c.month }}{% endif %} {{ c.year }}.
     {%- if c.role == 'co-first' %} <span style="color: var(--global-text-color-light);">· co-first author</span>{% endif %}
     {%- if c.presenter %} <span style="color: var(--global-text-color-light);">· presenter</span>{% endif %}
   </li>
@@ -144,9 +166,9 @@ publications are on the [publications]({{ '/publications/' | relative_url }}) pa
 </ul>
 
 <p style="font-size: 0.85em; color: var(--global-text-color-light);">
-  These presentations have no DOI and are listed from the CV; conference papers that do
-  have one appear on the <a href="{{ '/publications/' | relative_url }}">publications</a>
-  page, where every entry was checked against its DOI.
+  None of these has a DOI; they are listed from the CV. Conference papers that do have one
+  are on the <a href="{{ '/publications/' | relative_url }}">publications</a> page, where
+  every entry was checked against its DOI.
 </p>
 
 ## Conferences attended
@@ -182,4 +204,24 @@ publications are on the [publications]({{ '/publications/' | relative_url }}) pa
 
 <p style="font-size: 0.85em; color: var(--global-text-color-light); margin-top: 1.5rem;">
   Attendance history. Presentation type is shown only where the record states it.
+</p>
+
+## Technical skills
+
+{% comment %}
+  Instruments and software from the record. Listed as names and one-line functions, which
+  is what the CV carries — no proficiency ratings, because the record has none and
+  inventing a scale would be a claim nobody could check.
+{% endcomment %}
+
+**Measurement and characterisation**
+
+<p>
+{% for e in r.equipment %}{% unless forloop.first %} · {% endunless %}{{ e.name }}<span style="color: var(--global-text-color-light);"> ({{ e.function }})</span>{% endfor %}
+</p>
+
+**Simulation and design software**
+
+<p>
+{% for s in r.tools %}{% unless forloop.first %} · {% endunless %}{{ s.name }}<span style="color: var(--global-text-color-light);"> ({{ s.purpose }})</span>{% endfor %}
 </p>
