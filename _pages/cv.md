@@ -108,7 +108,48 @@ publications are on the [publications]({{ '/publications/' | relative_url }}) pa
 {% endfor %}
 </ul>
 
-## Conference presentations
+## Selected conference presentations
+
+{% comment %}
+  These carry titles and author lists; the list further down is attendance only.
+
+  They have no DOI, so unlike the publications page nothing here could be checked against
+  a registry — the source is the owner's CV. That is a weaker standard of evidence than
+  everything on the publications page, and the note below says so rather than letting the
+  two read as equivalent.
+{% endcomment %}
+
+{% comment %}
+  The record stores these strings with LaTeX conventions, because the CV renders from the
+  same fields into .tex: "--" for an en dash and "$_2$" for a subscript. Left alone they
+  reach the page literally, as "Photonic I--V" and "Si--SiO$_2$".
+
+  Converted here as a stopgap. The proper fix is for the record to hold renderer-neutral
+  text and let the CV generator add its own markup — one source should not carry another
+  renderer's syntax — and the hub has been asked for that. When it lands, these filters
+  become harmless no-ops and can go.
+{% endcomment %}
+<ul>
+{% for c in r.conference_papers %}
+  {%- assign t = c.title | replace: '$_2$', '₂' | replace: '$_x$', 'ₓ' | replace: '--', '–' -%}
+  {%- assign v = c.venue | replace: '--', '–' -%}
+  <li>
+    {{ c.authors }},
+    “{{ t }},”
+    <em>{{ v }}</em>{% if c.location %}, {{ c.location }}{% endif %}{% if c.month %}, {{ c.month }}{% endif %} {{ c.year }}{% if c.pages %}, pp. {{ c.pages | replace: '--', '–' }}{% endif %}.
+    {%- if c.role == 'co-first' %} <span style="color: var(--global-text-color-light);">· co-first author</span>{% endif %}
+    {%- if c.presenter %} <span style="color: var(--global-text-color-light);">· presenter</span>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+
+<p style="font-size: 0.85em; color: var(--global-text-color-light);">
+  These presentations have no DOI and are listed from the CV; conference papers that do
+  have one appear on the <a href="{{ '/publications/' | relative_url }}">publications</a>
+  page, where every entry was checked against its DOI.
+</p>
+
+## Conferences attended
 
 {% assign intl = r.conferences | where: "scope", "international" %}
 {% assign dom = r.conferences | where: "scope", "domestic" %}
@@ -140,7 +181,5 @@ publications are on the [publications]({{ '/publications/' | relative_url }}) pa
 </ul>
 
 <p style="font-size: 0.85em; color: var(--global-text-color-light); margin-top: 1.5rem;">
-  Conference papers with a DOI are listed on the
-  <a href="{{ '/publications/' | relative_url }}">publications</a> page; the list above is
-  attendance and presentation history, which is a separate record.
+  Attendance history. Presentation type is shown only where the record states it.
 </p>
