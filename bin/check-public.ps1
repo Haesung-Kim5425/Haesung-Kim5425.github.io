@@ -83,6 +83,10 @@ $checks = @(
     @{ name = 'date of birth';                pattern = '(?<!\d)19\d{2}-\d{2}-\d{2}(?!\d)' }
     @{ name = 'GPA';                          pattern = '(?<!\d)[0-4]\.\d{1,2}\s*/\s*4\.5(?!\d)' }
     @{ name = 'al-folio demo content';        pattern = '(?i)\b(einstein|example\.com|your-?name|555 your)\b' }
+    # al_comments renders a red "misconfigured" panel when giscus is switched on without
+    # repo_id / category / category_id. It is a visible error box on a public page, and it
+    # appears only in the built output, so nothing in the sources would reveal it.
+    @{ name = 'giscus misconfiguration panel'; pattern = '(?i)giscus comments misconfigured' }
 )
 
 # DOIs the record says to withhold. Read from the profile rather than hard-coded, so the
