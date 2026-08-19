@@ -37,27 +37,22 @@ position:
 
 contact:
   email: "kim5425@purdue.edu"
-  email_note: "Purdue 재직 기반 주소. 이직 시 갱신 필요."
 
 ids:
   orcid: "0000-0002-3392-9444"
   orcid_url: "https://orcid.org/0000-0002-3392-9444"
-  orcid_verified_by: "ORCID 공개 API works 목록이 오너 논문과 일치 (pub.orcid.org)"
   orcid_verified_on: "2026-08-07"
 
   google_scholar: "976BWb4AAAAJ"
   google_scholar_url: "https://scholar.google.com/citations?user=976BWb4AAAAJ"
-  google_scholar_verified_by: "프로필 표기 소속 'Post-doctoral Researcher, Purdue University' + verified email 도메인 purdue.edu 일치"
   google_scholar_verified_on: "2026-08-07"
 
   github: "Haesung-Kim5425"
   github_url: "https://github.com/Haesung-Kim5425"
-  github_verified_by: "오너 직접 확인 + 이 PC의 Windows 자격증명이 api.github.com/Haesung-Kim5425 로 저장돼 있음"
   github_verified_on: "2026-08-08"
 
   scopus_author_id: "57219359516"
   scopus_url: "https://www.scopus.com/authid/detail.uri?authorId=57219359516"
-  scopus_verified_by: "오너 직접 제공(강원대 세션 경유) + ORCID 공개 API external-identifiers 에 동일 값 등록 확인 (pub.orcid.org/v3.0/0000-0002-3392-9444/external-identifiers)"
   scopus_verified_on: "2026-08-19"
 
 site_url: "https://haesung-kim5425.github.io"

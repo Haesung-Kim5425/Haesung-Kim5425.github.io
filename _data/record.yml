@@ -9,7 +9,7 @@
 meta:
   public_safe: true
   updated: "2026-08-08"
-  source: "achievements/record.md (원본 근거·출처는 그쪽 참조)"
+  source: "achievements/record.md"
 
 teaching:
   - role: "Lecturer"
