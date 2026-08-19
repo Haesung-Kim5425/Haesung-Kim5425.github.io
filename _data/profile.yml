@@ -153,8 +153,16 @@ bio:
 #   이전 문안은 CV(2025-11-10판)의 Research History 를 옮긴 것이라 소자계 나열에 가까웠다.
 #   지금 문안은 "무엇을 규명하는 연구인가"를 앞에 두고, 그 근거를 주저자 논문에서 가져왔다.
 #   ★ 논문 수를 문장에 넣지 않는다(style 규약). 목록이 개수를 보여준다.
-#   ⚠ **Purdue 이후 진행 중인 연구는 아직 안 들어가 있다** — Analysis Manager 세션
-#     (cwd D:\Claude\research)에 조회 중이며, 회신 오면 갱신한다.
+# ★ 2026-08-18 진행 중 연구 반영 — research 통합 관리자 회신 + **오너 확정** 근거.
+#   공개 범위 조건(오너 확정, 반드시 지킬 것):
+#     · 어닐 방식 비교 : **일반 수준만.** 게재 전 수치(2Pr·비율 등)·샘플 코드네임 금지
+#     · endurance/공간스캔 · 광토글 C-t 서브갭 DoS : 공개 가능
+#     · 2D 트랜지스터 : 공개 가능하되 **구체적이지 않게** — 소자 스택·기하·수치 금지
+#       ⚠ **협업사명·협업자명 명시는 오너 재확인 전까지 보류.** 지금은 'industrial
+#         collaboration' 까지만 적었다. 넣으려면 research 관리자에게 재문의할 것.
+#     · 투고 중 원고 3건(candidates.md D-1)은 **비공개 유지**
+#   ★ 수치가 들어가는 순간 research 감사 게이트(FINDINGS F.key 인용) 대상이 된다.
+#     일반 수준 서술로 유지하면 해당 없음 — 수치를 넣지 말 것.
 research_focus: >-
   Characterization techniques and physics-based models that separate device parameters
   which conventional measurements leave entangled.
@@ -169,10 +177,16 @@ research_focus_long: >-
   measurement — photonic I–V and C–V with the photovoltaic and photoconductive
   contributions de-embedded — together with transient and pulsed characterization.
   Recent work applies these methods to emerging memory devices: charge-trapping dynamics
-  and read-after-write latency in HfZrO_x ferroelectric FETs, trap dynamics resolved from
+  and read-after-write latency in HfZrOₓ ferroelectric FETs, trap dynamics resolved from
   the transient response of a-IGZO thin-film transistors, low-frequency noise as a
   function of contact metal, intrinsic field-effect mobility at cryogenic temperature,
-  and proton-irradiation damage at SiN_x and Si–SiO_2 interfaces in flash memory.
+  and proton-irradiation damage at SiNₓ and Si–SiO₂ interfaces in flash memory.
+  Current work at Purdue extends this line to ferroelectric HfZrOₓ: how the crystallization
+  anneal route shapes the ferroelectric response, the mechanisms behind endurance degradation
+  and how that degradation varies spatially across a device population, photo-toggled
+  capacitance-transient spectroscopy that resolves the subgap density of states in both space
+  and energy, and the reliability of two-dimensional transistors under bias stress in an
+  industrial collaboration.
 
 # ── 지표 ─────────────────────────────────────────────────────────────────────
 # ★ 헌장: 지표는 출처 URL + 확인 날짜 없이 쓰지 않는다.

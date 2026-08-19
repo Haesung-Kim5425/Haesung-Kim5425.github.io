@@ -454,6 +454,35 @@ else {
 # The site's _data/socials.yml is then GENERATED from it, so the email, ORCID and Scholar
 # id exist in exactly one place across the whole system.
 # --------------------------------------------------------------------------------------
+# Render LaTeX-style subscripts as real subscript characters.
+#
+# The record writes chemical formulae the way the CV needs them for .tex: HfZrO_x, SiN_x,
+# Si-SiO_2. On a web page the underscore arrives literally -- "HfZrO_x" was live on the
+# research page, because the previous pass verified only the opening sentence of a
+# paragraph whose formulae are all in the last two.
+#
+# Only "letter + underscore + digit-or-x" is converted, so a YAML key can never be hit.
+# Checked before enabling: of 62 keys in profile.yml and 46 in record.yml, none matches
+# that shape; the only matches anywhere are the formulae themselves.
+#
+# Typography, not wording. The approved text is unchanged -- this is the same class of
+# change as the en-dash conversion, and the real fix remains a record that holds
+# renderer-neutral text.
+function Convert-Subscripts {
+    param([string]$Text)
+    # Real subscript characters, written as escapes so this script stays pure ASCII on
+    # disk -- Windows PowerShell 5.1 reads a BOM-less .ps1 as ANSI and would corrupt
+    # literals. HTML entities would work in the page but would leave "&#8322;" sitting in
+    # the data file for any non-HTML consumer of the same record.
+    $map = @{}
+    0..9 | ForEach-Object { $map["$_"] = [char](0x2080 + $_) }
+    $map['x'] = [char]0x2093
+    return [regex]::Replace($Text, '([A-Za-z])_([0-9x])', {
+        param($m)
+        $m.Groups[1].Value + $map[$m.Groups[2].Value]
+    })
+}
+
 # Shared gate for every YAML the record hands over. Written once and used for both
 # profile.yml and record.yml: duplicated safety logic is the kind that drifts, and the
 # copy that stops being maintained is the one still guarding something.
@@ -526,6 +555,7 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
     Write-Host "Profile: $ProfileSourcePath"
 
     Assert-PublicSafe -Text $profileText -Label 'profile.yml' -Path $ProfileSourcePath
+    $profileText = Convert-Subscripts $profileText
 
     # Cross-check site_url against _config.yml's `url`.
     #
@@ -707,7 +737,7 @@ if (Test-Path -LiteralPath $RecordSourcePath) {
     #
     # Converted here, at the boundary between the record and this site, rather than with a
     # filter on each field in the page. Eight fields across four sections carry it today,
-    # and per-field filters only cover the fields someone remembered — a new one leaks
+    # and per-field filters only cover the fields someone remembered -- a new one leaks
     # silently. Same reasoning as the line-ending normalisation above.
     #
     # Checked before enabling: all eight occurrences are values meaning an en dash, and no
@@ -716,6 +746,7 @@ if (Test-Path -LiteralPath $RecordSourcePath) {
     # The real fix is for the record to hold renderer-neutral text and let the CV generator
     # add its own markup. The hub has been asked; this stays until then.
     $recordText = $recordText -replace '--', [char]0x2013
+    $recordText = Convert-Subscripts $recordText
 
     $recordHeader = @"
 # ============================================================================
@@ -756,7 +787,7 @@ else {
 #
 # Referenced by `preview` fields in the bibliography, so a missing file is a broken image
 # on a public page. Compared by hash like the CV. Also reports figures the bibliography
-# does not reference and `preview` values with no file behind them — a mismatch either way
+# does not reference and `preview` values with no file behind them -- a mismatch either way
 # is a fault worth seeing, not something to discover in a browser.
 # --------------------------------------------------------------------------------------
 $figOrphan  = @()
@@ -765,7 +796,7 @@ $figStamp   = ''
 
 # Skip '%' comment lines. The bibliography header documents the convention with a sample
 # line (preview = {filename.png}), and counting that as a reference made the check report
-# a missing figure on a perfectly correct file — the same false positive the public-safety
+# a missing figure on a perfectly correct file -- the same false positive the public-safety
 # gate hit on the `exclude:` block. A check that fails on a file for documenting its own
 # rules is a check that gets ignored.
 $previewNames = @()
