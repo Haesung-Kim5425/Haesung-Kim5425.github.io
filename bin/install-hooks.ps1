@@ -40,9 +40,14 @@ check_output=$(powershell -NoProfile -ExecutionPolicy Bypass -File "$sync_script
 status=$?
 if [ "$status" -eq 2 ]; then
     echo "" >&2
-    echo "pre-commit: BLOCKED - _bibliography/papers.bib is out of date." >&2
-    echo "  Committing now would publish a stale publication list." >&2
-    echo "  Fix:  pwsh -File bin/sync-sot.ps1  &&  git add _bibliography/papers.bib" >&2
+    # Print what the check said rather than naming a file. This message used to read
+    # "papers.bib is out of date" whatever was stale, from when the bibliography was the
+    # only thing copied in; it since sent someone to diff a file that was current while
+    # the profile was the stale one. The check names the artefact -- let it.
+    echo "pre-commit: BLOCKED - a copied artefact is out of date." >&2
+    echo "$check_output" >&2
+    echo "  Committing now would publish a stale copy." >&2
+    echo "  Fix:  pwsh -File bin/sync-sot.ps1  &&  git add -A" >&2
     echo "" >&2
     exit 1
 fi
@@ -63,4 +68,4 @@ $target = Join-Path $hookDir 'pre-commit'
 [System.IO.File]::WriteAllText($target, ($preCommit -replace "`r`n", "`n"), (New-Object System.Text.UTF8Encoding($false)))
 
 Write-Host "Installed pre-commit hook at $target" -ForegroundColor Green
-Write-Host "It blocks commits while _bibliography/papers.bib is older than the source of truth."
+Write-Host "It blocks commits while any copied artefact is older than the record it comes from."
