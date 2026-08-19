@@ -260,6 +260,38 @@ if (Test-Path -LiteralPath $profileForExempt) {
     }
 }
 
+# The exemption above is exactly where a value can hide, so the exempted lines get their
+# own check: an entry may name the FIELD it withholds, never the value.
+#
+# "office street address (1205 Mitch Daniels Blvd)" publishes the address it exists to
+# withhold, and it does so in the one region both gates were told to skip -- this one by
+# line number, and Assert-PublicSafe in the sync for the same reason. It is the structure
+# the hub identified in the block list, one level down: a list of what not to publish is
+# only safe while it does not quote what it is withholding.
+foreach ($key in $exemptLines.Keys) {
+    $n = 0
+    foreach ($line in (Get-Content -LiteralPath $key -Encoding UTF8)) {
+        $n++
+        if (-not $exemptLines[$key].Contains($n)) { continue }
+        foreach ($c in @(
+            # House number, one to three name words, then a street type: "1205 Mitch
+            # Daniels Blvd". An earlier version allowed a single name word and matched
+            # nothing at all on the line it was written for.
+            @{ name = 'street address'; pattern = '(?i)\d{2,5}(\s+[A-Za-z.]+){1,3}\s+(Blvd|Boulevard|St|Street|Ave|Avenue|Rd|Road|Dr|Drive|Ln|Lane|Way|Mall|Circle|Ct|Court)\b' }
+            @{ name = 'phone number';   pattern = '(?<!\d)\+?\d{2,3}[-. ]\d{3,4}[-. ]\d{4}(?!\d)' }
+            @{ name = 'date of birth';  pattern = '(?<!\d)19\d{2}-\d{2}-\d{2}(?!\d)' }
+            @{ name = 'GPA';            pattern = '(?<!\d)[0-4]\.\d{1,2}\s*/\s*4\.5(?!\d)' }
+        )) {
+            if ($line -match $c.pattern) {
+                $failures++
+                Write-Host "  FAIL  the exclude block quotes the $($c.name) it withholds" -ForegroundColor Red
+                Write-Host "          $((Get-Item -LiteralPath $key).Name) : line $n"
+                Write-Host "        Name the field, not the value: the exclude block is published." -ForegroundColor Yellow
+            }
+        }
+    }
+}
+
 $srcFail = 0
 foreach ($b in $blocked) {
     $pat = "(?i)" + [regex]::Escape($b.value)
