@@ -9,128 +9,8 @@
 %
 %     pwsh -File bin/sync-sot.ps1
 %
-% Synced: 2026-08-08 17:12:10   |   entries: 26
+% Synced: 2026-08-19 11:01:05   |   entries: 26
 % ============================================================================
-% publications.bib — 논문 SoT (BibTeX). 홈페이지(al-folio)가 이 파일을 직접 렌더.
-% 규칙: DOI 검증 통과분만. 프리프린트/게재예정은 keywords={preprint} + note로 명시 구분.
-% 소스: ORCID 0000-0002-3392-9444 (정본) + Zotero 라이브러리 대조. 지표는 metrics.md.
-%
-% 검증 이력
-%   2026-08-07 초기 동기화. 3개 소스를 교차 대조해 25건 확정.
-%     ORCID works                21건 (정본)
-%     + Zotero 대조 누락 발견      3건 (오너 제1저자 2건 포함)
-%     + CV(2025-11-10) 대조 누락   1건 (10.1166/jnn.2021.19391)
-%                                = 25건
-%   검증 방법: 각 DOI를 Crossref REST API(api.crossref.org/works/{doi})로 resolve해
-%             청구 제목 vs 등록 레코드 제목을 대조(Topaz 조작 패턴 게이트).
-%             결과 25/25 matched, 철회(retraction) 0건.
-%   ※ citation-audit 스킬의 Scholar Sidekick MCP는 "not subscribed" 로 사용 불가 →
-%     동등한 제목-대조 검증을 Crossref 원본으로 수행. 구독 복구 시 재검증 권장.
-%   서지 필드(저자·권·호·페이지·연도)는 전부 Crossref 레코드에서 생성 — 수기 입력 없음.
-%
-% ★ 이름 표기 변형 주의
-%   10.1166/jnn.2021.19391 는 published record 상 저자명이 "Hae Sung Kim"(띄어쓰기)이라
-%   ORCID·Zotero 어느 쪽의 "Haesung Kim" 검색에서도 안 잡혔다. CV 대조로만 발견.
-%   → 향후 동기화 때 "Hae Sung" / "Haesung" 양쪽으로 검색할 것.
-%
-% 수기 교정 이력 (Crossref 레코드 오류 수정 — 이 파일에서 수기로 고친 유일한 항목)
-%   2026-08-08  kim2025photonic (10.1109/TED.2025.3547707) 의 author 필드
-%     Crossref 등록 레코드가 성/이름 경계를 잘못 나눠 놓았다:
-%       "Hyeop Han, Seung" / "Hwan Kim, Dae" / "Myong Kim, Dong"
-%     -> "Han, Seung Hyeop" / "Kim, Dae Hwan" / "Kim, Dong Myong" 로 교정.
-%     근거: 동일 인물이 이 파일의 다른 엔트리 다수에 올바른 형태로 등록돼 있고,
-%           오너 CV(2025-11-10판) 표기와도 일치한다. 제목·DOI·서지는 손대지 않았다.
-%     증상: 교정 전 CV 렌더가 "S. Hyeop Han", "D. Hwan Kim" 으로 출력했다.
-%   ※ 이 외의 모든 서지 필드는 Crossref 원본 그대로다. 교정 시 반드시 여기에 기록할 것.
-%
-% 미포함(공개 노출 금지) → candidates.md 참조
-%   - 10.1038/s41586-025-09793-3 (Nature, 2025) "Haesung Kim" 동명이인 의심(삼성 소속 저자군)
-%
-%   2026-08-08 (2차) watcher 주간 스캔이 잡은 게재 완료 1건 승격 → 26건.
-%     10.1016/j.mssp.2026.111021 (Mater. Sci. Semicond. Process. 215, 111021, 2026)
-%     Crossref 검증 통과 · 등록 저자에 given="Haesung"/family="Kim" 정확 일치(9인 중 8번째) ·
-%     공저자군이 기존 SoT 논문들과 동일 클러스터 · 발행사 통보 메일이 오너 주소로 직접 수신.
-%     ★ 이 논문은 **ORCID에 없다** — Outlook 감시가 아니었으면 못 잡았다.
-%
-% 총 26건 = journal article 23 + conference paper 2 + preprint 1
-%
-% ★★ 이 파일을 편집하는 세션에게: 주석에 '＠' 문자를 절대 쓰지 말 것.
-%   BibTeX에는 줄 주석 문법이 없다. 파서는 '％' 줄을 "다음 ＠까지 건너뛰기"로 처리하므로,
-%   주석 안의 ＠가 엔트리 시작으로 오인돼 파일 전체 파싱이 죽는다.
-%   (2026-08-07 실제로 이 사고가 났다 — Homepage 세션 al-folio 빌드가 통째로 실패.
-%    엔트리 타입을 주석에 쓸 때는 '＠article' 대신 'journal article' 처럼 풀어 쓴다.)
-%
-% 필드 규약 (렌더가 읽어야 함)
-%
-%   authorship = {...}  -> ★ 저자 역할. **25건 전부에 명시돼 있다**(2026-08-08 오너 요청).
-%       값(쉼표 결합 가능):
-%         first          제1저자 (저자 목록 첫 번째)
-%         co-first       공동 제1저자 (원문에 equal-contribution 명시가 있는 경우만)
-%         corresponding  교신저자
-%         co-author      공저 참여
-%       ★★ **빈 값을 두지 말 것.** "필드 없음"이 co-author 인지 아직 안 적은 것인지 구분이 안 된다.
-%          공저자도 반드시 {co-author} 로 명시한다. 이게 이 규약의 존재 이유다.
-%       ★★ **렌더는 반드시 contains 로 매칭할 것.** 정확 일치로 하면 {first,co-first} 같은
-%          결합 값을 놓쳐 **배지·단검표가 조용히 사라진다.** 실제로 CV 생성기가 그렇게 짜여 있었고
-%          이 규약 도입 때 고쳤다.
-%       현재 분포: first 5 · first,co-first 3 · co-first 5 · co-author 12 · corresponding 0
-%         → 주저자(first 또는 co-first 포함) 13건 / 공저자 12건 / 합 25건
-%       ★ 요약 통계(총 n편·주저자 n편·공저자 m편)는 **이 필드에서 세어 계산한다.**
-%          어느 렌더에도 숫자를 하드코딩하지 말 것 — 논문이 늘면 즉시 틀린 값이 된다.
-%
-%       co-first 근거: CV(2025-11-10판) 표기 5건 + 2026-08-08 원문 PDF 1쪽 직접 확인 3건
-%         (10.1109/LED.2020.3020405 · 10.1016/j.sse.2021.108133 · 10.1109/TED.2023.3269735
-%          — 셋 다 "Haesung Kim and Han Bin Yoo contributed equally to this work" 명시)
-%
-%   note = {...}        -> 자유서술 전용(프리프린트 설명·이름 표기 변형 등). 매칭 대상 아님.
-%
-% ★★★ 필드 규약을 바꾸면 반드시 렌더 세션에 통보할 것 (2026-08-08 확정)
-%   렌더(홈페이지·CV·biosketch)는 모르는 필드를 만나면 **에러 없이 그냥 안 그린다.**
-%   2026-08-08 note -> authorship 이관 때 실제로 이 일이 났다:
-%     공동 제1저자 배지 5개가 0개로 사라졌는데 al-folio 빌드는 성공했다. 에러 한 줄 없었다.
-%     Homepage 세션이 정기 실측을 하고 있어서 잡혔지, 아니면 공동 제1저자 표시가
-%     빠진 채로 공개 배포될 뻔했다.
-%   -> 필드 추가/이름변경/삭제 시 절차:
-%      (1) 이 헤더의 규약 블록을 먼저 갱신
-%      (2) 렌더 세션(website / proposal-writer biosketch / CV)에 변경 내용을 직접 통보
-%      (3) 렌더 쪽에서 "변경 후 실측"으로 건수 복구를 확인받을 것 (빌드 성공은 증거가 아니다)
-%   keywords = {preprint}     -> 프리프린트. verified 논문과 섞어 표시하지 말 것. 1건.
-%   selected = {true}         -> 홈페이지 About 상단 대표논문. 5건.
-%       ★★ 선정 규칙 (오너 최종 확정 2026-08-08): **제1저자 논문만.**
-%          = authorship 에 `first` 가 있는 것(저자 목록 첫 번째)만 대표논문이 된다.
-%          - 교신저자 논문은 **넣지 않는다** (오너 지시로 2026-08-08 규칙에서 제외).
-%          - 공동 제1저자라도 **본인이 1번째가 아니면 넣지 않는다.**
-%          - 저널 가시성은 선정 근거가 아니다.
-%       규칙 변경 이력:
-%          1차: "주저자(제1·공동제1·교신)" → Nature Communications(17인 중 10번째) 제외
-%          2차(최종): "제1저자만" → 교신저자·비1번 공동제1저자도 제외
-%       → selected 를 붙이기 전에 authorship 에 `first` 가 있는지 반드시 확인할 것.
-%   preview = {파일명.png}    -> 대표논문 썸네일. 5건(selected 와 동일 집합).
-%       파일 위치: achievements/figures/ (SoT 옆). 홈페이지는 assets/img/publication_preview/ 로 복사.
-%       출처: 각 논문의 Figure를 PDF에서 추출. 어느 Figure인지는 아래.
-%         kim2020alternating   Fig. 1  (측정 구성 · 등가회로 도식)
-%         kim2023extraction    Fig. 1  (에너지 밴드 다이어그램 · 추출 원리)
-%         kim2024comprehensive Fig. 7  (RWL 메커니즘 요약 도식)
-%         kim2025photonic      Fig. 1  (dark/photonic state 밴드 다이어그램)
-%         kim2026impact        Fig. 10 (proton dose 별 Dit 분포 — 핵심 결과)
-%
-%       ★★ 저작권 — 게재 전 반드시 읽을 것 (2026-08-08 발행사 정책 실제 확인)
-%         IEEE  : 표준 Copyright Form 하에서 **최종 게재본(VOR)의 온라인 게시는 금지**.
-%                 accepted version 은 개인 홈페이지 게시 허용. 게시 시 아래 고지문 필수:
-%                 "© 20XX IEEE. Personal use of this material is permitted. Permission from
-%                  IEEE must be obtained for all other uses..."
-%         AIP   : 개인 홈페이지 게재가 명시적 허용 목록에 없음(학위논문 재사용만 명시).
-%                 엄밀히는 RightsLink 허가 대상.
-%         Elsevier(NET 2026): **CC BY-NC-ND 오픈액세스** — 출처 표시 + 비상업이면 재배포 가능.
-%       → **오너 판단(2026-08-08): "figure는 accepted version과 동일하므로 그대로 사용"**.
-%         즉 본인 저작물인 accepted-version figure 로서 게시하는 것이다. 허브가 위 사실을
-%         보고했고 오너가 확인 후 진행을 지시했다. 정책이 바뀌거나 이의가 오면 즉시 내린다.
-%       → 홈페이지는 Publications 페이지에 **IEEE 고지문을 1회 표기**할 것.
-%
-%   ※ 교신저자(corresponding) 0건인 이유: **확인 결과 없음**이다(정보 부재 아님).
-%     2026-08-08 제1저자 논문 7건의 원문 PDF 1쪽을 직접 읽어 확인했고, 교신저자는 전부
-%     지도교수급(D. M. Kim / J.-H. Bae / D. Kwon / Y. J. Yoon / S. Y. Woo)이었다.
-%     미확인 1건: 10.1109/TED.2026.3691120 (Zotero에 PDF 없음). 상세는 candidates.md E-1절.
 
 @article{kim2020alternating,
   title        = {Alternating Current-Based Technique for Separate Extraction of Parasitic Resistances in MISFETs With or Without the Body Contact},
@@ -439,7 +319,7 @@
 }
 
 @article{lee2026quantitative,
-  title        = {Quantitative Analysis on the Interaction Between Channel Carrier and Remote Trap in Hf$_x$Zr$_{1-x}$O$_2$/SiO$_2$ Interface in Ferroelectric Field-Effect-Transistor},
+  title        = {Quantitative Analysis on the Interaction Between Channel Carrier and Remote Trap in HfxZr1-xO2/SiO2 Interface in Ferroelectric Field-Effect-Transistor},
   author       = {Lee, Haneul and Kim, Sujong and Han, Changhyeon and Kim, Haesung and Yang, Hyojin and Park, Sejun and Yun, Sanghyuk and Lee, Yoon Jung and Choi, Sung-Jin and Kim, Dae Hwan and Kim, Dong Myong and Kwon, Daewoong and Bae, Jong-Ho},
   journal      = {Advanced Electronic Materials},
   year         = {2026},

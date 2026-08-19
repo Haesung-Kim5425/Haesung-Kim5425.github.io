@@ -84,6 +84,39 @@ if (-not $RecordSourcePath)  { $RecordSourcePath  = Join-Path $here '..\..\achie
 if (-not $RecordDestPath)    { $RecordDestPath    = Join-Path $here '..\_data\record.yml' }
 if (-not $SocialsPath)       { $SocialsPath       = Join-Path $here '..\_data\socials.yml' }
 
+# --------------------------------------------------------------------------------------
+# Refuse to run if a file the record marks as NOT publishable has been copied in here.
+#
+# achievements/exclude_private.yml lists the strings that must never be published --
+# manuscript ids, a collaborator, sample codenames. It is deliberately kept outside this
+# repository, because a list of secrets stored in a public repository publishes exactly
+# what it exists to withhold. bin/check-public.ps1 reads it in place, across the repo
+# boundary, and nothing copies it.
+#
+# The failure this guards against is someone (including a later version of this script)
+# copying it in for convenience. Checked by name anywhere in the tree, and by declaration
+# in _data, which is where a copy would most plausibly land.
+# --------------------------------------------------------------------------------------
+$siteRootPath = (Resolve-Path -LiteralPath (Join-Path $here '..')).Path
+$strayPrivate = @()
+$strayPrivate += Get-ChildItem -LiteralPath $siteRootPath -Recurse -File -Filter 'exclude_private.yml' -ErrorAction SilentlyContinue |
+    Where-Object { $_.FullName -notmatch '(?i)[\/](\.git|_site.*|node_modules|vendor)[\/]' }
+$dataDirPath = Join-Path $siteRootPath '_data'
+if (Test-Path -LiteralPath $dataDirPath) {
+    $strayPrivate += Get-ChildItem -LiteralPath $dataDirPath -Recurse -File -Include *.yml, *.yaml -ErrorAction SilentlyContinue |
+        Where-Object { (Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8) -match '(?m)^\s*public_safe\s*:\s*false\s*(#.*)?$' }
+}
+if ($strayPrivate.Count -gt 0) {
+    Write-Host ""
+    Write-Host "SYNC REFUSED - a file marked 'public_safe: false' is inside the public repository." -ForegroundColor Red
+    foreach ($f in ($strayPrivate | Select-Object -Unique FullName)) { Write-Host "  $($f.FullName)" }
+    Write-Host ""
+    Write-Host "  Delete it. It belongs in achievements/ only, and is read from there across the"
+    Write-Host "  repository boundary. Committing it would publish the very strings it withholds."
+    Write-Host ""
+    exit 3
+}
+
 if (-not (Test-Path -LiteralPath $SotPath)) {
     Write-Error "SoT not found: $SotPath`nThe hub session owns this file. Ask it to create the file before syncing."
     exit 1
@@ -364,7 +397,7 @@ $header = @"
 % ============================================================================
 % GENERATED FILE - DO NOT EDIT.
 %
-% Copied verbatim from the publication source of truth:
+% Copied from the publication source of truth (entries verbatim, its comments left there):
 %     achievements/publications.bib   (owned by the Academic Profile hub session)
 %
 % Any edit made here is overwritten the next time bin/sync-sot.ps1 runs. To change
@@ -376,6 +409,15 @@ $header = @"
 % ============================================================================
 
 "@
+
+# The bibliography's own comments stay with the hub too, for the reason above: the SoT
+# carries a Korean provenance header -- which author name was corrected and on whose
+# authority, which DOI belongs to a different person of the same name -- and this copy is
+# published. BibTeX ignores text outside entries, so removing those lines changes nothing
+# that is read. The refusal above still examines them in the SOURCE, where they exist:
+# the CV and the biosketch parse the annotated original, and an '@' in a comment breaks
+# them whatever this copy looks like.
+$sotText = ($sotText -split "`n" | Where-Object { -not $_.TrimStart().StartsWith('%') }) -join "`n"
 
 $newText = $header + $sotText
 
@@ -486,6 +528,77 @@ function Convert-Subscripts {
 # Shared gate for every YAML the record hands over. Written once and used for both
 # profile.yml and record.yml: duplicated safety logic is the kind that drifts, and the
 # copy that stops being maintained is the one still guarding something.
+# Drop full-line comments when copying a record into this repository.
+#
+# The records are commented in Korean by the hub session, and those comments are working
+# notes: which values are withheld and why, what the owner approved on which date, what a
+# renderer must not do. This repository is public, so copying them verbatim publishes the
+# editorial reasoning behind the page -- including, in one case, a token from the private
+# block list, quoted in a note explaining that it must not be published.
+#
+# It is the same rule this site already enforces on page sources, where an internal note
+# must be a Liquid comment rather than an HTML one: notes stop at the boundary. Nothing is
+# lost, because the copies are read by Liquid, which never sees a comment anyway, and the
+# annotated original stays with the hub.
+#
+# Block scalars are tracked, because inside one a line starting with '#' is text, not a
+# comment. The safety of that is not argued -- it is verified: the parsed structure of the
+# copy is compared with the parsed structure of the source. See bin/verify-strip.py.
+function Remove-CommentLines {
+    param([string]$Text)
+
+    $out = New-Object System.Collections.Generic.List[string]
+    $blockIndent = -1
+    $lastBlank = $false
+    foreach ($raw in ($Text -split "`n")) {
+        $line = $raw.TrimEnd([char]13)
+        $trimmed = $line.Trim()
+        $indent = $line.Length - $line.TrimStart().Length
+
+        if ($blockIndent -ge 0) {
+            if ($trimmed -eq '' -or $indent -gt $blockIndent) { $out.Add($line); $lastBlank = ($trimmed -eq ''); continue }
+            $blockIndent = -1
+        }
+        if ($trimmed.StartsWith('#')) { continue }
+        # Collapse the blank runs the removed comments leave behind, outside block scalars
+        # where a blank line is part of the text.
+        if ($trimmed -eq '') {
+            if ($lastBlank -or $out.Count -eq 0) { continue }
+            $lastBlank = $true
+            $out.Add('')
+            continue
+        }
+        $lastBlank = $false
+        if ($line -match ':\s*[|>][-+0-9]*\s*$') { $out.Add($line); $blockIndent = $indent; continue }
+
+        # Trailing comments as well. Half the notes in these records are written after a
+        # value rather than above it, and a rule that removed only whole lines would leave
+        # them -- publishing the same reasoning one column to the right.
+        #
+        # Quote state is tracked so that a '#' inside a value survives. Whether that is
+        # done correctly is not taken on trust: bin/verify-strip.py parses both files and
+        # compares the structures, so a mangled value shows up as a changed value.
+        $cut = -1
+        $inSingle = $false
+        $inDouble = $false
+        for ($i = 0; $i -lt $line.Length; $i++) {
+            $ch = $line[$i]
+            if ($ch -eq "'" -and -not $inDouble) { $inSingle = -not $inSingle }
+            elseif ($ch -eq '"' -and -not $inSingle) { $inDouble = -not $inDouble }
+            elseif ($ch -eq '#' -and -not $inSingle -and -not $inDouble -and $i -gt 0 -and ($line[$i - 1] -eq ' ' -or $line[$i - 1] -eq [char]9)) {
+                $cut = $i
+                break
+            }
+        }
+        if ($cut -ge 0) {
+            $line = $line.Substring(0, $cut).TrimEnd()
+            if ($line.Trim() -eq '') { continue }
+        }
+        $out.Add($line)
+    }
+    return ($out -join "`n")
+}
+
 function Assert-PublicSafe {
     param([string]$Text, [string]$Label, [string]$Path)
 
@@ -556,6 +669,7 @@ if (Test-Path -LiteralPath $ProfileSourcePath) {
 
     Assert-PublicSafe -Text $profileText -Label 'profile.yml' -Path $ProfileSourcePath
     $profileText = Convert-Subscripts $profileText
+    $profileText = Remove-CommentLines $profileText
 
     # Cross-check site_url against _config.yml's `url`.
     #
@@ -747,6 +861,7 @@ if (Test-Path -LiteralPath $RecordSourcePath) {
     # add its own markup. The hub has been asked; this stays until then.
     $recordText = $recordText -replace '--', [char]0x2013
     $recordText = Convert-Subscripts $recordText
+    $recordText = Remove-CommentLines $recordText
 
     $recordHeader = @"
 # ============================================================================

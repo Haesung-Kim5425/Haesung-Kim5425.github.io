@@ -6,82 +6,39 @@
 #
 # Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
 # ============================================================================
-# profile.yml — 기계가독 프로필 SoT
-#
-# 목적: 이름·소속·연락처·식별자·표기규약·bio·지표를 **한 곳에서** 소유한다.
-#       렌더(홈페이지·CV·biosketch)는 이 파일을 읽어 배선한다. 값을 복사해 두지 않는다.
-#       이직·소속변경 시 여기 한 줄만 고치면 모든 렌더가 따라온다.
-#
-# ★★★ 이 파일은 공개 저장소(haesung-kim5425.github.io)로 복사된다.
-#     ⇒ **공개 안전한 값만 담는다. 비공개 항목을 절대 넣지 말 것.**
-#     전화번호·오피스 상세주소·GPA·생년월일·성별·국적은 여기 없다(있어서도 안 된다).
-#     그 값들과 공개/비공개 정책은 `record.md`에만 있고, record.md는 공개 복사 대상이 아니다.
-#
-# 역할 분담
-#   profile.yml  = 값 (렌더가 읽는 기계가독 원본)
-#   record.md    = 서술·출처·이력·비공개 항목 (사람이 읽는 문서)
-#   publications.bib = 논문 (별도 SoT)
-#   metrics.md   = 지표의 출처·주의사항 서술. 값 자체는 아래 metrics 블록이 원본.
-
 meta:
   updated: "2026-08-08"
-  public_safe: true          # 공개 저장소 복사 허용
+  public_safe: true
   owner_approved: "2026-08-08"
 
 name:
   full: "Haesung Kim"
   family: "Kim"
   given: "Haesung"
-  # 게재 레코드상 실제로 쓰인 표기 변형. 이름 매칭·볼드 처리에 **둘 다** 필요하다.
-  # "Kim, Hae Sung"(띄어쓰기)은 10.1166/jnn.2021.19391 의 등록 표기다.
-  # ★ 성만으로 매칭하지 말 것 — 논문마다 Kim 성 공저자가 3~4명이다.
   bibtex_variants:
     - "Kim, Haesung"
     - "Kim, Hae Sung"
 
-# ★ 2026-08-08 오너 정정: "birck nanotech에 들어간 것보다 specere group에 들어간 게 정확하다"
-#   → 소속의 주체는 **Specere Lab**(PI: Prof. Thomas E. Beechem III)이고,
-#     Birck Nanotechnology Center는 랩이 쓰는 시설/센터다.
-#   ⚠ 단, 오너의 **게재 논문에 인쇄된 affiliation 은 "Birck Nanotechnology Center"** 다
-#     (10.1016/j.net.2026.104433, 10.1016/j.cap.2026.06.007 원문 확인). 서지와 프로필 표기가
-#     다른 것은 정상이지만, 인지하고 있을 것. 상세는 record.md.
-#   2026-08-08 오너 추가 확정: **학과 = School of Mechanical Engineering** (기존 "확인 불가" 해소),
-#     그리고 **Birck Nanotechnology Center 병기**. 둘 다 오너 직접 지시다.
 position:
   title: "Postdoctoral Researcher"
   advisor: "Prof. Thomas Beechem"
   lab: "Specere Lab"
   lab_url: "https://specere.org"
-  department: "School of Mechanical Engineering"   # 오너 직접 확정 2026-08-08
-  center: "Birck Nanotechnology Center"            # 랩이 쓰는 센터. 오너 지시로 병기(2026-08-08)
+  department: "School of Mechanical Engineering"
+  center: "Birck Nanotechnology Center"
   unit: "Specere Lab"
   organization: "Purdue University"
   city: "West Lafayette"
   region: "IN"
   country: "USA"
-  # ★ 두 가지 길이를 둔다 — 한 줄에 넷을 다 넣으면 웹에서 길어진다.
-  #   display      : 웹 Contact·About 등 한 줄 표기 (랩 + 센터 + 대학)
-  #   display_full : CV·biosketch 등 지면 표기 (학과까지)
-  #   오피스 호수·번지는 오너 지시로 영구 제외(2026-08-08).
   display: "Specere Lab, Birck Nanotechnology Center, Purdue University"
   display_full: "Specere Lab, School of Mechanical Engineering, Birck Nanotechnology Center, Purdue University, West Lafayette, IN"
-  since: "2025-08-31"   # Purdue 고용증빙(PSLF ECF, 2026-04-06 발급) 기준 정확한 시작일
+  since: "2025-08-31"
 
 contact:
-  # ★ 사이트·CV·biosketch가 이메일을 각자 복사해 두지 말 것.
-  #   2026-08-08 실측에서 홈페이지 안에만 3곳에 복제돼 있었다(socials.yml / cv.yml / resume.json).
-  #   이직 시 여기만 고치면 되도록 유지한다.
   email: "kim5425@purdue.edu"
   email_note: "Purdue 재직 기반 주소. 이직 시 갱신 필요."
 
-# ── 외부 식별자 ──────────────────────────────────────────────────────────────
-# ★★★ 규칙: **귀속 근거(verified_by)와 확인일(verified_on) 없이 ID를 넣지 말 것.**
-#   잘못된 ID는 방문자를 **남의 프로필/레코드로 보낸다.** 공개물이라 그 자체가 사고다.
-#   2026-08-08 실제로 그런 일이 있었다 — `github: kim5425` 가 검증 없이 들어가 있었고,
-#   `github.com/kim5425` 는 **실존하지만 오너 계정이 아니었다.** 배포 직전 오너 확인으로 잡혔다.
-#   유래: 이 저장소 초기 PROFILE.md에 적혀 있던 값을 그대로 옮긴 것. 이메일 로컬파트나
-#   퍼듀 사내 GitHub 아이디에서 유추된 값으로 보인다. **ORCID·Scholar는 근거를 확인했는데
-#   GitHub만 안 했다** — 식별자는 전부 같은 기준으로 검증한다.
 ids:
   orcid: "0000-0002-3392-9444"
   orcid_url: "https://orcid.org/0000-0002-3392-9444"
@@ -93,40 +50,28 @@ ids:
   google_scholar_verified_by: "프로필 표기 소속 'Post-doctoral Researcher, Purdue University' + verified email 도메인 purdue.edu 일치"
   google_scholar_verified_on: "2026-08-07"
 
-  # ★ 계정이 두 개다. 헷갈리지 말 것 (오너 직접 확인 2026-08-08)
-  #   Haesung-Kim5425  (2025-09-15 생성) ← ★ 오너 계정. 이것만 쓴다.
-  #   kim5425          (2020-07-31 생성) ← ✗ **오너 계정 아님.** 실존하는 남의 계정이다. 절대 링크하지 말 것.
-  #   ⚠ 퍼듀 사내 GitHub(github.itap.purdue.edu)의 아이디와 공개 github.com 계정명은 다르다.
-  #     이메일 로컬파트(kim5425@purdue.edu)에서 계정명을 유추하지 말 것 — 이번 사고의 원인이다.
   github: "Haesung-Kim5425"
   github_url: "https://github.com/Haesung-Kim5425"
   github_verified_by: "오너 직접 확인 + 이 PC의 Windows 자격증명이 api.github.com/Haesung-Kim5425 로 저장돼 있음"
   github_verified_on: "2026-08-08"
 
-# 공개 사이트 주소 — GitHub user site는 **계정명에서 나온다**. 위 github 값과 반드시 일치해야 한다.
+  scopus_author_id: "57219359516"
+  scopus_url: "https://www.scopus.com/authid/detail.uri?authorId=57219359516"
+  scopus_verified_by: "오너 직접 제공(강원대 세션 경유) + ORCID 공개 API external-identifiers 에 동일 값 등록 확인 (pub.orcid.org/v3.0/0000-0002-3392-9444/external-identifiers)"
+  scopus_verified_on: "2026-08-19"
+
 site_url: "https://haesung-kim5425.github.io"
 
-# ── 표기 규약 (오너 확정 2026-08-08) — 모든 렌더가 지킬 것 ────────────────────
 style:
-  person: "third"                     # 3인칭 서술
-  pronouns: "none"                    # ★ 대명사를 쓰지 않는다. he/she/they 임의 삽입 금지.
-  publication_counts_in_prose: false  # ★ 산문에 논문 수를 적지 않는다. 목록 자체가 개수다.
-  # ★ 대표논문(publications.bib 의 selected={true}) 선정 규칙 — 오너 최종 확정 2026-08-08
-  #   **제1저자 논문만.** authorship 에 `first` 가 있는 것만.
-  #   교신저자 논문도 제외 · 본인이 1번째가 아닌 공동제1저자도 제외 · 저널 가시성은 근거 아님.
+  person: "third"
+  pronouns: "none"
+  publication_counts_in_prose: false
   selected_publications_rule: "first-author-only (authorship must contain `first`)"
   notes: >-
     한 사이트/문서 안에서 인칭이 섞이면 저자가 둘인 것처럼 읽힌다.
     bio 밖(Research·Contact 문안, config의 설명문·contact_note, og:description,
     alt 텍스트)에도 동일하게 적용한다.
 
-# ── Bio (오너 승인 2026-08-08 / 소속 정정 2026-08-08) ─────────────────────────
-# ★ 승인된 문안이다. 렌더는 **글자 그대로** 쓴다. 윤문·의역 금지.
-#   고칠 일이 생기면 허브를 거쳐 오너 승인을 다시 받는다.
-# ★ 2026-08-08 변경분: "at the Birck Nanotechnology Center" -> "at the Specere Lab".
-#   오너가 소속을 직접 정정했고(Specere가 정확), 그 사실만 반영한 **최소 수정**이다.
-#   나머지 문장은 승인본 그대로다. 문안 재승인 대기 중이며, 그 전까지 이 버전을 쓴다
-#   — 정정 전 문안을 계속 공개하는 것이 더 나쁘기 때문이다.
 bio:
   short: >-
     Haesung Kim is a postdoctoral researcher at the Specere Lab,
@@ -145,24 +90,6 @@ bio:
     Haesung received the Ph.D., M.S., and B.S. degrees in Electrical Engineering from
     Kookmin University, Seoul, Korea.
 
-# ── 연구 요약 ────────────────────────────────────────────────────────────────
-# ★ 상태: ✅ **오너 승인 완료 (2026-08-13).** 공개 렌더 가능.
-#   bio 와 같은 취급 — 렌더는 **글자 그대로** 쓴다. 윤문·의역 금지.
-#   고칠 일이 생기면 허브를 거쳐 오너 승인을 다시 받는다.
-# ★ 2026-08-13 갱신 — **주저자 논문 14편의 내용**을 근거로 다시 썼다(오너 지시).
-#   이전 문안은 CV(2025-11-10판)의 Research History 를 옮긴 것이라 소자계 나열에 가까웠다.
-#   지금 문안은 "무엇을 규명하는 연구인가"를 앞에 두고, 그 근거를 주저자 논문에서 가져왔다.
-#   ★ 논문 수를 문장에 넣지 않는다(style 규약). 목록이 개수를 보여준다.
-# ★ 2026-08-18 진행 중 연구 반영 — research 통합 관리자 회신 + **오너 확정** 근거.
-#   공개 범위 조건(오너 확정, 반드시 지킬 것):
-#     · 어닐 방식 비교 : **일반 수준만.** 게재 전 수치(2Pr·비율 등)·샘플 코드네임 금지
-#     · endurance/공간스캔 · 광토글 C-t 서브갭 DoS : 공개 가능
-#     · 2D 트랜지스터 : 공개 가능하되 **구체적이지 않게** — 소자 스택·기하·수치 금지
-#       ⚠ **협업사명·협업자명 명시는 오너 재확인 전까지 보류.** 지금은 'industrial
-#         collaboration' 까지만 적었다. 넣으려면 research 관리자에게 재문의할 것.
-#     · 투고 중 원고 3건(candidates.md D-1)은 **비공개 유지**
-#   ★ 수치가 들어가는 순간 research 감사 게이트(FINDINGS F.key 인용) 대상이 된다.
-#     일반 수준 서술로 유지하면 해당 없음 — 수치를 넣지 말 것.
 research_focus: >-
   Characterization techniques and physics-based models that separate device parameters
   which conventional measurements leave entangled.
@@ -188,9 +115,6 @@ research_focus_long: >-
   and energy, and the reliability of two-dimensional transistors under bias stress in an
   industrial collaboration.
 
-# ── 지표 ─────────────────────────────────────────────────────────────────────
-# ★ 헌장: 지표는 출처 URL + 확인 날짜 없이 쓰지 않는다.
-#   렌더는 아래 as_of 를 **반드시 값과 함께** 표시할 것. 날짜 없이 숫자만 쓰면 안 된다.
 metrics:
   as_of: "2026-08-07"
   source: "Google Scholar"
@@ -198,22 +122,14 @@ metrics:
   citations: 63
   h_index: 6
   i10_index: 2
-  # ★ 논문 수는 여기 없다. Scholar는 동명이인·중복을 섞으므로 논문 수를 지표로 쓰지 않는다.
-  #   개수가 필요하면 publications.bib 엔트리를 세되, 산문에는 적지 않는다(style 참조).
   caution: >-
     Google Scholar에는 공식 API가 없다. 위 값은 프로필 페이지를 직접 조회해 읽은 것이며
     Scholar 자체가 오귀속을 포함할 수 있다. 공개 배포 직전 재확인할 것.
 
-# ── 렌더에 노출 금지 ─────────────────────────────────────────────────────────
 exclude:
-  # 오너 확정(2026-08-08). 이 항목들은 이 파일에 값이 없고, 앞으로도 넣지 않는다.
-  # 렌더는 산출물에서 이것들이 없는지 확인하는 용도로 쓸 수 있다.
   - "phone numbers (US, KR)"
   - "office street address (1205 Mitch Daniels Blvd)"
   - "GPA"
   - "date of birth"
   - "gender, nationality"
-  # ★ 동명이인 확정(오너 판정 2026-08-08) — 오너 논문이 아니다. 어떤 렌더에도 넣지 않는다.
-  #   판정이 끝났어도 이 목록에서 빼지 않는다: 동기화가 다시 집어오는 걸 막는 영구 가드다.
-  #   상세는 candidates.md A절.
   - "DOI 10.1038/s41586-025-09793-3 (Nature 2025) — different person, permanently excluded"

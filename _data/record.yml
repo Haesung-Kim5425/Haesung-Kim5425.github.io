@@ -6,29 +6,11 @@
 #
 # Edits here are overwritten by:  pwsh -File bin/sync-sot.ps1
 # ============================================================================
-# record.yml — 논문 외 업적의 **기계가독 SoT**
-#
-# 목적: teaching·conferences·awards·grants·patents 를 렌더(홈페이지·CV·biosketch)가
-#       기계로 읽게 한다. `record.md` 는 같은 내용의 **서술·출처·이력 문서**이고,
-#       값의 원본은 이 파일이다. (profile.yml ↔ record.md 와 같은 역할 분담)
-#
-# ★★★ 이 파일은 공개 저장소로 복사된다. **공개 안전한 값만.**
-#   아래는 `record.md` 에 있지만 **여기 없고, 앞으로도 넣지 않는다**:
-#     - GPA 3건 · 생년월일 · 전화번호 2건 · 오피스 번지 · 성별 · 국적
-#     - ★ **특허 공보의 발명자 자택 주소** — 등록특허공보 원문에는 오너를 포함한
-#       발명자 전원의 집 주소가 인쇄돼 있다. 절대 옮기지 말 것. 여기엔 이름만 있다.
-#     - 연구과제 금액 — 전부 미확인이라 필드 자체를 두지 않는다(추정 금지)
-#
-# ★ 미확인은 필드를 **생략**한다. 빈 문자열이나 "미확인"을 값으로 넣지 않는다
-#   — 렌더가 그걸 그대로 출력하면 공개물에 "미확인"이 찍힌다.
-
 meta:
   public_safe: true
   updated: "2026-08-08"
   source: "achievements/record.md (원본 근거·출처는 그쪽 참조)"
 
-# ── 강의·멘토링 ──────────────────────────────────────────────────────────────
-# 출처: CV(2025-11-10판) Teaching Experience 절
 teaching:
   - role: "Lecturer"
     course: "Intelligent Semiconductor Devices"
@@ -91,12 +73,6 @@ teaching:
     institution: "Kookmin University"
     year: 2019
 
-# ── 학회 참석·발표 ────────────────────────────────────────────────────────────
-# 출처: CV(2025-11-10판) Experience 절 + Selected Conference Presentations 절(개최지).
-# ★ 이건 **참석·발표 이력**이다. DOI가 있는 학회 '논문'은 publications.bib 에 별도로 있다
-#   (IEEE NANO 2022, SNW 2025). 같은 행사가 양쪽에 나올 수 있으나 성격이 다르다.
-# ★ presentation(oral/poster/invited) 은 **CV에 확인된 1건에만** 있다.
-#   나머지는 미확인이라 필드를 생략했다 — 추정해서 채우지 않는다.
 conferences:
   - name: "International Conference on Electronics, Information, and Communication"
     short: "ICEIC"
@@ -143,15 +119,8 @@ conferences:
     scope: domestic
     location: "Korea"
     year: 2020
-    presentation: oral        # ★ CV에 명시된 유일한 발표 형태
+    presentation: oral
 
-# ── 학회 논문 (DOI 없는 것) ──────────────────────────────────────────────────
-# ★ 오너 원본 CV(2025-11-10판) `Conference` 절 **전 21건**을 옮겼다 (오너 지시 2026-08-13).
-#   DOI가 있는 2건(IEEE NANO 2022 · SNW 2025)은 `publications.bib` 에 있고 여기 없다 —
-#   CV 렌더가 국제 학회 논문 목록에서 **양쪽을 합쳐** 출력한다.
-# ★ 검증 등급이 다르다: 여기 21건은 **DOI가 없어 Crossref 대조가 불가능**하다.
-#   CV 원문 표기를 그대로 옮긴 것이고, publications.bib 의 검증분과 동급이 아니다.
-# ★ scope: 개최지·주최 기준. ICEIC/SNW = 국제, KCS(한국반도체학술대회)·IEIE = 국내.
 conference_papers:
   - authors: "H. Kim, S. H. Han, H. Jeong, H. Yang, S.-J. Choi, D. H. Kim, J.-H. Bae, D. M. Kim"
     title: "Photonic I–V-based technique for subgap density of states extraction in AOS TFTs"
@@ -167,9 +136,6 @@ conference_papers:
     year: 2024
     pages: "1–2"
     scope: international
-    # ★ 축약 표기에 "H. Kim" 이 두 명이다(1번째·4번째). 렌더가 추측하면 남의 이름이
-    #   오너로 굵어지므로 위치를 명시한다. 근거: 같은 연구의 저널판
-    #   10.1016/j.net.2026.104433 의 Crossref 저자 목록이 Kim, Haesung(1) … Kim, Hansol(4).
     owner_position: 1
 
   - authors: "J. Park, S. Lee, H. Kim, H. Jeong, Y. Choi, S.-J. Choi, D. M. Kim, D. H. Kim, J.-H. Bae"
@@ -294,7 +260,6 @@ conference_papers:
     month: "Feb."
     scope: domestic
 
-# ── 수상 ─────────────────────────────────────────────────────────────────────
 awards:
   - name: "Excellent Talent Award"
     org: "Kookmin University"
@@ -308,8 +273,6 @@ awards:
     detail: "M.S. conferral, Spring 2022"
     year: 2022
 
-# ── 연구과제 ─────────────────────────────────────────────────────────────────
-# ★ 금액 필드 없음 — CV에 금액이 없고 확인되지 않았다. 추정 금지.
 grants:
   - title: "Maximizing Energy Efficiency and Speed: Modeling and Optimization of Transient Response Characteristics in AOS-based Ferroelectric Memory Devices"
     funder: "National Research Foundation of Korea"
@@ -337,13 +300,6 @@ grants:
     start: "2020"
     end: "2022"
 
-# ── 장비 / 소프트웨어 ────────────────────────────────────────────────────────
-# ★ 오너 **원본 CV(2025-11-10판)의 표 형식**을 그대로 따른다 (오너 지시 2026-08-13).
-#   원본은 `Equipment Experience` (No. / Name / Function) 16종,
-#          `Tool Experience`      (No. / Name / Purpose)  7종의 **두 표**다.
-#   이름만 나열하면 "무엇을 다룰 줄 아는가"가 안 보인다 — 기능이 핵심 정보다.
-#   기능 문구는 원본 표기를 그대로 옮겼다(허브가 새로 쓰지 않음).
-#   ※ 원본 Tool 표는 번호가 01,02,04…로 03이 비어 있다. 번호는 의미가 없어 옮기지 않았다.
 equipment:
   - { name: "Agilent 4156C",         function: "Semiconductor parameter analyzer" }
   - { name: "Agilent B1500A",        function: "Semiconductor device analyzer" }
@@ -371,12 +327,8 @@ tools:
   - { name: "MATLAB",                purpose: "Data processing and analysis" }
   - { name: "Python",                purpose: "Data analysis and automation scripting" }
 
-# ── 특허 ─────────────────────────────────────────────────────────────────────
-# 출처: 등록특허공보 원문(`김해성-증빙-등록특허.pdf`) 직접 확인 2026-08-08.
-# ★ 공보에 발명자 자택 주소가 인쇄돼 있으나 **여기 옮기지 않았다.** 이름만 싣는다.
 patents:
   - title_ko: "비정질 산화물 반도체 박막 트랜지스터의 최소 전도 대역 추출 방법 및 장치"
-    # ★ 영문 제목은 공보에 없다. 아래는 허브가 옮긴 번역이며 공식 명칭이 아니다.
     title_en: "Method and apparatus for extracting the conduction band minimum of amorphous oxide semiconductor thin-film transistors"
     title_en_is_translation: true
     country: "KR"
@@ -390,5 +342,5 @@ patents:
     assignee: "Kookmin University Industry-Academic Cooperation Foundation"
     claims: 11
     inventors_count: 10
-    inventor_position: 5        # 발명자 10인 중 5번째 (김동명·김대환·최성진·배종호·김해성 …)
-    related_doi: "10.1109/TED.2023.3269735"   # 같은 CBM 추출 기법의 저널 논문
+    inventor_position: 5
+    related_doi: "10.1109/TED.2023.3269735"
